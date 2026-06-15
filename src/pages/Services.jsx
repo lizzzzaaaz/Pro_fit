@@ -1,42 +1,55 @@
 import React from 'react';
+import { services } from './servicesData';   // Берем только данные
+//import * as IconUtils from './ServiceIcons'; 
 
-function Services({ setActivePage }) {
-  console.log("Функция setActivePage:", setActivePage);
-  const servicesList = [
-    { title: 'Проектирование систем', desc: 'Разработка проектной, конструкторской и сметной документации для автоматизации инженерных систем.' },
-    { title: 'Пусконаладочные работы', desc: 'Комплексная настройка оборудования, калибровка датчиков и конфигурирование промышленного софта.' },
-    { title: 'Техническая поддержка', desc: 'Удаленный мониторинг, оперативное обслуживание комплексов и регламентное обновление ПО.' },
-    { title: 'Метрологическая поверка', desc: 'Организация и проведение поверки средств измерений с внесением данных в государственные реестры.' }
-  ];
 
+function Services({ setActivePage, onServiceClick }) {
   return (
-    <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
+    <div style={{ 
+      maxWidth: '1200px', 
+      margin: '80px auto', 
+      padding: '0 40px',
+      fontFamily: 'system-ui, -apple-system, sans-serif' 
+    }}>
+      <h1 style={{ fontSize: '42px', color: '#fff', marginBottom: '40px' }}>Наши услуги</h1>
       
-      {/* Крошки с рабочей ссылкой */}
-      <div style={{ backgroundColor: '#fff', borderBottom: '1px solid #f0f0f0' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 40px', fontSize: '14px', color: '#64748b' }}>
-          <span style={{ color: '#0070f3', cursor: 'pointer', fontWeight: '500' }} onClick={() => setActivePage('main')}>Главная</span>
-          <span style={{ margin: '0 12px', color: '#cbd5e1' }}>/</span>
-          <span style={{ color: '#1e293b', fontWeight: '500' }}>Услуги</span>
-        </div>
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+        gap: '24px' 
+      }}>
+        {services.map(s => (
+          <div 
+            key={s.id} 
+            onClick={() => {
+              onServiceClick(s.id); // Устанавливаем ID услуги
+              setActivePage('detail'); // Переключаем страницу на детальную
+            }}
+            style={{ 
+              padding: '30px', 
+              border: '1px solid #1e293b', 
+              borderRadius: '16px', 
+              backgroundColor: '#0f172a',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = '#0057b8';
+              e.currentTarget.style.transform = 'translateY(-5px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = '#1e293b';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            {/* <div style={{ color: '#0057b8', marginBottom: '20px' }}>
+              {getIcon(s.icon, 40)}
+            </div> */}
+            <h3 style={{ color: '#fff', fontSize: '18px', marginBottom: '12px' }}>{s.title}</h3>
+            <p style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.6' }}>{s.description}</p>
+          </div>
+        ))}
       </div>
-
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '60px 40px' }}>
-        <h1 style={{ fontSize: '38px', fontWeight: '800', color: '#111', margin: '0 0 16px 0', letterSpacing: '-1px' }}>Инженерные услуги</h1>
-        <p style={{ color: '#64748b', fontSize: '16px', maxWidth: '600px', margin: '0 0 50px 0', lineHeight: '1.6' }}>
-          Реализация комплексных технологических проектов от стадии разработки концепта до долгосрочного сервисного обслуживания.
-        </p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
-          {servicesList.map((item, index) => (
-            <div key={index} style={{ backgroundColor: '#fff', padding: '40px', borderRadius: '12px', border: '1px solid #eef2f6', boxShadow: '0 4px 20px rgba(0,0,0,0.01)' }}>
-              <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e293b', margin: '0 0 12px 0' }}>{item.title}</h3>
-              <p style={{ color: '#64748b', fontSize: '14.5px', lineHeight: '1.6', margin: 0 }}>{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
     </div>
   );
 }
