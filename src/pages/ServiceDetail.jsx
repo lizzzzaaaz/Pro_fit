@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 
+// Оригинальный набор путей для иконок из твоего файла Services.jsx
+const iconPaths = {
+  maintenance: <path d="M12 2v4m0 16v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m16 0h4m-4.93-7.07l-2.83 2.83M7.76 16.24l-2.83 2.83" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>,
+  construction: <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>,
+  automation: <path d="M10 2a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-4zM2 12a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>,
+  telemetry: <path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.59 16.14a6 6 0 0 1 6.82 0M12 20a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>,
+  crypto: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+};
 
-function RelatedCard({ service, onClick }) {
+function RelatedCard({ service, index, onClick }) {
   const [hovered, setHovered] = useState(false);
+  const softBlue = '#7baaf7';
+  const bgCard = '#f4f7fb'; // Оригинальный bgCard из твоих услуг
 
   return (
     <div
@@ -10,101 +20,106 @@ function RelatedCard({ service, onClick }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        backgroundColor: '#fff',
-        borderRadius: '14px',
-        border: `1.5px solid ${hovered ? '#0057b8' : '#e8edf4'}`,
-        padding: '26px 22px 20px',
+        padding: '40px',
+        backgroundColor: hovered ? softBlue : bgCard,
+        borderRadius: '16px',
+        border: '1px solid #eef2f7',
+        transition: 'all 0.4s ease',
         cursor: 'pointer',
-        transition: 'all 0.28s ease',
-        boxShadow: hovered
-          ? '0 10px 32px rgba(0,87,184,0.12)'
-          : '0 2px 10px rgba(0,0,0,0.04)',
-        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
         display: 'flex',
         flexDirection: 'column',
-        gap: '14px',
+        position: 'relative',
+        overflow: 'hidden',
+        minHeight: '180px',
+        boxShadow: hovered ? '0 15px 30px rgba(123, 170, 247, 0.3)' : 'none',
+        transform: hovered ? 'translateY(-8px)' : 'translateY(0)',
       }}
     >
-      
-
-      <div style={{
-        fontSize: '11px',
-        fontWeight: '700',
-        textTransform: 'uppercase',
-        letterSpacing: '0.6px',
-        color: hovered ? '#0057b8' : '#1a3a6b',
-        lineHeight: '1.5',
-        transition: 'color 0.28s',
-        flexGrow: 1,
-      }}>
-        {service.title}
+      {/* Иконка: цвет и прозрачность ВСЕГДА как на главной в обычном состоянии */}
+      <div 
+        className="icon-wrapper" 
+        style={{ 
+          position: 'absolute', 
+          top: '20px', 
+          right: '20px', 
+          opacity: 0.15, 
+          color: '#0f172a',
+          transition: '0.4s'
+        }}
+      >
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          {iconPaths[service.id] || iconPaths.automation}
+        </svg>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <div style={{
-          width: '28px',
-          height: '28px',
-          borderRadius: '50%',
-          backgroundColor: hovered ? '#0057b8' : '#1a3a6b',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'background-color 0.28s',
-          flexShrink: 0,
-        }}>
-          <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-            <path d="M3 7h8M8 4l3 3-3 3" stroke="#fff" strokeWidth="1.8"
-              strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </div>
-        <span style={{
-          fontSize: '13px',
-          fontWeight: '600',
-          color: hovered ? '#0057b8' : '#1a3a6b',
-          textDecoration: 'underline',
-          textUnderlineOffset: '3px',
-          transition: 'color 0.28s',
-        }}>
-          Перейти
-        </span>
+      {/* Номер: цвет и прозрачность ВСЕГДА статичны, никакого белого */}
+      <div 
+        className="num" 
+        style={{ 
+          fontSize: '32px', 
+          fontWeight: 900, 
+          opacity: 0.1, 
+          marginBottom: '20px', 
+          color: '#000000',
+          transition: '0.3s'
+        }}
+      >
+        0{index + 1}
       </div>
+
+      {/* Заголовок: ТОЛЬКО он плавно белеет при ховере */}
+      <h3 
+        style={{ 
+          fontSize: '20px', 
+          fontWeight: 700, 
+          margin: 'auto 0 0 0', 
+          color: hovered ? '#ffffff' : '#0f172a', 
+          transition: '0.3s',
+          lineHeight: '1.4'
+        }}
+      >
+        {service?.title}
+      </h3>
     </div>
   );
 }
 
-function ServiceDetail({ service, relatedServices, onServiceClick, onBack, setActivePage }) {
+function ServiceDetail({ service, relatedServices = [], onServiceClick, onBack, setActivePage }) {
+  if (!service) {
+    return (
+      <div style={{ padding: '100px', textAlign: 'center', fontFamily: 'system-ui, sans-serif' }}>
+        Данные услуги загружаются...
+      </div>
+    );
+  }
+
   return (
     <div style={{
-      fontFamily: 'system-ui, -apple-system, sans-serif',
-      backgroundColor: '#f5f7fb',
+      backgroundColor: '#ffffff',
       minHeight: '100vh',
-      padding: '60px 0 80px',
+      fontFamily: 'system-ui, sans-serif',
     }}>
-      <div style={{ maxWidth: '1180px', margin: '0 auto', padding: '0 40px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px' }}>
 
         {/* Хлебные крошки */}
-        <div style={{
-          fontSize: '13px',
-          marginBottom: '28px',
-          display: 'flex',
-          gap: '6px',
-          alignItems: 'center',
-        }}>
+        <div style={{ marginBottom: '50px', fontSize: '14px', letterSpacing: '0.5px' }}>
           <span
             onClick={() => setActivePage('main')}
-            style={{ cursor: 'pointer', color: '#0057b8' }}
+            style={{ cursor: 'pointer', color: '#7baaf7' }}
           >
-            Главная
+            ГЛАВНАЯ
           </span>
-          <span style={{ color: '#94a3b8' }}>/</span>
+          <span style={{ margin: '0 10px', color: '#cbd5e1' }}>/</span>
           <span
             onClick={onBack}
-            style={{ cursor: 'pointer', color: '#0057b8' }}
+            style={{ cursor: 'pointer', color: '#7baaf7' }}
           >
-            Услуги
+            УСЛУГИ
           </span>
-          <span style={{ color: '#94a3b8' }}>/</span>
-          <span style={{ color: '#64748b' }}>{service.shortTitle}</span>
+          <span style={{ margin: '0 10px', color: '#cbd5e1' }}>/</span>
+          <span style={{ color: '#0f172a', fontWeight: 600, textTransform: 'uppercase' }}>
+            {service.shortTitle || service.title}
+          </span>
         </div>
 
         {/* Кнопка назад */}
@@ -135,149 +150,91 @@ function ServiceDetail({ service, relatedServices, onServiceClick, onBack, setAc
           }}
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="2"
-              strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           Все услуги
         </button>
 
-        {/* Основная карточка */}
+        {/* Основная информационная карточка */}
         <div style={{
           backgroundColor: '#fff',
           borderRadius: '16px',
-          border: '1.5px solid #e8edf4',
+          border: '1px solid #eef2f7',
           padding: '52px',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.05)',
-          marginBottom: '56px',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.03)',
+          marginBottom: '60px',
         }}>
-
-          {/* Иконка + заголовок */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '28px',
-            marginBottom: '32px',
-          }}>
-            {/* <div style={{ color: '#1a3a6b', flexShrink: 0 }}>
-              {getIcon(service.icon, 60)}
-            </div> */}
+          <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '32px' }}>
             <div>
-              <div style={{
-                fontSize: '12px',
-                fontWeight: '700',
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-                color: '#0057b8',
-                marginBottom: '10px',
-              }}>
-                Услуга
+              <div style={{ fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', color: '#0057b8', marginBottom: '10px' }}>
+                Направление
               </div>
-              <h1 style={{
-                fontSize: '30px',
-                fontWeight: '800',
-                color: '#0b1120',
-                margin: 0,
-                letterSpacing: '-0.6px',
-                lineHeight: '1.25',
-              }}>
+              <h1 style={{ fontSize: '32px', fontWeight: '800', color: '#0f172a', margin: 0, letterSpacing: '-0.6px', lineHeight: '1.25' }}>
                 {service.title}
               </h1>
             </div>
           </div>
 
-          {/* Разделитель */}
-          <div style={{
-            height: '1px',
-            backgroundColor: '#eef2f8',
-            marginBottom: '32px',
-          }}/>
+          <div style={{ height: '1px', backgroundColor: '#eef2f8', marginBottom: '32px' }}/>
 
-          {/* Описание */}
-          <p style={{
-            fontSize: '16px',
-            color: '#475569',
-            lineHeight: '1.7',
-            margin: '0 0 36px 0',
-            maxWidth: '800px',
-          }}>
+          <p style={{ fontSize: '16px', color: '#475569', lineHeight: '1.7', margin: '0 0 40px 0', maxWidth: '850px' }}>
             {service.description}
           </p>
 
-          {/* Заголовок списка */}
-          <div style={{
-            fontSize: '13px',
-            fontWeight: '700',
-            textTransform: 'uppercase',
-            letterSpacing: '1px',
-            color: '#1a3a6b',
-            marginBottom: '18px',
-          }}>
-            В рамках услуги выполняем:
-          </div>
-
-          {/* Список */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '12px 40px',
-          }}>
-            {service.details.map((item, i) => (
-              <div key={i} style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '12px',
-                fontSize: '15px',
-                color: '#334155',
-                lineHeight: '1.5',
-              }}>
-                <div style={{
-                  width: '20px',
-                  height: '20px',
-                  borderRadius: '50%',
-                  backgroundColor: 'rgba(0,87,184,0.1)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                  marginTop: '2px',
-                }}>
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                    <path d="M2 5l2.5 2.5L8 3" stroke="#0057b8" strokeWidth="1.6"
-                      strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
+            {service.details && service.details.length > 0 && (
+              <div>
+                <div style={{ fontSize: '13px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', color: '#1a3a6b', marginBottom: '20px' }}>
+                  В рамках услуги выполняем:
                 </div>
-                {item}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  {service.details.map((item, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', fontSize: '15px', color: '#334155', lineHeight: '1.5' }}>
+                      <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'rgba(123, 170, 247, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                          <path d="M2 5l2.5 2.5L8 3" stroke="#7baaf7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                      {item}
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
+            )}
+
+            <div style={{ paddingLeft: '20px', borderLeft: '1px solid #eef2f8' }}>
+              <div style={{ fontSize: '13px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', color: '#1a3a6b', marginBottom: '20px' }}>
+                Преимущества решения:
+              </div>
+              <ul style={{ paddingLeft: '20px', color: '#475569', fontSize: '15px', lineHeight: '1.9', margin: 0 }}>
+                <li>Высокая отказоустойчивость систем</li>
+                <li>Снижение эксплуатационных расходов</li>
+                <li>Полное соответствие тех. регламентам</li>
+                <li>Гарантийное обслуживание объекта</li>
+              </ul>
+            </div>
           </div>
-
         </div>
-        {/* конец основной карточки */}
 
-        {/* Другие услуги */}
-        <h2 style={{
-          fontSize: '22px',
-          fontWeight: '700',
-          color: '#0b1120',
-          margin: '0 0 22px 0',
-          letterSpacing: '-0.4px',
-        }}>
-          Другие услуги
-        </h2>
+        {/* Секция сопутствующих предложений */}
+        {relatedServices && relatedServices.length > 0 && (
+          <div style={{ marginTop: '40px' }}>
+            <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#0f172a', margin: '0 0 30px 0', letterSpacing: '-0.4px' }}>
+              Другие услуги направления
+            </h2>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '20px',
-        }}>
-          {relatedServices.slice(0, 4).map(s => (
-            <RelatedCard
-              key={s.id}
-              service={s}
-              onClick={onServiceClick}
-            />
-          ))}
-        </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+              {relatedServices.slice(0, 3).map((s, idx) => (
+                <RelatedCard
+                  key={s.id}
+                  index={idx}
+                  service={s}
+                  onClick={onServiceClick}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
       </div>
     </div>
