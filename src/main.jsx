@@ -15,6 +15,7 @@ import PowerAndModules from './pages/PowerAndModules';
 // Детальные страницы товаров
 import ProductsA1 from './pages/ProductsA1'; 
 import ProductsA2 from './pages/ProductsA2'; 
+import ProductsA3 from './pages/ProductsA3';
 
 import { services } from './pages/servicesData'; 
 
@@ -57,6 +58,11 @@ function MainApp() {
         {/* Детальная страница 2: КУТ300-АК */}
         {currentPage === 'products-a2' && (
           <ProductsA2 setActivePage={setCurrentPage} />
+        )}
+
+        {/* Детальная страница 3: КУТ300-А42 */}
+        {currentPage === 'products-a3' && (
+          <ProductsA3 setActivePage={setCurrentPage} />
         )}
 
         {/* СТРАНИЦЫ УСЛУГ И ОСНОВНЫЕ РАЗДЕЛЫ */}

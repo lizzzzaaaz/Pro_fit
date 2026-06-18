@@ -16,7 +16,7 @@ function Services({ onServiceClick, setActivePage }) {
           fontWeight: '500',
           color: '#94a3b8'
         }}>
-          <span onClick={() => setActivePage('main')} style={{ cursor: 'pointer', color: '#7baaf7' }}>ГЛАВНАЯ</span>
+          <span onClick={() => setActivePage('main')} style={{ cursor: 'pointer', color: '#0284c7' }}>ГЛАВНАЯ</span>
           <span style={{ margin: '0 8px', color: '#cbd5e1' }}>/</span>
           <span style={{ color: '#334155', fontWeight: '600' }}>УСЛУГИ</span>
         </div>

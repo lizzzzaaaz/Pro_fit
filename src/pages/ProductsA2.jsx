@@ -1,135 +1,303 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+
+// import mainImg from '../assets/kut300-ak.png';
 
 export default function ProductsA2({ setActivePage }) {
   const [activeTab, setActiveTab] = useState('main');
+  const [selectedComponent, setSelectedComponent] = useState(null);
+  const componentsSectionRef = useRef(null);
+  const mainImg = null;
+
+  const scrollToComponents = () => {
+    setActiveTab('components');
+    setSelectedComponent(null);
+    setTimeout(() => {
+      componentsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 0);
+  };
+
+  const renderImage = (imgSrc, altText) => {
+    if (typeof imgSrc === 'string' && (imgSrc.startsWith('/') || imgSrc.startsWith('data:image') || imgSrc.startsWith('blob:'))) {
+      return <img src={imgSrc} alt={altText} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />;
+    }
+    if (typeof imgSrc === 'object' && imgSrc !== null) {
+      return <img src={imgSrc} alt={altText} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />;
+    }
+    return <span style={{ fontSize: '12px', color: '#64748b', textAlign: 'center', padding: '10px' }}>Фото будет добавлено</span>;
+  };
+
+  const componentsData = [
+    {
+      id: 'Плата процессора',
+      title: 'Плата процессора',
+      desc: 'Основной вычислительный модуль автономного контроллера.',
+      fullDesc: 'Плата процессора включает элементы управления работой контроллера, индикаторы работы, разъём подключения блока батарейного питания, разъёмы для SIM-карт, разъём подключения антенны SMA, разъём подключения устройства М100, батарею часов реального времени, элементы искрозащиты, а также цепи подключения датчиков температуры и давления, дискретных датчиков и внешнего интерфейса.',
+      img: null,
+      chars: [
+        { label: 'SIM-карты', value: '2' },
+        { label: 'Разъём антенны', value: 'SMA' },
+        { label: 'Разъём устройства М100', value: 'Есть' },
+        { label: 'Часы реального времени', value: 'Батарея RTC' },
+        { label: 'Искрозащита', value: 'Встроенные барьеры' },
+        { label: 'Подключение датчиков', value: 'Температура, давление, дискретные' },
+        { label: 'Внешний интерфейс', value: 'RS-232/RS-485' },
+      ]
+    },
+    {
+      id: 'Плата расширения',
+      title: 'Плата расширения',
+      desc: 'Дополнительные измерительные каналы и переключатели режимов.',
+      fullDesc: 'Плата расширения оснащена переключателями режимов работы универсальных каналов измерения, элементами искрозащиты, а также цепями подключения датчиков температуры и давления и дискретных датчиков.',
+      img: null,
+      chars: [
+        { label: 'Универсальные каналы', value: 'Переключатели режимов работы' },
+        { label: 'Искрозащита', value: 'Встроенные барьеры' },
+        { label: 'Датчики температуры и давления', value: 'Подключение предусмотрено' },
+        { label: 'Дискретные датчики', value: 'Подключение предусмотрено' },
+        { label: 'Дискретные входы (всего)', value: 'до 8 шт.' },
+        { label: 'Аналоговые входы (всего)', value: 'до 10 шт.' },
+      ]
+    },
+    {
+      id: 'Блок батарейного питания',
+      title: 'Блок батарейного питания',
+      desc: 'Автономное питание контроллера от 6 элементов.',
+      fullDesc: 'Блок батарейного питания обеспечивает автономную работу контроллера. Установка 6 батарей питания с параллельным соединением. Исключительно малый саморазряд при длительном сроке службы (менее 1% от номинальной ёмкости в течение одного года хранения). Высокая нагрузочная способность при импульсной нагрузке вследствие малого внутреннего сопротивления.',
+      img: null,
+      chars: [
+        { label: 'Количество элементов', value: '6' },
+        { label: 'Соединение батарей', value: 'Параллельное' },
+        { label: 'Саморазряд', value: 'менее 1% в год' },
+        { label: 'Защита', value: 'От перегрузки и короткого замыкания' },
+        { label: 'Электролит', value: 'Негорючий' },
+        { label: 'Суммарная ёмкость', value: '78 А·ч' },
+      ]
+    },
+    {
+      id: 'Проектное решение',
+      title: 'Проектное решение (корпус Exd)',
+      desc: 'Взрывозащищённое металлическое исполнение.',
+      fullDesc: 'Автономные контроллеры серии КУТ300-АК в соответствии с разработанным компанией проектным решением могут быть поставлены заказчику во взрывозащищённом корпусе типа металлическая взрывонепроницаемая оболочка Exd. Автономное питание осуществляется за счёт имеющегося в составе батарейного блока с 6-ю элементами питания.',
+      img: null,
+      chars: [
+        { label: 'Тип исполнения', value: 'Металлическая оболочка Exd' },
+        { label: 'Взрывозащита', value: '[Ex ib Gb] IIB X' },
+        { label: 'Нормативная база', value: 'ГОСТ 31610.0' },
+        { label: 'Питание', value: 'Батарейный блок (6 элементов)' },
+        { label: 'Суммарная ёмкость АКБ', value: '78 А·ч' },
+      ]
+    },
+    {
+      id: 'Сертификаты',
+      title: 'Свидетельства и сертификаты',
+      desc: 'Подтверждение соответствия и разрешительная документация.',
+      fullDesc: 'Контроллеры серии КУТ300-АК имеют полный комплект разрешительной документации, подтверждающей соответствие требованиям электромагнитной совместимости, метрологии, системы менеджмента качества, взрывозащиты и промышленной безопасности.',
+      img: null,
+      chars: [
+        { label: 'Декларация о соответствии', value: 'ТР ТС 020/2011' },
+        { label: 'Свидетельство об утверждении типа', value: 'Средства измерений' },
+        { label: 'Сертификат СМК', value: 'ГОСТ Р ИСО 9001-2015' },
+        { label: 'Сертификат взрывозащиты', value: 'Есть' },
+        { label: 'Сертификат СДС', value: 'ГАЗСЕРТ' },
+      ]
+    },
+  ];
 
   return (
-    <div style={{ padding: '30px', maxWidth: '1200px', margin: '0 auto', color: '#fff', fontFamily: 'Arial, sans-serif' }}>
-      
-      {/* Хлебные крошки */}
-      <div style={{ fontSize: '14px', color: '#94a3b8', marginBottom: '20px' }}>
-        Главная / Продукция / Автономные комплексы телеметрии / <strong style={{ color: '#f8fafc' }}>КУТ300-АК</strong>
-      </div>
-
-      {/* Верхняя часть: Заглушка под фото и базовое описание */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: '350px 1fr', 
-        gap: '40px', 
-        backgroundColor: '#1e293b', 
-        padding: '30px', 
-        borderRadius: '16px',
-        border: '1px solid #334155',
-        marginBottom: '30px'
-      }}>
-        <div style={{ 
-          height: '260px', 
-          backgroundColor: '#334155', 
-          borderRadius: '10px',
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center',
-          color: '#64748b',
-          fontSize: '18px'
-        }}>
-          [ Фото: КУТ300-АК ]
-        </div>
-        <div>
-          <h1 style={{ margin: '0 0 15px 0', fontSize: '32px', color: '#f8fafc' }}>КУТ300-АК</h1>
-          <p style={{ margin: '0 0 10px 0', color: '#38bdf8', fontSize: '18px', fontWeight: 'bold' }}>
-            Автономный контроллер телеметрии
-          </p>
-          <p style={{ margin: 0, color: '#94a3b8', fontSize: '15px', lineHeight: '1.6' }}>
-            Предназначен для построения систем дистанционного контроля параметров ГРП, ШРП различных типов, 
-            оснащённых приборами учёта газа, в условиях полного отсутствия постоянного энергоснабжения.
-          </p>
-          
-          <button 
-            onClick={() => setActivePage('autonomous-telemetry')}
-            style={{ 
-              marginTop: '25px', 
-              padding: '12px 24px', 
-              backgroundColor: '#475569', 
-              color: '#fff', 
-              border: 'none', 
-              borderRadius: '8px', 
-              cursor: 'pointer',
-              fontSize: '14px',
-              transition: 'background 0.2s'
-            }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#64748b'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = '#475569'}
-          >
-            Назад к списку
-          </button>
-        </div>
-      </div>
-
-      {/* Переключение вкладок */}
-      <div style={{ display: 'flex', gap: '10px', borderBottom: '2px solid #334155', marginBottom: '30px' }}>
-        <button 
-          onClick={() => setActiveTab('main')}
-          style={{ 
-            padding: '15px 25px', 
-            background: 'none', 
-            border: 'none', 
-            color: activeTab === 'main' ? '#f8fafc' : '#94a3b8', 
-            borderBottom: activeTab === 'main' ? '2px solid #38bdf8' : 'none',
-            marginBottom: '-2px',
-            fontSize: '16px', 
-            cursor: 'pointer',
-            fontWeight: activeTab === 'main' ? 'bold' : 'normal'
-          }}
+    <div style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: '#0f172a', fontFamily: 'sans-serif', backgroundColor: '#ffffff', minHeight: '100vh' }}>
+      <div style={{ marginBottom: '30px', fontSize: '13px', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '4px' }}>
+        <button onClick={() => setActivePage('main')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#7baaf7', font: 'inherit' }}>ГЛАВНАЯ</button>
+        <span>/</span>
+        <button onClick={() => setActivePage('products-catalog')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#7baaf7', font: 'inherit' }}>ПРОДУКЦИЯ</button>
+        <span>/</span>
+        <button onClick={() => setActivePage('industrial-controllers')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#7baaf7', font: 'inherit' }}>ПРОМЫШЛЕННЫЕ КОНТРОЛЛЕРЫ</button>
+        <span>/</span>
+        <button
+          onClick={() => { setActiveTab('main'); setSelectedComponent(null); }}
+          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit', color: (activeTab === 'main' || activeTab === 'components') && !selectedComponent ? '#334155' : '#7baaf7', fontWeight: '600' }}
         >
-          Главное
-        </button>
-        <button 
-          onClick={() => setActiveTab('components')}
-          style={{ 
-            padding: '15px 25px', 
-            background: 'none', 
-            border: 'none', 
-            color: activeTab === 'components' ? '#f8fafc' : '#94a3b8', 
-            borderBottom: activeTab === 'components' ? '2px solid #38bdf8' : 'none',
-            marginBottom: '-2px',
-            fontSize: '16px', 
-            cursor: 'pointer',
-            fontWeight: activeTab === 'components' ? 'bold' : 'normal'
-          }}
-        >
-          Составляющие
+          КУТ300-АК
         </button>
       </div>
 
-      {/* Содержимое вкладок */}
-      <div style={{ backgroundColor: '#1e293b', padding: '30px', borderRadius: '16px', border: '1px solid #334155', minHeight: '200px' }}>
-        
-        {activeTab === 'main' && (
-          <div>
-            <h2 style={{ marginTop: 0, color: '#f8fafc' }}>Назначение и применение</h2>
-            <p style={{ color: '#94a3b8', lineHeight: '1.7', fontSize: '15px' }}>
-              Контроллеры серии <strong>КУТ300-АК</strong> обеспечивают прием и обработку сигналов от датчиков, 
-              архивирование данных и передачу информации на Пульт Управления (ПУ) по каналам связи стандарта 
-              <strong> CSD / GPRS / 3G</strong>. <br /><br />
-              Интеграция в существующие автоматизированные системы происходит за счет применения ОРС-сервера. 
-              Устройство отличается крайне низким саморазрядом элементов питания и надежной взрывозащитой.
-            </p>
-          </div>
+      <div style={{ marginBottom: '25px' }}>
+        <button onClick={() => setActivePage('industrial-controllers')} style={{ padding: '12px 24px', backgroundColor: '#e2e8f0', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+          ← К списку контроллеров
+        </button>
+      </div>
+
+      {!selectedComponent && (
+        <div style={{ display: 'flex', gap: '10px', borderBottom: '2px solid #e2e8f0', marginBottom: '30px' }}>
+          <button onClick={() => setActiveTab('main')} style={{ padding: '12px 20px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: activeTab === 'main' ? '2px solid #0284c7' : 'none', fontWeight: activeTab === 'main' ? 'bold' : 'normal', marginBottom: '-2px' }}>Главное</button>
+          <button onClick={() => setActiveTab('documents')} style={{ padding: '12px 20px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: activeTab === 'documents' ? '2px solid #0284c7' : 'none', fontWeight: activeTab === 'documents' ? 'bold' : 'normal', marginBottom: '-2px' }}>Документация</button>
+          <button onClick={scrollToComponents} style={{ padding: '12px 20px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: activeTab === 'components' ? '2px solid #0284c7' : 'none', fontWeight: activeTab === 'components' ? 'bold' : 'normal', marginBottom: '-2px' }}>Составляющие</button>
+        </div>
+      )}
+
+      <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+        {(activeTab === 'main' || activeTab === 'components') && (
+          <>
+            {!selectedComponent ? (
+              <div>
+                <div style={{ marginBottom: '40px' }}>
+                  <h2 style={{ fontSize: '24px', color: '#0284c7', marginBottom: '15px' }}>КУТ300-АК</h2>
+                  <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '30px', marginBottom: '30px' }}>
+                    <div style={{
+                      aspectRatio: '1 / 1',
+                      width: '100%',
+                      backgroundColor: '#e2e8f0',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: '1px solid #cbd5e1',
+                      boxSizing: 'border-box',
+                      overflow: 'hidden'
+                    }}>
+                      {renderImage(mainImg, 'КУТ300-АК')}
+                    </div>
+                    <div>
+                      <h4 style={{ marginBottom: '10px', fontWeight: 'bold' }}>Описание</h4>
+                      <p style={{ color: '#0284c7', fontWeight: '600', margin: '0 0 10px 0' }}>Автономный контроллер телеметрии</p>
+                      <p style={{ lineHeight: '1.6', color: '#475569', margin: 0 }}>
+                        Автономные контроллеры телеметрии серии КУТ300-АК предназначены для построения автоматизированных систем дистанционного контроля параметров ГРП, ШРП различных типов, в том числе оснащённых приборами учёта газа в условиях отсутствия постоянного энергоснабжения. Контроллеры могут быть внедрены в существующие автоматизированные системы за счёт применения OPC-сервера.
+                      </p>
+                      <p style={{ lineHeight: '1.6', color: '#475569', margin: '12px 0 0 0' }}>
+                        Контроллеры обеспечивают приём и преобразование аналоговых сигналов от датчиков, обработку данных от многофункциональных устройств, накопление и обработку дискретных сигналов, связь с пультом управления по каналам CSD/GPRS/3G, контроль параметров объекта по граничным уставкам, архивирование данных, а также местную и удалённую настройку параметров работы.
+                      </p>
+                      <p style={{ lineHeight: '1.6', color: '#475569', margin: '12px 0 0 0' }}>
+                        Конструктивно контроллеры имеют моноблочное исполнение в виде печатной платы в защитном кожухе. Все измерительные каналы защищены встроенными барьерами искрозащиты. Маркировка взрывозащиты: [Ex ib Gb] IIB X по ГОСТ 31610.0.
+                      </p>
+                    </div>
+                    <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                      <h4 style={{ marginBottom: '15px', fontWeight: 'bold' }}>Технические характеристики</h4>
+                      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                        <tbody>
+                          {[
+                            { label: 'SIM-карты', value: '2' },
+                            { label: 'Входы дискретные ТС', value: 'до 8' },
+                            { label: 'Входы аналоговые ТИТ', value: 'до 10' },
+                            { label: 'Внешний интерфейс', value: 'RS-232/RS-485' },
+                            { label: 'Технологии GSM', value: 'GPRS/3G' },
+                            { label: 'Параметры канала связи', value: '900/1800 МГц' },
+                            { label: 'Протокол внешней связи', value: 'СКАТ' },
+                            { label: 'Протокол обмена с ПУ', value: 'OPC DA, OPC HDA, OPC UA' },
+                            { label: 'Напряжение питания', value: '2,8…3,9 В' },
+                            { label: 'Импульсный ток (активный режим)', value: 'не более 300 мА' },
+                            { label: 'Ток в режиме «измерение»', value: 'менее 10,15 мА' },
+                            { label: 'Ток в режиме «сон»', value: 'менее 1,4 мА' },
+                            { label: 'Взрывозащита', value: '[Ex ib Gb] IIB X' },
+                          ].map((char, i) => (
+                            <tr key={i} style={{ borderBottom: '1px solid #e2e8f0' }}>
+                              <td style={{ padding: '8px 0', color: '#64748b', fontSize: '14px', textAlign: 'left' }}>{char.label}</td>
+                              <td style={{ padding: '8px 0', fontWeight: 'bold', fontSize: '14px', textAlign: 'right' }}>{char.value}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div ref={componentsSectionRef} style={{ scrollMarginTop: '20px' }}>
+                  <h2 style={{ fontSize: '22px', marginBottom: '20px' }}>Составляющие</h2>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                    gap: '20px'
+                  }}>
+                    {componentsData.map((comp) => (
+                      <button
+                        key={comp.id}
+                        onClick={() => setSelectedComponent(comp)}
+                        style={{
+                          textAlign: 'left',
+                          backgroundColor: '#f8fafc',
+                          padding: '20px',
+                          borderRadius: '12px',
+                          border: '1px solid #e2e8f0',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '12px'
+                        }}
+                      >
+                        <div style={{
+                          aspectRatio: '1 / 1',
+                          width: '100%',
+                          backgroundColor: '#e2e8f0',
+                          borderRadius: '6px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#64748b',
+                          border: '1px solid #cbd5e1',
+                          boxSizing: 'border-box',
+                          overflow: 'hidden'
+                        }}>
+                          {renderImage(comp.img, comp.title)}
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' }}>
+                          <h3 style={{ color: '#0284c7', fontSize: '16px', margin: 0, fontWeight: 'bold' }}>{comp.id}</h3>
+                          <p style={{ fontSize: '12px', color: '#475569', margin: 0, lineHeight: '1.4' }}>{comp.desc}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <h2 style={{ fontSize: '24px', color: '#0284c7', marginBottom: '15px' }}>{selectedComponent.title}</h2>
+                <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '30px', marginBottom: '30px' }}>
+                  <div style={{
+                    aspectRatio: '1 / 1',
+                    width: '100%',
+                    backgroundColor: '#e2e8f0',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#64748b',
+                    border: '1px solid #cbd5e1',
+                    boxSizing: 'border-box',
+                    overflow: 'hidden'
+                  }}>
+                    {renderImage(selectedComponent.img, selectedComponent.title)}
+                  </div>
+                  <div>
+                    <h4 style={{ marginBottom: '10px', fontWeight: 'bold' }}>Описание</h4>
+                    <p style={{ lineHeight: '1.6', color: '#475569' }}>{selectedComponent.fullDesc}</p>
+                  </div>
+                  <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                    <h4 style={{ marginBottom: '15px', fontWeight: 'bold' }}>Технические характеристики</h4>
+                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                      <tbody>
+                        {selectedComponent.chars.map((char, i) => (
+                          <tr key={i} style={{ borderBottom: '1px solid #e2e8f0' }}>
+                            <td style={{ padding: '8px 0', color: '#64748b', fontSize: '14px', textAlign: 'left' }}>{char.label}</td>
+                            <td style={{ padding: '8px 0', fontWeight: 'bold', fontSize: '14px', textAlign: 'right' }}>{char.value}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <button onClick={() => setSelectedComponent(null)} style={{ padding: '10px 20px', backgroundColor: '#0284c7', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
+                  ← Назад к составляющим
+                </button>
+              </div>
+            )}
+          </>
         )}
 
-        {activeTab === 'components' && (
+        {activeTab === 'documents' && (
           <div>
-            <h2 style={{ marginTop: 0, color: '#f8fafc' }}>Составляющие и узлы</h2>
-            <ul style={{ color: '#94a3b8', lineHeight: '1.8', fontSize: '15px', paddingLeft: '20px' }}>
-              <li><strong>Энергоснабжение:</strong> Автономный батарейный блок (6 литиевых элементов высокой емкости, 78 А·ч).</li>
-              <li><strong>Измерительная часть:</strong> Аналоговые и дискретные входы (до 8 каналов типа «сухой контакт») со встроенными барьерами искрозащиты.</li>
-              <li><strong>Связь и архивация:</strong> Модуль GSM/3G, интерфейсы RS-232 и RS-485 для подключения сторонних вычислителей расхода газа с регулируемым напряжением питания.</li>
-              <li><strong>Исполнение:</strong> Моноблочная печатная плата в защитном кожухе, помещенная во взрывонепроницаемую металлическую оболочку (Exd / взрывозащита <i>[Ex ib Gb] IIB X</i>).</li>
-              <li><strong>Диагностика:</strong> Настройка контроллера на объекте осуществляется с помощью переносного универсального устройства конфигурирования <strong>М80</strong>.</li>
-            </ul>
+            <h2>Документация</h2>
+            <p>Технические паспорта и сертификаты в формате PDF появятся здесь.</p>
           </div>
         )}
-
       </div>
     </div>
   );
