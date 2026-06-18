@@ -238,7 +238,7 @@ export default function ProductsA1({ setActivePage }) {
 
                 {/* СОСТАВЛЯЮЩИЕ (Сетка карточек модулей) */}
                 <div>
-                  <h2 style={{ fontSize: '22px', marginBottom: '20px' }}>Составляющие модули</h2>
+                  <h2 style={{ fontSize: '22px', marginBottom: '20px' }}>Модули расширения</h2>
                   <div style={{ 
                     display: 'grid', 
                     gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', 
