@@ -1,12 +1,15 @@
 import React, { useState, useRef } from 'react';
-
-// import mainImg from '../assets/kut300-ak.png';
+import mainImg from '../assets/КУТ300-АК.png';
+import processorImg from '../assets/Плата процессора.png';
+import expansionImg from '../assets/Плата расширения.png';
+import batteryBlockImg from '../assets/Блок батарейного питания.png';
+import accumulatorImg from '../assets/Аккамуляторный блок.png';
+import m80Img from '../assets/устройство_конфигурирования_m80.png';
 
 export default function ProductsA2({ setActivePage }) {
   const [activeTab, setActiveTab] = useState('main');
   const [selectedComponent, setSelectedComponent] = useState(null);
   const componentsSectionRef = useRef(null);
-  const mainImg = null;
 
   const scrollToComponents = () => {
     setActiveTab('components');
@@ -32,7 +35,7 @@ export default function ProductsA2({ setActivePage }) {
       title: 'Плата процессора',
       desc: 'Основной вычислительный модуль автономного контроллера.',
       fullDesc: 'Плата процессора включает элементы управления работой контроллера, индикаторы работы, разъём подключения блока батарейного питания, разъёмы для SIM-карт, разъём подключения антенны SMA, разъём подключения устройства М100, батарею часов реального времени, элементы искрозащиты, а также цепи подключения датчиков температуры и давления, дискретных датчиков и внешнего интерфейса.',
-      img: null,
+      img: processorImg,
       chars: [
         { label: 'SIM-карты', value: '2' },
         { label: 'Разъём антенны', value: 'SMA' },
@@ -48,7 +51,7 @@ export default function ProductsA2({ setActivePage }) {
       title: 'Плата расширения',
       desc: 'Дополнительные измерительные каналы и переключатели режимов.',
       fullDesc: 'Плата расширения оснащена переключателями режимов работы универсальных каналов измерения, элементами искрозащиты, а также цепями подключения датчиков температуры и давления и дискретных датчиков.',
-      img: null,
+      img: expansionImg,
       chars: [
         { label: 'Универсальные каналы', value: 'Переключатели режимов работы' },
         { label: 'Искрозащита', value: 'Встроенные барьеры' },
@@ -63,7 +66,7 @@ export default function ProductsA2({ setActivePage }) {
       title: 'Блок батарейного питания',
       desc: 'Автономное питание контроллера от 6 элементов.',
       fullDesc: 'Блок батарейного питания обеспечивает автономную работу контроллера. Установка 6 батарей питания с параллельным соединением. Исключительно малый саморазряд при длительном сроке службы (менее 1% от номинальной ёмкости в течение одного года хранения). Высокая нагрузочная способность при импульсной нагрузке вследствие малого внутреннего сопротивления.',
-      img: null,
+      img: batteryBlockImg,
       chars: [
         { label: 'Количество элементов', value: '6' },
         { label: 'Соединение батарей', value: 'Параллельное' },
@@ -74,37 +77,39 @@ export default function ProductsA2({ setActivePage }) {
       ]
     },
     {
-      id: 'Проектное решение',
-      title: 'Проектное решение (корпус Exd)',
-      desc: 'Взрывозащищённое металлическое исполнение.',
-      fullDesc: 'Автономные контроллеры серии КУТ300-АК в соответствии с разработанным компанией проектным решением могут быть поставлены заказчику во взрывозащищённом корпусе типа металлическая взрывонепроницаемая оболочка Exd. Автономное питание осуществляется за счёт имеющегося в составе батарейного блока с 6-ю элементами питания.',
-      img: null,
+      id: 'Аккумуляторный блок',
+      title: 'Аккумуляторный блок',
+      desc: 'Литий-железо-фосфатный LiFePO4 аккумулятор 3,2 В.',
+      fullDesc: 'Аккумуляторный блок на базе литий-железо-фосфатного LiFePO4 аккумулятора 3,2 В. Исключительно малый саморазряд при длительном сроке службы (менее 2 % от номинальной ёмкости в течение одного года хранения). Высокая нагрузочная способность при импульсной нагрузке вследствие малого внутреннего сопротивления. Полностью отсутствует эффект памяти. Стоит на первом месте по безопасности среди всех типов батарей (термическая и химическая стабильность).',
+      img: accumulatorImg,
       chars: [
-        { label: 'Тип исполнения', value: 'Металлическая оболочка Exd' },
-        { label: 'Взрывозащита', value: '[Ex ib Gb] IIB X' },
-        { label: 'Нормативная база', value: 'ГОСТ 31610.0' },
-        { label: 'Питание', value: 'Батарейный блок (6 элементов)' },
-        { label: 'Суммарная ёмкость АКБ', value: '78 А·ч' },
+        { label: 'Тип аккумулятора', value: 'LiFePO4, 3,2 В' },
+        { label: 'Саморазряд', value: 'менее 2% в год' },
+        { label: 'Эффект памяти', value: 'Отсутствует' },
+        { label: 'Безопасность', value: 'Термическая и химическая стабильность' },
+        { label: 'Электролит', value: 'Негорючий' },
+        { label: 'Суммарная ёмкость', value: '80 А·ч' },
       ]
     },
     {
-      id: 'Сертификаты',
-      title: 'Свидетельства и сертификаты',
-      desc: 'Подтверждение соответствия и разрешительная документация.',
-      fullDesc: 'Контроллеры серии КУТ300-АК имеют полный комплект разрешительной документации, подтверждающей соответствие требованиям электромагнитной совместимости, метрологии, системы менеджмента качества, взрывозащиты и промышленной безопасности.',
-      img: null,
+      id: 'М80',
+      title: 'Устройство конфигурирования М80',
+      desc: 'Настройка и диагностика КУТ300-АК.',
+      fullDesc: 'Настройка и диагностика КУТ300-АК осуществляется с помощью устройства конфигурирования М80. М80 является универсальным и подходит ко всем изделиям производства ООО «НТК Профи-Т».',
+      img: m80Img,
       chars: [
-        { label: 'Декларация о соответствии', value: 'ТР ТС 020/2011' },
-        { label: 'Свидетельство об утверждении типа', value: 'Средства измерений' },
-        { label: 'Сертификат СМК', value: 'ГОСТ Р ИСО 9001-2015' },
-        { label: 'Сертификат взрывозащиты', value: 'Есть' },
-        { label: 'Сертификат СДС', value: 'ГАЗСЕРТ' },
+        { label: 'Напряжение питания', value: 'от 3,0 до 5,5 В' },
+        { label: 'Ток потребления (макс.)', value: 'не более 0,1 А' },
+        { label: 'Температурный диапазон', value: 'от минус 40 до плюс 50 °С' },
+        { label: 'Габаритные размеры', value: 'не более 150 × 90 × 25 мм' },
+        { label: 'Масса устройства', value: 'не более 200 г' },
+        { label: 'Степень защиты оболочки', value: 'IP40 (по ГОСТ 14254)' },
       ]
     },
   ];
 
   return (
-    <div style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: '#0f172a', fontFamily: 'sans-serif', backgroundColor: '#ffffff', minHeight: '100vh' }}>
+    <div style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: '#0f172a', fontFamily: 'sans-serif', backgroundColor: '#ffffff' }}>
       <div style={{ marginBottom: '30px', fontSize: '13px', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '4px' }}>
         <button onClick={() => setActivePage('main')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#7baaf7', font: 'inherit' }}>ГЛАВНАЯ</button>
         <span>/</span>
@@ -121,7 +126,7 @@ export default function ProductsA2({ setActivePage }) {
       </div>
 
       <div style={{ marginBottom: '25px' }}>
-        <button onClick={() => setActivePage('industrial-controllers')} style={{ padding: '12px 24px', backgroundColor: '#e2e8f0', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+        <button onClick={() => setActivePage('industrial-controllers')} style={{ padding: '12px 24px', backgroundColor: '#eff6ff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
           ← К списку контроллеров
         </button>
       </div>
@@ -134,7 +139,7 @@ export default function ProductsA2({ setActivePage }) {
         </div>
       )}
 
-      <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+      <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '16px', border: '1px solid #bfdbfe', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
         {(activeTab === 'main' || activeTab === 'components') && (
           <>
             {!selectedComponent ? (
@@ -145,7 +150,7 @@ export default function ProductsA2({ setActivePage }) {
                     <div style={{
                       aspectRatio: '1 / 1',
                       width: '100%',
-                      backgroundColor: '#e2e8f0',
+                      backgroundColor: '#eff6ff',
                       borderRadius: '8px',
                       display: 'flex',
                       alignItems: 'center',
@@ -169,7 +174,7 @@ export default function ProductsA2({ setActivePage }) {
                         Конструктивно контроллеры имеют моноблочное исполнение в виде печатной платы в защитном кожухе. Все измерительные каналы защищены встроенными барьерами искрозащиты. Маркировка взрывозащиты: [Ex ib Gb] IIB X по ГОСТ 31610.0.
                       </p>
                     </div>
-                    <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ backgroundColor: '#eff6ff', padding: '20px', borderRadius: '12px', border: '1px solid #bfdbfe' }}>
                       <h4 style={{ marginBottom: '15px', fontWeight: 'bold' }}>Технические характеристики</h4>
                       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                         <tbody>
@@ -212,27 +217,37 @@ export default function ProductsA2({ setActivePage }) {
                         onClick={() => setSelectedComponent(comp)}
                         style={{
                           textAlign: 'left',
-                          backgroundColor: '#f8fafc',
+                          backgroundColor: '#ffffff',
                           padding: '20px',
                           borderRadius: '12px',
-                          border: '1px solid #e2e8f0',
+                          border: '1px solid #bfdbfe',
                           cursor: 'pointer',
-                          transition: 'all 0.2s',
+                          transition: 'transform 0.2s, border-color 0.2s, box-shadow 0.2s',
                           display: 'flex',
                           flexDirection: 'column',
                           gap: '12px'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-3px)';
+                          e.currentTarget.style.borderColor = '#0284c7';
+                          e.currentTarget.style.boxShadow = '0 8px 24px rgba(2, 132, 199, 0.1)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.borderColor = '#bfdbfe';
+                          e.currentTarget.style.boxShadow = 'none';
                         }}
                       >
                         <div style={{
                           aspectRatio: '1 / 1',
                           width: '100%',
-                          backgroundColor: '#e2e8f0',
+                          backgroundColor: '#eff6ff',
                           borderRadius: '6px',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           color: '#64748b',
-                          border: '1px solid #cbd5e1',
+                          border: '1px solid #dbeafe',
                           boxSizing: 'border-box',
                           overflow: 'hidden'
                         }}>
@@ -254,7 +269,7 @@ export default function ProductsA2({ setActivePage }) {
                   <div style={{
                     aspectRatio: '1 / 1',
                     width: '100%',
-                    backgroundColor: '#e2e8f0',
+                    backgroundColor: '#eff6ff',
                     borderRadius: '8px',
                     display: 'flex',
                     alignItems: 'center',
@@ -270,7 +285,7 @@ export default function ProductsA2({ setActivePage }) {
                     <h4 style={{ marginBottom: '10px', fontWeight: 'bold' }}>Описание</h4>
                     <p style={{ lineHeight: '1.6', color: '#475569' }}>{selectedComponent.fullDesc}</p>
                   </div>
-                  <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ backgroundColor: '#eff6ff', padding: '20px', borderRadius: '12px', border: '1px solid #bfdbfe' }}>
                     <h4 style={{ marginBottom: '15px', fontWeight: 'bold' }}>Технические характеристики</h4>
                     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                       <tbody>

@@ -1,67 +1,78 @@
 import React from 'react';
+import akImg from '../assets/КУТ300-АК.png';
+import { colors, fonts } from '../theme';
 
 export default function AutonomousTelemetry({ setActivePage }) {
   return (
-    <div style={{ padding: '30px', maxWidth: '1200px', margin: '0 auto', color: '#0f172a', fontFamily: 'Arial, sans-serif' }}>
-      
-      {/* Хлебные крошки */}
-      <div style={{ fontSize: '14px', color: '#64748b', marginBottom: '15px' }}>
-        Главная / Продукция / <strong style={{ color: '#0f172a' }}>Автономные комплексы телеметрии</strong>
-      </div>
-
-      <h1 style={{ marginBottom: '30px', fontSize: '28px', color: '#0f172a' }}>Автономные комплексы телеметрии</h1>
-
-      {/* Карточки продукции */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
-        gap: '30px' 
-      }}>
+    <div style={{ backgroundColor: colors.pageBg, padding: '40px 0 80px', fontFamily: fonts.base }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', color: colors.text }}>
         
-        {/* КАРТОЧКА: КУТ300-АК */}
-        <div 
-          onClick={() => setActivePage('products-a2')}
-          style={{ 
-            backgroundColor: '#ffffff', 
-            borderRadius: '12px', 
-            overflow: 'hidden',
-            border: '1px solid #e2e8f0',
-            cursor: 'pointer',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-            transition: 'transform 0.2s, box-shadow 0.2s'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-5px)';
-            e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.05)';
-          }}
-        >
-          <div style={{ 
-            height: '180px', 
-            backgroundColor: '#f1f5f9', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center',
-            color: '#94a3b8',
-            fontSize: '15px',
-            borderBottom: '1px solid #e2e8f0'
-          }}>
-            [ Фото: КУТ300-АК ]
-          </div>
-          <div style={{ padding: '24px' }}>
-            <h3 style={{ margin: '0 0 10px 0', fontSize: '20px', color: '#0f172a' }}>
-              КУТ300-АК
-            </h3>
-            <p style={{ margin: 0, color: '#475569', fontSize: '14px', lineHeight: '1.5' }}>
-              Автономный контроллер для объектов без электроснабжения. 
-              Работа от батарей, поддержка GPRS/3G, взрывозащита.
-            </p>
-          </div>
+        <div style={{ fontSize: '13px', color: colors.textFaint, marginBottom: '30px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <button onClick={() => setActivePage('main')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: colors.lightBlue, font: 'inherit' }}>ГЛАВНАЯ</button>
+          <span>/</span>
+          <button onClick={() => setActivePage('products-catalog')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: colors.lightBlue, font: 'inherit' }}>ПРОДУКЦИЯ</button>
+          <span>/</span>
+          <span style={{ color: colors.text, fontWeight: '600' }}>АВТОНОМНЫЕ КОМПЛЕКСЫ ТЕЛЕМЕТРИИ</span>
         </div>
 
+        <h1 style={{ marginBottom: '30px', fontSize: '28px', color: colors.text }}>Автономные комплексы телеметрии</h1>
+
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
+          gap: '30px' 
+        }}>
+          
+          <button
+            type="button"
+            onClick={() => setActivePage('products-a2')}
+            style={{ 
+              backgroundColor: colors.white, 
+              borderRadius: '12px', 
+              overflow: 'hidden',
+              border: `1px solid ${colors.border}`,
+              cursor: 'pointer',
+              boxShadow: '0 4px 12px rgba(2, 132, 199, 0.06)',
+              transition: 'transform 0.2s, box-shadow 0.2s, border-color 0.2s',
+              textAlign: 'left',
+              font: 'inherit',
+              padding: 0,
+              width: '100%',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 10px 25px rgba(2, 132, 199, 0.12)';
+              e.currentTarget.style.borderColor = colors.primary;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(2, 132, 199, 0.06)';
+              e.currentTarget.style.borderColor = colors.border;
+            }}
+          >
+            <div style={{ 
+              aspectRatio: '1 / 1',
+              backgroundColor: colors.lightBlueBg, 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              borderBottom: `1px solid ${colors.border}`,
+              overflow: 'hidden',
+            }}>
+              <img src={akImg} alt="КУТ300-АК" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+            </div>
+            <div style={{ padding: '24px' }}>
+              <h3 style={{ margin: '0 0 10px 0', fontSize: '20px', color: colors.primary }}>
+                КУТ300-АК
+              </h3>
+              <p style={{ margin: 0, color: colors.textMuted, fontSize: '14px', lineHeight: '1.5' }}>
+                Автономный контроллер для объектов без электроснабжения. 
+                Работа от батарей, поддержка GPRS/3G, взрывозащита.
+              </p>
+            </div>
+          </button>
+
+        </div>
       </div>
     </div>
   );

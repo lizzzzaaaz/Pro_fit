@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-
-// import mainImg from '../assets/kut300-a42.png';
+import mainImg from '../assets/КУТ300-А42.png';
 
 const renderImage = (imgSrc, altText) => {
   if (typeof imgSrc === 'string' && (imgSrc.startsWith('/') || imgSrc.startsWith('data:image') || imgSrc.startsWith('blob:'))) {
@@ -14,10 +13,9 @@ const renderImage = (imgSrc, altText) => {
 
 export default function ProductsA3({ setActivePage }) {
   const [activeTab, setActiveTab] = useState('main');
-  const mainImg = null;
 
   return (
-    <div style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: '#0f172a', fontFamily: 'sans-serif', backgroundColor: '#ffffff', minHeight: '100vh' }}>
+    <div style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: '#0f172a', fontFamily: 'sans-serif', backgroundColor: '#ffffff' }}>
       <div style={{ marginBottom: '30px', fontSize: '13px', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '4px' }}>
         <button onClick={() => setActivePage('main')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#7baaf7', font: 'inherit' }}>ГЛАВНАЯ</button>
         <span>/</span>
@@ -29,7 +27,7 @@ export default function ProductsA3({ setActivePage }) {
       </div>
 
       <div style={{ marginBottom: '25px' }}>
-        <button onClick={() => setActivePage('industrial-controllers')} style={{ padding: '12px 24px', backgroundColor: '#e2e8f0', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+        <button onClick={() => setActivePage('industrial-controllers')} style={{ padding: '12px 24px', backgroundColor: '#eff6ff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
           ← К списку контроллеров
         </button>
       </div>
@@ -39,7 +37,7 @@ export default function ProductsA3({ setActivePage }) {
         <button onClick={() => setActiveTab('documents')} style={{ padding: '12px 20px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: activeTab === 'documents' ? '2px solid #0284c7' : 'none', fontWeight: activeTab === 'documents' ? 'bold' : 'normal', marginBottom: '-2px' }}>Документация</button>
       </div>
 
-      <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+      <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '16px', border: '1px solid #bfdbfe', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
         {activeTab === 'main' && (
           <div style={{ marginBottom: '40px' }}>
             <h2 style={{ fontSize: '24px', color: '#0284c7', marginBottom: '15px' }}>КУТ300-А42</h2>
@@ -47,7 +45,7 @@ export default function ProductsA3({ setActivePage }) {
               <div style={{
                 aspectRatio: '1 / 1',
                 width: '100%',
-                backgroundColor: '#e2e8f0',
+                backgroundColor: '#eff6ff',
                 borderRadius: '8px',
                 display: 'flex',
                 alignItems: 'center',
@@ -70,7 +68,7 @@ export default function ProductsA3({ setActivePage }) {
                   Изделие обеспечивает периодические измерение и контроль параметров ЭХЗ, архивирование данных, передачу информации и аварийных сообщений на пульт управления, получение данных с ИКП посредством УСИКПСТ, а также контроль состояния источника питания. Передача данных осуществляется по каналам сотовой связи стандарта GSM.
                 </p>
               </div>
-              <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+              <div style={{ backgroundColor: '#eff6ff', padding: '20px', borderRadius: '12px', border: '1px solid #bfdbfe' }}>
                 <h4 style={{ marginBottom: '15px', fontWeight: 'bold' }}>Технические характеристики</h4>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <tbody>

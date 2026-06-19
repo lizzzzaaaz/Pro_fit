@@ -155,7 +155,7 @@ export default function ProductsA1({ setActivePage }) {
   ];
 
   return (
-    <div style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: '#0f172a', fontFamily: 'sans-serif', backgroundColor: '#ffffff', minHeight: '100vh' }}>
+    <div style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: '#0f172a', fontFamily: 'sans-serif', backgroundColor: '#ffffff' }}>
       
       {/* Хлебные крошки */}
       <div style={{ marginBottom: '30px', fontSize: '13px', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -175,7 +175,7 @@ export default function ProductsA1({ setActivePage }) {
 
       {/* Кнопка назад */}
       <div style={{ marginBottom: '25px' }}>
-        <button onClick={() => setActivePage('industrial-controllers')} style={{ padding: '12px 24px', backgroundColor: '#e2e8f0', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+        <button onClick={() => setActivePage('industrial-controllers')} style={{ padding: '12px 24px', backgroundColor: '#eff6ff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
           ← К списку контроллеров
         </button>
       </div>
@@ -190,7 +190,7 @@ export default function ProductsA1({ setActivePage }) {
       )}
 
       {/* Контент */}
-      <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+      <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '16px', border: '1px solid #bfdbfe', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
         
         {(activeTab === 'main' || activeTab === 'modules') && (
           <>
@@ -203,7 +203,7 @@ export default function ProductsA1({ setActivePage }) {
                     <div style={{
                       aspectRatio: '1 / 1',
                       width: '100%',
-                      backgroundColor: '#e2e8f0',
+                      backgroundColor: '#eff6ff',
                       borderRadius: '8px',
                       display: 'flex',
                       alignItems: 'center',
@@ -225,7 +225,7 @@ export default function ProductsA1({ setActivePage }) {
                         Модуль имеет возможность резервирования оператора сотовой связи.
                       </p>
                     </div>
-                    <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ backgroundColor: '#eff6ff', padding: '20px', borderRadius: '12px', border: '1px solid #bfdbfe' }}>
                       <h4 style={{ marginBottom: '15px', fontWeight: 'bold' }}>Технические характеристики</h4>
                       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                         <tbody>
@@ -261,27 +261,37 @@ export default function ProductsA1({ setActivePage }) {
                         onClick={() => setSelectedComponent(comp)}
                         style={{ 
                           textAlign: 'left', 
-                          backgroundColor: '#f8fafc', 
+                          backgroundColor: '#ffffff', 
                           padding: '20px', 
                           borderRadius: '12px', 
-                          border: '1px solid #e2e8f0', 
+                          border: '1px solid #bfdbfe', 
                           cursor: 'pointer', 
-                          transition: 'all 0.2s',
+                          transition: 'transform 0.2s, border-color 0.2s, box-shadow 0.2s',
                           display: 'flex',
                           flexDirection: 'column',
                           gap: '12px'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-3px)';
+                          e.currentTarget.style.borderColor = '#0284c7';
+                          e.currentTarget.style.boxShadow = '0 8px 24px rgba(2, 132, 199, 0.1)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.borderColor = '#bfdbfe';
+                          e.currentTarget.style.boxShadow = 'none';
                         }}
                       >
                         <div style={{ 
                           aspectRatio: '1 / 1',
                           width: '100%',
-                          backgroundColor: '#e2e8f0', 
+                          backgroundColor: '#eff6ff', 
                           borderRadius: '6px', 
                           display: 'flex', 
                           alignItems: 'center', 
                           justifyContent: 'center', 
                           color: '#64748b', 
-                          border: '1px solid #cbd5e1',
+                          border: '1px solid #dbeafe',
                           boxSizing: 'border-box',
                           overflow: 'hidden'
                         }}>
@@ -304,7 +314,7 @@ export default function ProductsA1({ setActivePage }) {
                   <div style={{ 
                     aspectRatio: '1 / 1',
                     width: '100%',
-                    backgroundColor: '#e2e8f0', 
+                    backgroundColor: '#eff6ff', 
                     borderRadius: '8px', 
                     display: 'flex', 
                     alignItems: 'center', 
@@ -320,7 +330,7 @@ export default function ProductsA1({ setActivePage }) {
                     <h4 style={{ marginBottom: '10px', fontWeight: 'bold' }}>Описание модуля</h4>
                     <p style={{ lineHeight: '1.6', color: '#475569' }}>{selectedComponent.fullDesc}</p>
                   </div>
-                  <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ backgroundColor: '#eff6ff', padding: '20px', borderRadius: '12px', border: '1px solid #bfdbfe' }}>
                     <h4 style={{ marginBottom: '15px', fontWeight: 'bold' }}>Технические характеристики</h4>
                     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                       <tbody>

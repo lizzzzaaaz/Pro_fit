@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import MainPage from './pages/MainPage';
 import Services from './pages/Services';
 import Contacts from './pages/Contacts';
@@ -24,9 +25,9 @@ function MainApp() {
   const [activeServiceId, setActiveServiceId] = useState(null);
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#06080f' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column' }}>
       <Header activePage={currentPage} setActivePage={setCurrentPage} />
-      <main>
+      <main style={{ flex: 1 }}>
         
         {/* СТРАНИЦЫ КАТАЛОГА ПРОДУКЦИИ */}
         
@@ -95,12 +96,13 @@ function MainApp() {
 
         {/* Заглушки для страниц в разработке */}
         {['support', 'about'].includes(currentPage) && (
-          <div style={{ padding: '80px 40px', color: '#fff', fontFamily: 'Arial, sans-serif' }}>
+          <div style={{ padding: '80px 40px', color: '#0f172a', fontFamily: 'Arial, sans-serif', backgroundColor: '#ffffff' }}>
             <h1>Страница "{currentPage}" в разработке</h1>
           </div>
         )}
 
       </main>
+      <Footer setActivePage={setCurrentPage} />
     </div>
   );
 }

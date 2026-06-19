@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { colors } from '../theme';
 
 import imgMaintenance from '../assets/service1.jpg';
 import imgConstruction from '../assets/service2.jpg';
@@ -29,7 +30,7 @@ function ServiceCard({ service, index, onClick, isSmall = false }) {
         transition: 'transform 0.4s ease, box-shadow 0.4s ease',
         transform: hovered ? 'translateY(-10px)' : 'translateY(0)',
         boxShadow: hovered ? '0 20px 40px rgba(0,0,0,0.3)' : '0 10px 20px rgba(0,0,0,0.1)',
-        backgroundColor: '#1e293b'
+        backgroundColor: colors.darkBlue
       }}
     >
       {/* Фоновое изображение */}
@@ -120,8 +121,8 @@ function ServiceCard({ service, index, onClick, isSmall = false }) {
         {/* Кнопка "Перейти" */}
         <div style={{
           marginTop: '4px',
-          backgroundColor: hovered ? '#ffffff' : '#7baaf7', 
-          color: hovered ? '#1e293b' : '#ffffff',
+          backgroundColor: hovered ? colors.white : colors.lightBlue, 
+          color: hovered ? colors.darkBlue : colors.white,
           padding: isSmall ? '6px 14px' : '8px 20px',
           borderRadius: '10px',
           fontSize: isSmall ? '11px' : '13px',
