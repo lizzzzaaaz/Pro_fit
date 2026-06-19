@@ -1,5 +1,6 @@
 import React from 'react';
 import akImg from '../assets/КУТ300-АК.png';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { colors, fonts } from '../theme';
 
 export default function AutonomousTelemetry({ setActivePage }) {
@@ -7,13 +8,14 @@ export default function AutonomousTelemetry({ setActivePage }) {
     <div style={{ backgroundColor: colors.pageBg, padding: '40px 0 80px', fontFamily: fonts.base }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', color: colors.text }}>
         
-        <div style={{ fontSize: '13px', color: colors.textFaint, marginBottom: '30px', display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <button onClick={() => setActivePage('main')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: colors.lightBlue, font: 'inherit' }}>ГЛАВНАЯ</button>
-          <span>/</span>
-          <button onClick={() => setActivePage('products-catalog')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: colors.lightBlue, font: 'inherit' }}>ПРОДУКЦИЯ</button>
-          <span>/</span>
-          <span style={{ color: colors.text, fontWeight: '600' }}>АВТОНОМНЫЕ КОМПЛЕКСЫ ТЕЛЕМЕТРИИ</span>
-        </div>
+        <Breadcrumbs
+          setActivePage={setActivePage}
+          items={[
+            { label: 'ГЛАВНАЯ', page: 'main' },
+            { label: 'ПРОДУКЦИЯ', page: 'products-catalog' },
+            { label: 'АВТОНОМНЫЕ КОМПЛЕКСЫ ТЕЛЕМЕТРИИ' },
+          ]}
+        />
 
         <h1 style={{ marginBottom: '30px', fontSize: '28px', color: colors.text }}>Автономные комплексы телеметрии</h1>
 

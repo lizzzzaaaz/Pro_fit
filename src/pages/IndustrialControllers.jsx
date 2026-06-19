@@ -2,6 +2,7 @@ import React from 'react';
 import mainImg from '../assets/kut300-pk.png';
 import a42Img from '../assets/КУТ300-А42.png';
 import akImg from '../assets/КУТ300-АК.png';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { colors, fonts } from '../theme';
 
 const controllers = [
@@ -33,32 +34,14 @@ export default function IndustrialControllers({ setActivePage }) {
       fontFamily: fonts.base,
     }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
-        <div style={{
-          marginBottom: '30px',
-          fontSize: '13px',
-          letterSpacing: '0.5px',
-          fontWeight: '500',
-          color: colors.textFaint,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px'
-        }}>
-          <button
-            onClick={() => setActivePage('main')}
-            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: colors.lightBlue, font: 'inherit' }}
-          >
-            ГЛАВНАЯ
-          </button>
-          <span style={{ margin: '0 4px', color: colors.borderNeutral }}>/</span>
-          <button
-            onClick={() => setActivePage('products-catalog')}
-            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: colors.lightBlue, font: 'inherit' }}
-          >
-            ПРОДУКЦИЯ
-          </button>
-          <span style={{ margin: '0 4px', color: colors.borderNeutral }}>/</span>
-          <span style={{ color: colors.text, fontWeight: '600' }}>ПРОМЫШЛЕННЫЕ КОНТРОЛЛЕРЫ</span>
-        </div>
+        <Breadcrumbs
+          setActivePage={setActivePage}
+          items={[
+            { label: 'ГЛАВНАЯ', page: 'main' },
+            { label: 'ПРОДУКЦИЯ', page: 'products-catalog' },
+            { label: 'ПРОМЫШЛЕННЫЕ КОНТРОЛЛЕРЫ' },
+          ]}
+        />
 
         <h1 style={{ margin: '0 0 30px 0', fontSize: '28px', color: colors.text }}>Промышленные контроллеры</h1>
 

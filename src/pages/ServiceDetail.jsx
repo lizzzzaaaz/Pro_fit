@@ -1,5 +1,6 @@
 import React from 'react';
-import ServiceCard from '../components/ServiceCard'; 
+import ServiceCard from '../components/ServiceCard';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { services } from './servicesData';
 import { colors, fonts } from '../theme';
 
@@ -13,24 +14,16 @@ function ServiceDetail({ service, onServiceClick, onBack, setActivePage }) {
     <div style={{ backgroundColor: colors.pageBg, fontFamily: fonts.base }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 40px 80px 40px' }}>
         
-        {/* Хлебные крошки */}
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
-          marginBottom: '30px',
-          fontSize: '13px',
-          letterSpacing: '0.5px',
-          fontWeight: '500'
-        }}>
-          <div style={{ color: colors.textFaint }}>
-            <span onClick={() => setActivePage('main')} style={{ cursor: 'pointer', color: colors.lightBlue }}>ГЛАВНАЯ</span>
-            <span style={{ margin: '0 8px', color: colors.borderNeutral }}>/</span>
-            <span onClick={onBack} style={{ cursor: 'pointer', color: colors.lightBlue }}>УСЛУГИ</span>
-            <span style={{ margin: '0 8px', color: colors.borderNeutral }}>/</span>
-            <span style={{ color: colors.text, fontWeight: '600', textTransform: 'uppercase' }}>{service.shortTitle || service.title}</span>
-          </div>
-
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', gap: '16px', flexWrap: 'wrap' }}>
+          <Breadcrumbs
+            setActivePage={setActivePage}
+            style={{ marginBottom: 0 }}
+            items={[
+              { label: 'ГЛАВНАЯ', page: 'main' },
+              { label: 'УСЛУГИ', onClick: onBack },
+              { label: (service.shortTitle || service.title).toUpperCase() },
+            ]}
+          />
           <button 
             onClick={onBack}
             style={{

@@ -1,5 +1,6 @@
 import React from 'react';
-import ServiceCard from '../components/ServiceCard'; 
+import ServiceCard from '../components/ServiceCard';
+import Breadcrumbs from '../components/Breadcrumbs';
 import { services } from './servicesData';
 import { colors, fonts } from '../theme';
 
@@ -8,17 +9,13 @@ function Services({ onServiceClick, setActivePage }) {
     <div style={{ backgroundColor: colors.pageBg, padding: '40px 0 80px 0', fontFamily: fonts.base }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
         
-        <div style={{ 
-          marginBottom: '30px',
-          fontSize: '13px',
-          letterSpacing: '0.5px',
-          fontWeight: '500',
-          color: colors.textFaint
-        }}>
-          <span onClick={() => setActivePage('main')} style={{ cursor: 'pointer', color: colors.lightBlue }}>ГЛАВНАЯ</span>
-          <span style={{ margin: '0 8px', color: colors.borderNeutral }}>/</span>
-          <span style={{ color: colors.text, fontWeight: '600' }}>УСЛУГИ</span>
-        </div>
+        <Breadcrumbs
+          setActivePage={setActivePage}
+          items={[
+            { label: 'ГЛАВНАЯ', page: 'main' },
+            { label: 'УСЛУГИ' },
+          ]}
+        />
 
         <hr style={{ border: 'none', borderTop: `1px solid ${colors.border}`, marginBottom: '40px' }} />
 

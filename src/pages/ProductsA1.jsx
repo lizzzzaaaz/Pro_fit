@@ -1,4 +1,6 @@
 import React, { useState, useRef } from 'react';
+import Breadcrumbs from '../components/Breadcrumbs';
+import { colors, fonts } from '../theme';
 import mainImg from '../assets/kut300-pk.png'; 
 import p11Img from '../assets/kut300-p11.png';
 import p12Img from '../assets/kut300-p12.png';
@@ -8,9 +10,28 @@ import p51Img from '../assets/kut300-p51.png';
 import p52Img from '../assets/kut300-p52.png';
 import b03Img from '../assets/kut300-b03.png';
 import m80Img from '../assets/m80.png';
+import certSiPdf from '../assets/Сертификат СИ КУТ300-ПК.pdf';
+import trTsPdf from '../assets/ТР ТС 004 и 020 на КУТ300-ПК.pdf';
+import DocumentList from '../components/DocumentList';
+
+const productDocuments = [
+  {
+    title: 'Декларация ТР ТС 004 и 020 на КУТ300-ПК',
+    size: '320.3 KB',
+    href: trTsPdf,
+    fileName: 'ТР ТС 004 и 020 на КУТ300-ПК.pdf',
+  },
+  {
+    title: 'Свидетельство об утверждении типа средств измерений на КУТ300-ПК',
+    size: '315.4 KB',
+    href: certSiPdf,
+    fileName: 'Сертификат СИ КУТ300-ПК.pdf',
+  },
+];
 
 export default function ProductsA1({ setActivePage }) {
   const [activeTab, setActiveTab] = useState('main');
+  const [moduleTab, setModuleTab] = useState('main');
   const [selectedComponent, setSelectedComponent] = useState(null);
   const modulesSectionRef = useRef(null);
 
@@ -154,43 +175,59 @@ export default function ProductsA1({ setActivePage }) {
     }
   ];
 
+  const openModule = (comp) => {
+    setSelectedComponent(comp);
+    setModuleTab('main');
+  };
+
+  const tabButtonStyle = (isActive) => ({
+    padding: '12px 20px',
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    borderBottom: isActive ? `2px solid ${colors.primary}` : 'none',
+    fontWeight: isActive ? 'bold' : 'normal',
+    marginBottom: '-2px',
+    color: isActive ? colors.darkBlue : colors.textMuted,
+    fontFamily: fonts.base,
+  });
+
   return (
-    <div style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: '#0f172a', fontFamily: 'sans-serif', backgroundColor: '#ffffff' }}>
+    <div style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: colors.text, fontFamily: fonts.base, backgroundColor: colors.pageBg }}>
       
-      {/* Хлебные крошки */}
-      <div style={{ marginBottom: '30px', fontSize: '13px', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '4px' }}>
-        <button onClick={() => setActivePage('main')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#7baaf7', font: 'inherit' }}>ГЛАВНАЯ</button>
-        <span>/</span>
-        <button onClick={() => setActivePage('products-catalog')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#7baaf7', font: 'inherit' }}>ПРОДУКЦИЯ</button>
-        <span>/</span>
-        <button onClick={() => setActivePage('industrial-controllers')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#7baaf7', font: 'inherit' }}>ПРОМЫШЛЕННЫЕ КОНТРОЛЛЕРЫ</button>
-        <span>/</span>
-        <button 
-          onClick={() => { setActiveTab('main'); setSelectedComponent(null); }} 
-          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit', color: activeTab === 'main' && !selectedComponent ? '#334155' : '#7baaf7', fontWeight: '600' }}
-        >
-          КУТ300-ПК
-        </button>
-      </div>
+      <Breadcrumbs
+        setActivePage={setActivePage}
+        items={[
+          { label: 'ГЛАВНАЯ', page: 'main' },
+          { label: 'ПРОДУКЦИЯ', page: 'products-catalog' },
+          { label: 'ПРОМЫШЛЕННЫЕ КОНТРОЛЛЕРЫ', page: 'industrial-controllers' },
+          { label: 'КУТ300-ПК' },
+        ]}
+      />
 
       {/* Кнопка назад */}
       <div style={{ marginBottom: '25px' }}>
-        <button onClick={() => setActivePage('industrial-controllers')} style={{ padding: '12px 24px', backgroundColor: '#eff6ff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+        <button onClick={() => setActivePage('industrial-controllers')} style={{ padding: '12px 24px', backgroundColor: '#f5f5f5', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
           ← К списку контроллеров
         </button>
       </div>
 
       {/* Вкладки */}
-      {!selectedComponent && (
-        <div style={{ display: 'flex', gap: '10px', borderBottom: '2px solid #e2e8f0', marginBottom: '30px' }}>
-          <button onClick={() => setActiveTab('main')} style={{ padding: '12px 20px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: activeTab === 'main' ? '2px solid #0284c7' : 'none', fontWeight: activeTab === 'main' ? 'bold' : 'normal', marginBottom: '-2px' }}>Главное</button>
-          <button onClick={() => setActiveTab('documents')} style={{ padding: '12px 20px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: activeTab === 'documents' ? '2px solid #0284c7' : 'none', fontWeight: activeTab === 'documents' ? 'bold' : 'normal', marginBottom: '-2px' }}>Документация</button>
-          <button onClick={scrollToModules} style={{ padding: '12px 20px', background: 'none', border: 'none', cursor: 'pointer', borderBottom: activeTab === 'modules' ? '2px solid #0284c7' : 'none', fontWeight: activeTab === 'modules' ? 'bold' : 'normal', marginBottom: '-2px' }}>Модули расширения</button>
+      {!selectedComponent ? (
+        <div style={{ display: 'flex', gap: '10px', borderBottom: `2px solid ${colors.borderNeutral}`, marginBottom: '30px' }}>
+          <button onClick={() => setActiveTab('main')} style={tabButtonStyle(activeTab === 'main')}>Главное</button>
+          <button onClick={() => setActiveTab('documents')} style={tabButtonStyle(activeTab === 'documents')}>Документация</button>
+          <button onClick={scrollToModules} style={tabButtonStyle(activeTab === 'modules')}>Модули расширения</button>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', gap: '10px', borderBottom: `2px solid ${colors.borderNeutral}`, marginBottom: '30px' }}>
+          <button onClick={() => setModuleTab('main')} style={tabButtonStyle(moduleTab === 'main')}>Главная</button>
+          <button onClick={() => setModuleTab('documents')} style={tabButtonStyle(moduleTab === 'documents')}>Документация</button>
         </div>
       )}
 
       {/* Контент */}
-      <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '16px', border: '1px solid #bfdbfe', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+      <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '16px', border: '1px solid #e5e7eb', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
         
         {(activeTab === 'main' || activeTab === 'modules') && (
           <>
@@ -198,12 +235,12 @@ export default function ProductsA1({ setActivePage }) {
               <div>
                 {/* Карточка прибора КУТ300-ПК */}
                 <div style={{ marginBottom: '40px' }}>
-                  <h2 style={{ fontSize: '24px', color: '#0284c7', marginBottom: '15px' }}>КУТ300-ПК</h2>
+                  <h2 style={{ fontSize: '24px', color: '#c9a227', marginBottom: '15px' }}>КУТ300-ПК</h2>
                   <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '30px', marginBottom: '30px' }}>
                     <div style={{
                       aspectRatio: '1 / 1',
                       width: '100%',
-                      backgroundColor: '#eff6ff',
+                      backgroundColor: '#f5f5f5',
                       borderRadius: '8px',
                       display: 'flex',
                       alignItems: 'center',
@@ -217,7 +254,7 @@ export default function ProductsA1({ setActivePage }) {
                     </div>
                     <div>
                       <h4 style={{ marginBottom: '10px', fontWeight: 'bold' }}>Описание</h4>
-                      <p style={{ color: '#0284c7', fontWeight: '600', margin: '0 0 10px 0' }}>Контроллер телеметрический универсальный</p>
+                      <p style={{ color: '#c9a227', fontWeight: '600', margin: '0 0 10px 0' }}>Контроллер телеметрический универсальный</p>
                       <p style={{ lineHeight: '1.6', color: '#475569', margin: 0 }}>
                         Модуль применяется для сбора, контроля, управления, хранения и передачи данных на диспетчерский пункт по каналам связи GSM.
                         Модуль используется в системах телемеханизации узлов учёта газа с подключением многофункциональных устройств (корректоров газа, вычислителей, газоанализаторов и т.д.).
@@ -225,7 +262,7 @@ export default function ProductsA1({ setActivePage }) {
                         Модуль имеет возможность резервирования оператора сотовой связи.
                       </p>
                     </div>
-                    <div style={{ backgroundColor: '#eff6ff', padding: '20px', borderRadius: '12px', border: '1px solid #bfdbfe' }}>
+                    <div style={{ backgroundColor: '#f5f5f5', padding: '20px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
                       <h4 style={{ marginBottom: '15px', fontWeight: 'bold' }}>Технические характеристики</h4>
                       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                         <tbody>
@@ -258,13 +295,13 @@ export default function ProductsA1({ setActivePage }) {
                     {componentsData.map((comp) => (
                       <button 
                         key={comp.id} 
-                        onClick={() => setSelectedComponent(comp)}
+                        onClick={() => openModule(comp)}
                         style={{ 
                           textAlign: 'left', 
                           backgroundColor: '#ffffff', 
                           padding: '20px', 
                           borderRadius: '12px', 
-                          border: '1px solid #bfdbfe', 
+                          border: '1px solid #e5e7eb', 
                           cursor: 'pointer', 
                           transition: 'transform 0.2s, border-color 0.2s, box-shadow 0.2s',
                           display: 'flex',
@@ -273,32 +310,32 @@ export default function ProductsA1({ setActivePage }) {
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'translateY(-3px)';
-                          e.currentTarget.style.borderColor = '#0284c7';
-                          e.currentTarget.style.boxShadow = '0 8px 24px rgba(2, 132, 199, 0.1)';
+                          e.currentTarget.style.borderColor = '#c9a227';
+                          e.currentTarget.style.boxShadow = '0 8px 24px rgba(201, 162, 39, 0.1)';
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.borderColor = '#bfdbfe';
+                          e.currentTarget.style.borderColor = '#e5e7eb';
                           e.currentTarget.style.boxShadow = 'none';
                         }}
                       >
                         <div style={{ 
                           aspectRatio: '1 / 1',
                           width: '100%',
-                          backgroundColor: '#eff6ff', 
+                          backgroundColor: '#f5f5f5', 
                           borderRadius: '6px', 
                           display: 'flex', 
                           alignItems: 'center', 
                           justifyContent: 'center', 
                           color: '#64748b', 
-                          border: '1px solid #dbeafe',
+                          border: '1px solid #f3f4f6',
                           boxSizing: 'border-box',
                           overflow: 'hidden'
                         }}>
                           {renderImage(comp.img, comp.title)}
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' }}>
-                          <h3 style={{ color: '#0284c7', fontSize: '16px', margin: 0, fontWeight: 'bold' }}>{comp.id}</h3>
+                          <h3 style={{ color: '#c9a227', fontSize: '16px', margin: 0, fontWeight: 'bold' }}>{comp.id}</h3>
                           <p style={{ fontSize: '12px', color: '#475569', margin: 0, lineHeight: '1.4' }}>{comp.desc}</p>
                         </div>
                       </button>
@@ -306,15 +343,15 @@ export default function ProductsA1({ setActivePage }) {
                   </div>
                 </div>
               </div>
-            ) : (
+            ) : moduleTab === 'main' ? (
               /* ДЕТАЛЬНАЯ КАРТОЧКА ВЫБРАННОГО МОДУЛЯ */
               <div>
-                <h2 style={{ fontSize: '24px', color: '#0284c7', marginBottom: '15px' }}>{selectedComponent.title}</h2>
+                <h2 style={{ fontSize: '24px', color: colors.primary, marginBottom: '15px' }}>{selectedComponent.title}</h2>
                 <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '30px', marginBottom: '30px' }}>
                   <div style={{ 
                     aspectRatio: '1 / 1',
                     width: '100%',
-                    backgroundColor: '#eff6ff', 
+                    backgroundColor: '#f5f5f5', 
                     borderRadius: '8px', 
                     display: 'flex', 
                     alignItems: 'center', 
@@ -330,7 +367,7 @@ export default function ProductsA1({ setActivePage }) {
                     <h4 style={{ marginBottom: '10px', fontWeight: 'bold' }}>Описание модуля</h4>
                     <p style={{ lineHeight: '1.6', color: '#475569' }}>{selectedComponent.fullDesc}</p>
                   </div>
-                  <div style={{ backgroundColor: '#eff6ff', padding: '20px', borderRadius: '12px', border: '1px solid #bfdbfe' }}>
+                  <div style={{ backgroundColor: '#f5f5f5', padding: '20px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
                     <h4 style={{ marginBottom: '15px', fontWeight: 'bold' }}>Технические характеристики</h4>
                     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                       <tbody>
@@ -344,7 +381,17 @@ export default function ProductsA1({ setActivePage }) {
                     </table>
                   </div>
                 </div>
-                <button onClick={() => setSelectedComponent(null)} style={{ padding: '10px 20px', backgroundColor: '#0284c7', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
+                <button onClick={() => { setSelectedComponent(null); setModuleTab('main'); }} style={{ padding: '10px 20px', backgroundColor: colors.primary, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
+                  ← Назад к модулям
+                </button>
+              </div>
+            ) : (
+              <div>
+                <h2 style={{ fontSize: '24px', color: colors.primary, marginBottom: '15px' }}>Документация — {selectedComponent.id}</h2>
+                <p style={{ color: colors.textMuted, lineHeight: '1.6' }}>
+                  Технический паспорт, руководство по эксплуатации и сертификаты для модуля {selectedComponent.id} появятся здесь в формате PDF.
+                </p>
+                <button onClick={() => { setSelectedComponent(null); setModuleTab('main'); }} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: colors.primary, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
                   ← Назад к модулям
                 </button>
               </div>
@@ -354,8 +401,11 @@ export default function ProductsA1({ setActivePage }) {
 
         {activeTab === 'documents' && (
           <div>
-            <h2>Документация</h2>
-            <p>Технические паспорта и сертификаты в формате PDF появятся здесь.</p>
+            <h2 style={{ fontSize: '24px', color: colors.primary, margin: '0 0 8px 0' }}>Документация</h2>
+            <p style={{ color: colors.textMuted, lineHeight: '1.6', margin: '0 0 24px 0' }}>
+              Сертификаты и декларации соответствия для КУТ300-ПК.
+            </p>
+            <DocumentList items={productDocuments} />
           </div>
         )}
       </div>

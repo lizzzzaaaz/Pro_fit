@@ -1,4 +1,3 @@
-import React from 'react';
 import { colors, fonts } from '../theme';
 
 function Footer({ setActivePage }) {
@@ -29,7 +28,7 @@ function Footer({ setActivePage }) {
         gap: '40px',
       }}>
         <div>
-          <div style={{ fontSize: '24px', fontWeight: '800', marginBottom: '12px' }}>Pro_fit</div>
+          <div style={{ fontSize: '22px', fontWeight: '800', marginBottom: '12px', color: colors.lightBlue }}>Профи-Т</div>
           <p style={{ margin: 0, color: 'rgba(255,255,255,0.75)', fontSize: '14px', lineHeight: '1.6' }}>
             ООО «Про_фит Разработки» — проектирование, разработка и интеграция программно-аппаратных комплексов для автоматизации и телеметрии.
           </p>

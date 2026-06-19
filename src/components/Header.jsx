@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import emblemImg from '../assets/эмблема.png';
 import { colors, fonts } from '../theme';
 
 const productLinks = [
@@ -34,9 +35,9 @@ function Header({ activePage, setActivePage }) {
     fontSize: '14px',
     fontWeight: isActive ? '600' : '500',
     letterSpacing: '0.02em',
-    color: isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.82)',
+    color: isActive ? colors.darkBlue : colors.textMuted,
     padding: '10px 4px',
-    borderBottom: isActive ? `2px solid ${colors.lightBlue}` : '2px solid transparent',
+    borderBottom: isActive ? `2px solid ${colors.primary}` : '2px solid transparent',
     transition: 'color 0.2s ease, border-color 0.2s ease',
     whiteSpace: 'nowrap',
   });
@@ -44,9 +45,9 @@ function Header({ activePage, setActivePage }) {
   return (
     <header style={{
       fontFamily: fonts.base,
-      backgroundColor: colors.darkBlue,
-      color: '#ffffff',
-      boxShadow: '0 4px 20px rgba(15, 39, 68, 0.2)',
+      backgroundColor: colors.white,
+      color: colors.text,
+      boxShadow: '0 2px 16px rgba(92, 83, 68, 0.08)',
       borderBottom: `3px solid ${colors.primary}`,
       position: 'relative',
       zIndex: 1000,
@@ -54,7 +55,7 @@ function Header({ activePage, setActivePage }) {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '16px 40px',
+        padding: '12px 40px',
         display: 'grid',
         gridTemplateColumns: '1fr auto 1fr',
         alignItems: 'center',
@@ -69,14 +70,15 @@ function Header({ activePage, setActivePage }) {
             border: 'none',
             padding: 0,
             cursor: 'pointer',
-            fontFamily: fonts.base,
-            fontSize: '24px',
-            fontWeight: '800',
-            letterSpacing: '-0.03em',
-            color: '#ffffff',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
-          Pro<span style={{ color: colors.lightBlue }}>_fit</span>
+          <img
+            src={emblemImg}
+            alt="Профи-Т"
+            style={{ height: '52px', width: 'auto', display: 'block' }}
+          />
         </button>
 
         <nav style={{
@@ -99,9 +101,9 @@ function Header({ activePage, setActivePage }) {
                   <span
                     onClick={() => setActivePage(item.id)}
                     style={navLinkStyle(isActive || showDropdown)}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = '#ffffff'; }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = colors.darkBlue; }}
                     onMouseLeave={(e) => {
-                      if (!isActive && !showDropdown) e.currentTarget.style.color = 'rgba(255, 255, 255, 0.82)';
+                      if (!isActive && !showDropdown) e.currentTarget.style.color = colors.textMuted;
                     }}
                   >
                     {item.label}
@@ -111,7 +113,7 @@ function Header({ activePage, setActivePage }) {
                       fontSize: '10px',
                       transform: showDropdown ? 'rotate(180deg)' : 'rotate(0deg)',
                       transition: 'transform 0.2s ease',
-                      opacity: 0.85,
+                      opacity: 0.7,
                     }}>
                       ▾
                     </span>
@@ -123,50 +125,90 @@ function Header({ activePage, setActivePage }) {
                       top: '100%',
                       left: '50%',
                       transform: 'translateX(-50%)',
-                      paddingTop: '10px',
-                      minWidth: '300px',
+                      paddingTop: '12px',
+                      minWidth: '320px',
                       zIndex: 1001,
                     }}>
                       <div style={{
-                        backgroundColor: colors.darkBlue,
-                        border: `1px solid rgba(123, 170, 247, 0.35)`,
-                        borderTop: `3px solid ${colors.primary}`,
-                        borderRadius: '0 0 12px 12px',
-                        boxShadow: '0 12px 32px rgba(0, 0, 0, 0.25)',
+                        backgroundColor: colors.white,
+                        border: `1px solid ${colors.border}`,
+                        borderRadius: '10px',
+                        boxShadow: '0 10px 32px rgba(74, 67, 56, 0.12)',
                         overflow: 'hidden',
                       }}>
-                        {productLinks.map(({ page, label }, index) => (
-                          <button
-                            key={page}
-                            type="button"
-                            onClick={() => setActivePage(page)}
-                            style={{
-                              display: 'block',
-                              width: '100%',
-                              textAlign: 'left',
-                              background: activePage === page ? 'rgba(2, 132, 199, 0.22)' : 'transparent',
-                              border: 'none',
-                              borderBottom: index < productLinks.length - 1 ? '1px solid rgba(255, 255, 255, 0.08)' : 'none',
-                              padding: '14px 20px',
-                              cursor: 'pointer',
-                              fontFamily: fonts.base,
-                              fontSize: '14px',
-                              fontWeight: activePage === page ? '600' : '500',
-                              color: activePage === page ? colors.lightBlue : 'rgba(255, 255, 255, 0.9)',
-                              transition: 'background 0.2s ease, color 0.2s ease',
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.backgroundColor = 'rgba(123, 170, 247, 0.18)';
-                              e.currentTarget.style.color = '#ffffff';
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.backgroundColor = activePage === page ? 'rgba(2, 132, 199, 0.22)' : 'transparent';
-                              e.currentTarget.style.color = activePage === page ? colors.lightBlue : 'rgba(255, 255, 255, 0.9)';
-                            }}
-                          >
-                            {label}
-                          </button>
-                        ))}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActivePage('products-catalog');
+                            setShowDropdown(false);
+                          }}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                            textAlign: 'left',
+                            background: activePage === 'products-catalog' ? colors.lightBlueBg : colors.white,
+                            border: 'none',
+                            borderBottom: `1px solid ${colors.border}`,
+                            padding: '14px 18px',
+                            cursor: 'pointer',
+                            fontFamily: fonts.base,
+                            fontSize: '13px',
+                            fontWeight: '700',
+                            color: colors.darkBlue,
+                            letterSpacing: '0.02em',
+                          }}
+                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = colors.lightBlueBg; }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = activePage === 'products-catalog' ? colors.lightBlueBg : colors.white;
+                          }}
+                        >
+                          <span>Все направления</span>
+                          <span style={{ fontSize: '12px', color: colors.primary, fontWeight: '600' }}>Каталог</span>
+                        </button>
+
+                        {productLinks.map(({ page, label }) => {
+                          const isItemActive = activePage === page;
+                          return (
+                            <button
+                              key={page}
+                              type="button"
+                              onClick={() => {
+                                setActivePage(page);
+                                setShowDropdown(false);
+                              }}
+                              style={{
+                                display: 'block',
+                                width: '100%',
+                                textAlign: 'left',
+                                background: isItemActive ? colors.lightBlueBg : colors.white,
+                                border: 'none',
+                                borderLeft: isItemActive ? `3px solid ${colors.primary}` : '3px solid transparent',
+                                borderBottom: `1px solid ${colors.borderLight}`,
+                                padding: '13px 18px 13px 16px',
+                                cursor: 'pointer',
+                                fontFamily: fonts.base,
+                                fontSize: '14px',
+                                fontWeight: isItemActive ? '600' : '500',
+                                color: isItemActive ? colors.darkBlue : colors.textMuted,
+                                transition: 'background 0.15s ease, color 0.15s ease, border-color 0.15s ease',
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = colors.lightBlueBg;
+                                e.currentTarget.style.color = colors.darkBlue;
+                                if (!isItemActive) e.currentTarget.style.borderLeftColor = colors.border;
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = isItemActive ? colors.lightBlueBg : colors.white;
+                                e.currentTarget.style.color = isItemActive ? colors.darkBlue : colors.textMuted;
+                                e.currentTarget.style.borderLeftColor = isItemActive ? colors.primary : 'transparent';
+                              }}
+                            >
+                              {label}
+                            </button>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
@@ -179,9 +221,9 @@ function Header({ activePage, setActivePage }) {
                 key={item.id}
                 onClick={() => setActivePage(item.id)}
                 style={navLinkStyle(isActive)}
-                onMouseEnter={(e) => { e.currentTarget.style.color = '#ffffff'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = colors.darkBlue; }}
                 onMouseLeave={(e) => {
-                  if (!isActive) e.currentTarget.style.color = 'rgba(255, 255, 255, 0.82)';
+                  if (!isActive) e.currentTarget.style.color = colors.textMuted;
                 }}
               >
                 {item.label}

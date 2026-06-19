@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { colors } from '../theme';
 
-import imgMaintenance from '../assets/service1.jpg';
-import imgConstruction from '../assets/service2.jpg';
-import imgAutomation from '../assets/service3.jpg';
+import imgMaintenance from '../assets/Service1.jpg';
+import imgConstruction from '../assets/Service2.jpg';
+import imgAutomation from '../assets/Service3.jpg';
 
 const cardBackgrounds = {
   0: imgMaintenance,   
@@ -81,8 +81,8 @@ function ServiceCard({ service, index, onClick, isSmall = false }) {
         right: isSmall ? '15px' : '20px',     
         padding: isSmall ? '15px' : '20px',
         background: hovered 
-          ? 'linear-gradient(135deg, rgba(123, 170, 247, 0.85) 0%, rgba(26, 58, 107, 0.9) 100%)' 
-          : 'rgba(30, 41, 59, 0.65)', 
+          ? 'linear-gradient(135deg, rgba(201, 162, 39, 0.85) 0%, rgba(92, 83, 68, 0.9) 100%)' 
+          : 'rgba(92, 83, 68, 0.65)', 
         backdropFilter: 'blur(16px)',   
         WebkitBackdropFilter: 'blur(16px)',
         borderRadius: '18px',           

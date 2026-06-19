@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -23,6 +23,10 @@ import { services } from './pages/servicesData';
 function MainApp() {
   const [currentPage, setCurrentPage] = useState('main');
   const [activeServiceId, setActiveServiceId] = useState(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage, activeServiceId]);
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column' }}>
