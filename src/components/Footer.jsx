@@ -42,7 +42,6 @@ function Footer({ setActivePage }) {
             <button type="button" onClick={() => setActivePage('services')} style={linkStyle}>Услуги</button>
             <button type="button" onClick={() => setActivePage('products-catalog')} style={linkStyle}>Продукция</button>
             <button type="button" onClick={() => setActivePage('contacts')} style={linkStyle}>Контакты</button>
-            <button type="button" onClick={() => setActivePage('support')} style={linkStyle}>Тех поддержка</button>
           </div>
         </div>
 

@@ -71,11 +71,10 @@ function ServiceDetail({ service, onServiceClick, onBack, setActivePage }) {
           </h2>
 
           {/* Сетка для уменьшенных карточек */}
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(2, 1fr)', 
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
             gap: '30px',
-            maxWidth: '850px' // Ограничиваем общую ширину ряда, чтобы карточки были меньше основного размера
           }}>
             {relatedServices.map((s) => {
               // Ищем оригинальный индекс услуги в общем массиве, чтобы сохранить правильный номер (01, 02, 03) и картинку

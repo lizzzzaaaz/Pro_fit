@@ -11,6 +11,8 @@ import ServiceDetail from './pages/ServiceDetail';
 import ProductsCatalog from './pages/ProductsCatalog';
 import IndustrialControllers from './pages/IndustrialControllers';
 import AutonomousTelemetry from './pages/AutonomousTelemetry';
+import TelemetryComplexDetail from './pages/TelemetryComplexDetail';
+import { telemetryComplexPages } from './pages/telemetryComplexesData';
 import PowerAndModules from './pages/PowerAndModules';
 
 // Детальные страницы товаров
@@ -45,10 +47,20 @@ function MainApp() {
           <IndustrialControllers setActivePage={setCurrentPage} />
         )}
 
-        {/* 2. Категория: Автономные комплексы телеметрии */}
+        {/* 2. Категория: Комплексы телеметрии */}
         {currentPage === 'autonomous-telemetry' && (
           <AutonomousTelemetry setActivePage={setCurrentPage} />
         )}
+
+        {telemetryComplexPages.map((pageId) => (
+          currentPage === pageId && (
+            <TelemetryComplexDetail
+              key={pageId}
+              setActivePage={setCurrentPage}
+              pageId={pageId}
+            />
+          )
+        ))}
 
         {/* 3. Категория: Источники и модули */}
         {currentPage === 'power-modules' && (

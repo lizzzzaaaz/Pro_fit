@@ -1,64 +1,13 @@
 import { colors, fonts } from '../theme';
 
-const lineIconProps = {
-  width: 36,
-  height: 36,
-  viewBox: '0 0 48 48',
-  fill: 'none',
-  xmlns: 'http://www.w3.org/2000/svg',
-  'aria-hidden': true,
+const cardIndexStyle = {
+  margin: '0 0 12px 0',
+  fontSize: '44px',
+  fontWeight: '800',
+  lineHeight: 1,
+  color: 'rgba(154, 117, 22, 0.35)',
+  letterSpacing: '-0.04em',
 };
-
-const iconStroke = colors.darkBlue;
-
-function CardLineIcon({ children }) {
-  return (
-    <div style={{
-      width: '58px',
-      height: '58px',
-      marginBottom: '18px',
-      borderRadius: '12px',
-      backgroundColor: 'rgba(92, 83, 68, 0.08)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      lineHeight: 0,
-    }}>
-      {children}
-    </div>
-  );
-}
-
-function EngineeringServicesIcon() {
-  return (
-    <svg {...lineIconProps}>
-      <g stroke={iconStroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.55">
-        <path d="M15 12h16l4 4v23H15V12z" />
-        <path d="M31 12v4h4" />
-        <path d="M19 21h14 M19 25h12 M19 29h8" />
-        <path d="M27 31l9 9" />
-        <path d="M32 26l4-4" />
-        <path d="M30 28l-2 2" />
-      </g>
-    </svg>
-  );
-}
-
-function IndustrialProductsIcon() {
-  return (
-    <svg {...lineIconProps}>
-      <g stroke={iconStroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.55">
-        <rect x="12" y="14" width="24" height="18" rx="2" />
-        <rect x="15" y="17" width="10" height="6" rx="1" />
-        <path d="M28 19h5 M28 22h3" />
-        <path d="M16 11v3 M22 11v3 M28 11v3 M34 11v3" />
-        <path d="M15 36h18" />
-        <path d="M18 36v3 M24 36v3 M30 36v3" />
-        <path d="M14 24h2 M32 24h2" />
-      </g>
-    </svg>
-  );
-}
 
 function HeroBrandMark() {
   return (
@@ -330,12 +279,7 @@ function MainPage({ setActivePage }) {
                 e.currentTarget.style.borderColor = colors.border;
               }}
             >
-              <CardLineIcon>
-                <EngineeringServicesIcon />
-              </CardLineIcon>
-              <div style={{ color: colors.primary, fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '10px' }}>
-                Направление 01
-              </div>
+              <div style={cardIndexStyle}>01</div>
               <h3 style={{ margin: '0 0 12px 0', fontSize: '22px', fontWeight: '700', color: colors.darkBlue }}>
                 Инженерные услуги
               </h3>
@@ -362,12 +306,7 @@ function MainPage({ setActivePage }) {
                 e.currentTarget.style.borderColor = colors.border;
               }}
             >
-              <CardLineIcon>
-                <IndustrialProductsIcon />
-              </CardLineIcon>
-              <div style={{ color: colors.primary, fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '10px' }}>
-                Направление 02
-              </div>
+              <div style={cardIndexStyle}>02</div>
               <h3 style={{ margin: '0 0 12px 0', fontSize: '22px', fontWeight: '700', color: colors.darkBlue }}>
                 Собственные продукты
               </h3>

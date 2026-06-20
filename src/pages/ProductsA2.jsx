@@ -122,8 +122,8 @@ export default function ProductsA2({ setActivePage }) {
     {
       id: 'М80',
       title: 'Устройство конфигурирования М80',
-      desc: 'Настройка и диагностика КУТ300-АК.',
-      fullDesc: 'Настройка и диагностика КУТ300-АК осуществляется с помощью устройства конфигурирования М80. М80 является универсальным и подходит ко всем изделиям производства ООО «НТК Профи-Т».',
+      desc: 'Настройка, диагностика и тестирование контроллеров телемеханики.',
+      fullDesc: 'М80 имеет настраиваемые параметры контрастности дисплея, перехода в спящий низкопотребляющий режим и повтора срабатывания кнопки при удержании. Устройство конфигурирования М80 предназначено для настройки, диагностики и тестирования контроллеров телемеханики производства ООО «НТК Профи-Т». М80 универсально и может использоваться со всем спектром выпускаемого оборудования. М80 обеспечивает отображение текущих данных, полученных контроллером, осуществление настройки параметров контроллера, выполнение диагностики работы программы и аппаратных узлов контроллера. Питание М80 осуществляется от контроллера, к которому оно подключено. М80 имеет 8 кнопок: 4-позиционный джойстик, кнопки подтверждения, отмены и 2 функциональных клавиши. М80 оснащён низкопотребляющим OLED-дисплеем. Подключение к контроллеру осуществляется кабелем с шестиконтактным разъёмом.',
       img: m80Img,
       chars: [
         { label: 'Напряжение питания', value: 'от 3,0 до 5,5 В' },
@@ -175,7 +175,7 @@ export default function ProductsA2({ setActivePage }) {
         <div style={{ display: 'flex', gap: '10px', borderBottom: `2px solid ${colors.borderNeutral}`, marginBottom: '30px' }}>
           <button onClick={() => setActiveTab('main')} style={tabButtonStyle(activeTab === 'main')}>Главное</button>
           <button onClick={() => setActiveTab('documents')} style={tabButtonStyle(activeTab === 'documents')}>Документация</button>
-          <button onClick={scrollToComponents} style={tabButtonStyle(activeTab === 'components')}>Составляющие</button>
+          <button onClick={scrollToComponents} style={tabButtonStyle(activeTab === 'components')}>Модули расширения</button>
         </div>
       ) : (
         <div style={{ display: 'flex', gap: '10px', borderBottom: `2px solid ${colors.borderNeutral}`, marginBottom: '30px' }}>
@@ -250,7 +250,7 @@ export default function ProductsA2({ setActivePage }) {
                 </div>
 
                 <div ref={componentsSectionRef} style={{ scrollMarginTop: '20px' }}>
-                  <h2 style={{ fontSize: '22px', marginBottom: '20px' }}>Составляющие</h2>
+                  <h2 style={{ fontSize: '22px', marginBottom: '20px' }}>Модули расширения</h2>
                   <div style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
@@ -345,17 +345,20 @@ export default function ProductsA2({ setActivePage }) {
                   </div>
                 </div>
                 <button onClick={() => { setSelectedComponent(null); setModuleTab('main'); }} style={{ padding: '10px 20px', backgroundColor: colors.primary, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
-                  ← Назад к составляющим
+                  ← Назад к модулям
                 </button>
               </div>
             ) : (
               <div>
-                <h2 style={{ fontSize: '24px', color: colors.primary, marginBottom: '15px' }}>Документация — {selectedComponent.id}</h2>
-                <p style={{ color: colors.textMuted, lineHeight: '1.6' }}>
-                  Технический паспорт, руководство по эксплуатации и сертификаты для {selectedComponent.id} появятся здесь в формате PDF.
+                <h2 style={{ fontSize: '24px', color: colors.primary, margin: '0 0 8px 0' }}>
+                  Документация — {selectedComponent.id}
+                </h2>
+                <p style={{ color: colors.textMuted, lineHeight: '1.6', margin: '0 0 24px 0' }}>
+                  Сертификаты и декларации соответствия для КУТ300-АК.
                 </p>
-                <button onClick={() => { setSelectedComponent(null); setModuleTab('main'); }} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: colors.primary, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
-                  ← Назад к составляющим
+                <DocumentList items={productDocuments} />
+                <button onClick={() => { setSelectedComponent(null); setModuleTab('main'); }} style={{ marginTop: '24px', padding: '10px 20px', backgroundColor: colors.primary, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
+                  ← Назад к модулям
                 </button>
               </div>
             )}

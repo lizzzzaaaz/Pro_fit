@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import emblemImg from '../assets/эмблема.png';
 import { colors, fonts } from '../theme';
+import { telemetryComplexPages } from '../pages/telemetryComplexesData';
 
 const productLinks = [
   { page: 'industrial-controllers', label: 'Промышленные контроллеры' },
-  { page: 'autonomous-telemetry', label: 'Автономные комплексы телеметрии' },
+  { page: 'autonomous-telemetry', label: 'Комплексы телеметрии' },
   { page: 'power-modules', label: 'Источники и модули' },
 ];
 
@@ -12,10 +13,10 @@ function Header({ activePage, setActivePage }) {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const menuItems = [
-    { id: 'services', label: 'Услуги' },
+    { id: 'main', label: 'Главная' },
     { id: 'products-catalog', label: 'Продукция', hasDropdown: true },
+    { id: 'services', label: 'Услуги' },
     { id: 'contacts', label: 'Контакты' },
-    { id: 'support', label: 'Тех поддержка' },
     { id: 'about', label: 'О компании' },
   ];
 
@@ -27,6 +28,7 @@ function Header({ activePage, setActivePage }) {
     'products-a1',
     'products-a2',
     'products-a3',
+    ...telemetryComplexPages,
   ].includes(activePage);
 
   const navLinkStyle = (isActive) => ({
@@ -136,38 +138,6 @@ function Header({ activePage, setActivePage }) {
                         boxShadow: '0 10px 32px rgba(74, 67, 56, 0.12)',
                         overflow: 'hidden',
                       }}>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setActivePage('products-catalog');
-                            setShowDropdown(false);
-                          }}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            width: '100%',
-                            textAlign: 'left',
-                            background: activePage === 'products-catalog' ? colors.lightBlueBg : colors.white,
-                            border: 'none',
-                            borderBottom: `1px solid ${colors.border}`,
-                            padding: '14px 18px',
-                            cursor: 'pointer',
-                            fontFamily: fonts.base,
-                            fontSize: '13px',
-                            fontWeight: '700',
-                            color: colors.darkBlue,
-                            letterSpacing: '0.02em',
-                          }}
-                          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = colors.lightBlueBg; }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = activePage === 'products-catalog' ? colors.lightBlueBg : colors.white;
-                          }}
-                        >
-                          <span>Все направления</span>
-                          <span style={{ fontSize: '12px', color: colors.primary, fontWeight: '600' }}>Каталог</span>
-                        </button>
-
                         {productLinks.map(({ page, label }) => {
                           const isItemActive = activePage === page;
                           return (
@@ -232,7 +202,22 @@ function Header({ activePage, setActivePage }) {
           })}
         </nav>
 
-        <div aria-hidden="true" />
+        <a
+          href="tel:+79619914470"
+          style={{
+            justifySelf: 'end',
+            fontFamily: fonts.base,
+            fontSize: '15px',
+            fontWeight: '700',
+            color: colors.darkBlue,
+            textDecoration: 'none',
+            whiteSpace: 'nowrap',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = colors.primary; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = colors.darkBlue; }}
+        >
+          +7 (961) 991-44-70
+        </a>
       </div>
     </header>
   );

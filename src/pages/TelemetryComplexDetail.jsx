@@ -1,0 +1,240 @@
+import React, { useState } from 'react';
+import Breadcrumbs from '../components/Breadcrumbs';
+import { colors, fonts } from '../theme';
+import { getTelemetryComplex } from './telemetryComplexesData';
+
+const imageBoxStyle = {
+  aspectRatio: '1 / 1',
+  width: '100%',
+  backgroundColor: colors.lightBlueBg,
+  borderRadius: '8px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  border: `1px solid ${colors.border}`,
+  boxSizing: 'border-box',
+  overflow: 'hidden',
+  color: colors.textLight,
+  fontSize: '13px',
+  textAlign: 'center',
+  padding: '16px',
+};
+
+function ContentSection({ section }) {
+  return (
+    <div style={{ marginTop: '28px' }}>
+      <h4 style={{ margin: '0 0 12px 0', fontWeight: '700', color: colors.text }}>{section.title}</h4>
+      {section.paragraphs?.map((p, i) => (
+        <p key={i} style={{ lineHeight: '1.65', color: colors.textMuted, margin: '0 0 12px 0' }}>{p}</p>
+      ))}
+      {section.items?.length > 0 && (
+        <ul style={{ margin: 0, paddingLeft: '20px', color: colors.textMuted, lineHeight: '1.65' }}>
+          {section.items.map((item, i) => (
+            <li key={i} style={{ marginBottom: '6px' }}>{item}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+export default function TelemetryComplexDetail({ setActivePage, pageId }) {
+  const complex = getTelemetryComplex(pageId);
+  const [activeTab, setActiveTab] = useState('main');
+
+  if (!complex) {
+    return null;
+  }
+
+  const hasSpecs = complex.specs?.length > 0;
+  const gridColumns = hasSpecs ? '260px 1fr 1fr' : '260px 1fr';
+
+  const tabButtonStyle = (isActive) => ({
+    padding: '12px 20px',
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    borderBottom: isActive ? `2px solid ${colors.primary}` : 'none',
+    fontWeight: isActive ? 'bold' : 'normal',
+    marginBottom: '-2px',
+    color: isActive ? colors.darkBlue : colors.textMuted,
+    fontFamily: fonts.base,
+  });
+
+  return (
+    <div style={{ backgroundColor: colors.pageBg, padding: '40px 0 80px', fontFamily: fonts.base }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', color: colors.text }}>
+        <Breadcrumbs
+          setActivePage={setActivePage}
+          items={[
+            { label: 'ГЛАВНАЯ', page: 'main' },
+            { label: 'ПРОДУКЦИЯ', page: 'products-catalog' },
+            { label: 'КОМПЛЕКСЫ ТЕЛЕМЕТРИИ', page: 'autonomous-telemetry' },
+            { label: complex.cardTitle.toUpperCase() },
+          ]}
+        />
+
+        <div style={{ marginBottom: '25px' }}>
+          <button
+            type="button"
+            onClick={() => setActivePage('autonomous-telemetry')}
+            style={{
+              padding: '12px 24px',
+              backgroundColor: colors.lightBlueBg,
+              border: `1px solid ${colors.border}`,
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontWeight: '600',
+              fontFamily: fonts.base,
+            }}
+          >
+            ← К списку комплексов
+          </button>
+        </div>
+
+        <div style={{ display: 'flex', gap: '10px', borderBottom: `2px solid ${colors.borderNeutral}`, marginBottom: '30px' }}>
+          <button type="button" onClick={() => setActiveTab('main')} style={tabButtonStyle(activeTab === 'main')}>
+            Главная
+          </button>
+          <button type="button" onClick={() => setActiveTab('documents')} style={tabButtonStyle(activeTab === 'documents')}>
+            Документация
+          </button>
+        </div>
+
+        <div style={{
+          backgroundColor: colors.white,
+          padding: '30px',
+          borderRadius: '16px',
+          border: `1px solid ${colors.border}`,
+          boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+        }}>
+          {activeTab === 'main' && (
+            <div>
+              <h1 style={{ fontSize: '24px', color: colors.primary, margin: '0 0 20px 0' }}>
+                {complex.cardTitle}
+              </h1>
+
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: gridColumns,
+                gap: '30px',
+                alignItems: 'start',
+                marginBottom: '10px',
+              }}>
+                <div style={imageBoxStyle}>
+                  {complex.img ? (
+                    <img
+                      src={complex.img}
+                      alt={complex.cardTitle}
+                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    />
+                  ) : (
+                    <span>Фото будет добавлено</span>
+                  )}
+                </div>
+
+                <div style={{ minWidth: 0 }}>
+                  <h4 style={{ margin: '0 0 10px 0', fontWeight: '700', color: colors.text }}>Описание</h4>
+                  {complex.subtitle && (
+                    <p style={{ color: colors.primary, fontWeight: '600', margin: '0 0 12px 0', lineHeight: '1.5' }}>
+                      {complex.subtitle}
+                    </p>
+                  )}
+                  {complex.description.map((paragraph, i) => (
+                    <p
+                      key={i}
+                      style={{
+                        lineHeight: '1.65',
+                        color: colors.textMuted,
+                        margin: i === 0 ? '0 0 12px 0' : '0 0 12px 0',
+                      }}
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+
+                {hasSpecs && (
+                  <div style={{
+                    backgroundColor: colors.lightBlueBg,
+                    padding: '20px',
+                    borderRadius: '12px',
+                    border: `1px solid ${colors.border}`,
+                    minWidth: 0,
+                  }}>
+                    <h4 style={{ margin: '0 0 15px 0', fontWeight: '700', color: colors.text }}>
+                      Технические характеристики
+                    </h4>
+                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                      <tbody>
+                        {complex.specs.map((row, i) => (
+                          <tr key={i} style={{ borderBottom: `1px solid ${colors.borderNeutral}` }}>
+                            <td style={{
+                              padding: '8px 8px 8px 0',
+                              color: colors.textMuted,
+                              fontSize: '14px',
+                              textAlign: 'left',
+                              verticalAlign: 'top',
+                            }}
+                            >
+                              {row.label}
+                            </td>
+                            <td style={{
+                              padding: '8px 0',
+                              fontWeight: '600',
+                              fontSize: '14px',
+                              textAlign: 'right',
+                              verticalAlign: 'top',
+                              whiteSpace: 'nowrap',
+                            }}
+                            >
+                              {row.value}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    {complex.specsNote && (
+                      <p style={{ margin: '12px 0 0 0', fontSize: '13px', color: colors.textLight }}>
+                        {complex.specsNote}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {complex.sections?.map((section, i) => (
+                <ContentSection key={i} section={section} />
+              ))}
+            </div>
+          )}
+
+          {activeTab === 'documents' && (
+            <div>
+              <h2 style={{ fontSize: '24px', color: colors.primary, margin: '0 0 8px 0' }}>Документация</h2>
+              <p style={{ color: colors.textMuted, lineHeight: '1.6', margin: '0 0 24px 0' }}>
+                Сертификат и проектная документация для «{complex.cardTitle}».
+              </p>
+              <ul style={{ margin: 0, padding: '0 0 0 20px', color: colors.textMuted, lineHeight: '1.8' }}>
+                <li>Сертификат</li>
+                <li>Проект</li>
+              </ul>
+              <div style={{
+                marginTop: '16px',
+                padding: '16px 20px',
+                backgroundColor: colors.lightBlueBg,
+                borderRadius: '8px',
+                border: `1px dashed ${colors.border}`,
+                color: colors.textMuted,
+                fontSize: '14px',
+                lineHeight: '1.6',
+              }}>
+                Файлы будут добавлены позже.
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

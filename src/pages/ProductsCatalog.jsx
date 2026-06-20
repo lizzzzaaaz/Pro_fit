@@ -17,7 +17,7 @@ const categories = [
   },
   {
     page: 'autonomous-telemetry',
-    title: 'Автономные комплексы телеметрии',
+    title: 'Комплексы телеметрии',
     img: telemetryImg,
   },
 ];
