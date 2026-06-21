@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import MainPage from './pages/MainPage';
 import Services from './pages/Services';
 import Contacts from './pages/Contacts';
+import { About, Certificates } from './pages/CompanyPages';
 import ServiceDetail from './pages/ServiceDetail';
 
 // Импортируем страницы каталога продукции
@@ -13,7 +14,10 @@ import IndustrialControllers from './pages/IndustrialControllers';
 import AutonomousTelemetry from './pages/AutonomousTelemetry';
 import TelemetryComplexDetail from './pages/TelemetryComplexDetail';
 import { telemetryComplexPages } from './pages/telemetryComplexesData';
+import { explosionBarrierPages, getExplosionBarrier } from './pages/explosionBarriersData';
+import { softwareProductPages, getSoftwareProduct } from './pages/softwareProductsData';
 import PowerAndModules from './pages/PowerAndModules';
+import SoftwareProducts from './pages/SoftwareProducts';
 
 // Детальные страницы товаров
 import ProductsA1 from './pages/ProductsA1'; 
@@ -37,7 +41,7 @@ function MainApp() {
         
         {/* СТРАНИЦЫ КАТАЛОГА ПРОДУКЦИИ */}
         
-        {/* Главная страница Продукции (плитка из 3 категорий) */}
+        {/* Главная страница Продукции (плитка из 4 категорий) */}
         {currentPage === 'products-catalog' && (
           <ProductsCatalog setActivePage={setCurrentPage} />
         )}
@@ -62,10 +66,43 @@ function MainApp() {
           )
         ))}
 
-        {/* 3. Категория: Источники и модули */}
+        {explosionBarrierPages.map((pageId) => (
+          currentPage === pageId && (
+            <TelemetryComplexDetail
+              key={pageId}
+              setActivePage={setCurrentPage}
+              pageId={pageId}
+              getItem={getExplosionBarrier}
+              listPage="power-modules"
+              listBreadcrumb="БАРЬЕРЫ ИСКРОЗАЩИТЫ"
+              backLabel="← К списку барьеров"
+            />
+          )
+        ))}
+
+        {/* 3. Категория: Барьеры искрозащиты */}
         {currentPage === 'power-modules' && (
           <PowerAndModules setActivePage={setCurrentPage} />
         )}
+
+        {/* 4. Категория: Программное обеспечение */}
+        {currentPage === 'software-products' && (
+          <SoftwareProducts setActivePage={setCurrentPage} />
+        )}
+
+        {softwareProductPages.map((pageId) => (
+          currentPage === pageId && (
+            <TelemetryComplexDetail
+              key={pageId}
+              setActivePage={setCurrentPage}
+              pageId={pageId}
+              getItem={getSoftwareProduct}
+              listPage="software-products"
+              listBreadcrumb="ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ"
+              backLabel="← К списку ПО"
+            />
+          )
+        ))}
 
         {/* Детальная страница 1: КУТ300-ПК */}
         {currentPage === 'products-a1' && (
@@ -110,10 +147,12 @@ function MainApp() {
         
         {currentPage === 'contacts' && <Contacts setActivePage={setCurrentPage} />}
 
-        {/* Заглушки для страниц в разработке */}
-        {['support', 'about'].includes(currentPage) && (
+        {currentPage === 'about' && <About setActivePage={setCurrentPage} />}
+        {currentPage === 'certificates' && <Certificates setActivePage={setCurrentPage} />}
+
+        {currentPage === 'support' && (
           <div style={{ padding: '80px 40px', color: '#0f172a', fontFamily: 'Arial, sans-serif', backgroundColor: '#ffffff' }}>
-            <h1>Страница "{currentPage}" в разработке</h1>
+            <h1>Страница «Поддержка» в разработке</h1>
           </div>
         )}
 

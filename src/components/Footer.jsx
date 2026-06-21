@@ -1,5 +1,5 @@
+import { companyRequisites } from '../data/companyRequisites';
 import { colors, fonts } from '../theme';
-
 function Footer({ setActivePage }) {
   const linkStyle = {
     background: 'none',
@@ -28,9 +28,11 @@ function Footer({ setActivePage }) {
         gap: '40px',
       }}>
         <div>
-          <div style={{ fontSize: '22px', fontWeight: '800', marginBottom: '12px', color: colors.lightBlue }}>Профи-Т</div>
+          <div style={{ fontSize: '22px', fontWeight: '800', marginBottom: '12px', color: colors.lightBlue }}>
+            {companyRequisites.brandName}
+          </div>
           <p style={{ margin: 0, color: 'rgba(255,255,255,0.75)', fontSize: '14px', lineHeight: '1.6' }}>
-            ООО «Про_фит Разработки» — проектирование, разработка и интеграция программно-аппаратных комплексов для автоматизации и телеметрии.
+            {companyRequisites.shortName} — {companyRequisites.tagline}
           </p>
         </div>
 
@@ -50,26 +52,31 @@ function Footer({ setActivePage }) {
             Контакты
           </h4>
           <p style={{ margin: '0 0 8px 0', fontSize: '14px', lineHeight: '1.6', color: 'rgba(255,255,255,0.85)' }}>
-            350059, г. Краснодар,<br />ул. Стасова, д. 10, офис 402
+            {companyRequisites.legalAddress}
           </p>
           <p style={{ margin: '0 0 8px 0', fontSize: '14px', color: 'rgba(255,255,255,0.85)' }}>
-            <a href="tel:+78619992233" style={{ color: '#ffffff', textDecoration: 'none' }}>+7 (861) 999-22-33</a>
+            {companyRequisites.phones.map((phone, i) => (
+              <span key={phone}>
+                {i > 0 && '; '}
+                <a href={companyRequisites.phoneLinks[i]} style={{ color: '#ffffff', textDecoration: 'none' }}>{phone}</a>
+              </span>
+            ))}
           </p>
           <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.6', color: 'rgba(255,255,255,0.85)' }}>
-            <a href="mailto:sales@pro-fit.ru" style={{ color: colors.lightBlue, textDecoration: 'none' }}>sales@pro-fit.ru</a><br />
-            <a href="mailto:support@pro-fit.ru" style={{ color: colors.lightBlue, textDecoration: 'none' }}>support@pro-fit.ru</a>
+            <a href={`mailto:${companyRequisites.email}`} style={{ color: colors.lightBlue, textDecoration: 'none' }}>
+              {companyRequisites.email}
+            </a>
           </p>
         </div>
       </div>
 
-      <div style={{
-        borderTop: '1px solid rgba(255,255,255,0.12)',
+      <div style={{        borderTop: '1px solid rgba(255,255,255,0.12)',
         padding: '16px 40px',
         textAlign: 'center',
         fontSize: '13px',
         color: 'rgba(255,255,255,0.55)',
       }}>
-        © {new Date().getFullYear()} ООО «Про_фит Разработки». Все права защищены.
+        © {new Date().getFullYear()} {companyRequisites.shortName}. Все права защищены.
       </div>
     </footer>
   );

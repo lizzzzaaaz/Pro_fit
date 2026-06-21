@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
+import ZoomableImage from '../components/ZoomableImage';
 import mainImg from '../assets/КУТ300-А42.png';
 
 const renderImage = (imgSrc, altText) => {
   if (typeof imgSrc === 'string' && (imgSrc.startsWith('/') || imgSrc.startsWith('data:image') || imgSrc.startsWith('blob:'))) {
-    return <img src={imgSrc} alt={altText} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />;
+    return <ZoomableImage src={imgSrc} alt={altText} />;
   }
   if (typeof imgSrc === 'object' && imgSrc !== null) {
-    return <img src={imgSrc} alt={altText} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />;
+    return <ZoomableImage src={imgSrc} alt={altText} />;
   }
   return <span style={{ fontSize: '12px', color: '#64748b', textAlign: 'center', padding: '10px' }}>Фото будет добавлено</span>;
 };

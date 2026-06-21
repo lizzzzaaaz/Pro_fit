@@ -89,6 +89,28 @@ export function TelemetryIcon({ size = 56, color = 'currentColor' }) {
   );
 }
 
+export function RepairIcon({ size = 56, color = 'currentColor' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 56 56" fill="none">
+      <rect x="10" y="12" width="28" height="32" rx="3"
+        stroke={color} strokeWidth="2"/>
+      <rect x="16" y="18" width="16" height="10" rx="1.5"
+        stroke={color} strokeWidth="1.8"/>
+      <path d="M14 34h20M14 38h20"
+        stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M18 42v2M22 42v2M26 42v2M30 42v2"
+        stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+      <path
+        d="M40 36l-3 3a3.5 3.5 0 1 1-5-5l6-6a3.5 3.5 0 1 1 5 5l-3 3"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function CryptoIcon({ size = 56, color = 'currentColor' }) {
   return (
     <svg width={size} height={size} viewBox="0 0 56 56" fill="none">
@@ -108,14 +130,16 @@ export function CryptoIcon({ size = 56, color = 'currentColor' }) {
   );
 }
 
-// export function getIcon(iconKey, size = 56, color = 'currentColor') {
-//   const map = {
-//     certification: <CertificationIcon size={size} color={color} />,
-//     maintenance:   <MaintenanceIcon   size={size} color={color} />,
-//     construction:  <ConstructionIcon  size={size} color={color} />,
-//     automation:    <AutomationIcon    size={size} color={color} />,
-//     telemetry:     <TelemetryIcon     size={size} color={color} />,
-//     crypto:        <CryptoIcon        size={size} color={color} />,
-//   };
-//   return map[iconKey] ?? null;
-// }
+export function getIcon(iconKey, size = 56, color = 'currentColor') {
+  const map = {
+    automation: <AutomationIcon size={size} color={color} />,
+    construction: <ConstructionIcon size={size} color={color} />,
+    maintenance: <MaintenanceIcon size={size} color={color} />,
+    verification: <CertificationIcon size={size} color={color} />,
+    repair: <RepairIcon size={size} color={color} />,
+    certification: <CertificationIcon size={size} color={color} />,
+    telemetry: <TelemetryIcon size={size} color={color} />,
+    crypto: <CryptoIcon size={size} color={color} />,
+  };
+  return map[iconKey] ?? null;
+}

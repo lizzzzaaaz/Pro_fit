@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
+import ZoomableImage from '../components/ZoomableImage';
 import { colors, fonts } from '../theme';
 import { getTelemetryComplex } from './telemetryComplexesData';
+
+const defaultCatalog = {
+  getItem: getTelemetryComplex,
+  listPage: 'autonomous-telemetry',
+  listBreadcrumb: 'КОМПЛЕКСЫ ТЕЛЕМЕТРИИ',
+  backLabel: '← К списку комплексов',
+};
 
 const imageBoxStyle = {
   aspectRatio: '1 / 1',
@@ -19,6 +27,60 @@ const imageBoxStyle = {
   textAlign: 'center',
   padding: '16px',
 };
+
+function SpecsBlock({ specs, specsNote, fullWidth = false }) {
+  return (
+    <div style={{
+      backgroundColor: colors.lightBlueBg,
+      padding: '20px',
+      borderRadius: '12px',
+      border: `1px solid ${colors.border}`,
+      minWidth: 0,
+    }}>
+      <h4 style={{ margin: '0 0 15px 0', fontWeight: '700', color: colors.text }}>
+        Технические характеристики
+      </h4>
+      <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
+        <tbody>
+          {specs.map((row, i) => (
+            <tr key={i} style={{ borderBottom: `1px solid ${colors.borderNeutral}` }}>
+              <td style={{
+                width: fullWidth ? '42%' : '52%',
+                padding: '8px 12px 8px 0',
+                color: colors.textMuted,
+                fontSize: '14px',
+                textAlign: 'left',
+                verticalAlign: 'top',
+                wordBreak: 'break-word',
+              }}
+              >
+                {row.label}
+              </td>
+              <td style={{
+                width: fullWidth ? '58%' : '48%',
+                padding: '8px 0',
+                fontWeight: '600',
+                fontSize: '14px',
+                textAlign: fullWidth ? 'left' : 'right',
+                verticalAlign: 'top',
+                whiteSpace: 'normal',
+                wordBreak: 'break-word',
+              }}
+              >
+                {row.value}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {specsNote && (
+        <p style={{ margin: '12px 0 0 0', fontSize: '13px', color: colors.textLight }}>
+          {specsNote}
+        </p>
+      )}
+    </div>
+  );
+}
 
 function ContentSection({ section }) {
   return (
@@ -38,16 +100,24 @@ function ContentSection({ section }) {
   );
 }
 
-export default function TelemetryComplexDetail({ setActivePage, pageId }) {
-  const complex = getTelemetryComplex(pageId);
+export default function TelemetryComplexDetail({
+  setActivePage,
+  pageId,
+  getItem = defaultCatalog.getItem,
+  listPage = defaultCatalog.listPage,
+  listBreadcrumb = defaultCatalog.listBreadcrumb,
+  backLabel = defaultCatalog.backLabel,
+}) {
+  const item = getItem(pageId);
   const [activeTab, setActiveTab] = useState('main');
 
-  if (!complex) {
+  if (!item) {
     return null;
   }
 
-  const hasSpecs = complex.specs?.length > 0;
-  const gridColumns = hasSpecs ? '260px 1fr 1fr' : '260px 1fr';
+  const hasSpecs = item.specs?.length > 0;
+  const specsFullWidth = hasSpecs && item.specs.length >= 10;
+  const gridColumns = hasSpecs && !specsFullWidth ? '260px 1fr 1fr' : '260px 1fr';
 
   const tabButtonStyle = (isActive) => ({
     padding: '12px 20px',
@@ -69,15 +139,15 @@ export default function TelemetryComplexDetail({ setActivePage, pageId }) {
           items={[
             { label: 'ГЛАВНАЯ', page: 'main' },
             { label: 'ПРОДУКЦИЯ', page: 'products-catalog' },
-            { label: 'КОМПЛЕКСЫ ТЕЛЕМЕТРИИ', page: 'autonomous-telemetry' },
-            { label: complex.cardTitle.toUpperCase() },
+            { label: listBreadcrumb, page: listPage },
+            { label: item.cardTitle.toUpperCase() },
           ]}
         />
 
         <div style={{ marginBottom: '25px' }}>
           <button
             type="button"
-            onClick={() => setActivePage('autonomous-telemetry')}
+            onClick={() => setActivePage(listPage)}
             style={{
               padding: '12px 24px',
               backgroundColor: colors.lightBlueBg,
@@ -88,7 +158,7 @@ export default function TelemetryComplexDetail({ setActivePage, pageId }) {
               fontFamily: fonts.base,
             }}
           >
-            ← К списку комплексов
+            {backLabel}
           </button>
         </div>
 
@@ -111,7 +181,7 @@ export default function TelemetryComplexDetail({ setActivePage, pageId }) {
           {activeTab === 'main' && (
             <div>
               <h1 style={{ fontSize: '24px', color: colors.primary, margin: '0 0 20px 0' }}>
-                {complex.cardTitle}
+                {item.cardTitle}
               </h1>
 
               <div style={{
@@ -122,12 +192,8 @@ export default function TelemetryComplexDetail({ setActivePage, pageId }) {
                 marginBottom: '10px',
               }}>
                 <div style={imageBoxStyle}>
-                  {complex.img ? (
-                    <img
-                      src={complex.img}
-                      alt={complex.cardTitle}
-                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                    />
+                  {item.img ? (
+                    <ZoomableImage src={item.img} alt={item.cardTitle} />
                   ) : (
                     <span>Фото будет добавлено</span>
                   )}
@@ -135,12 +201,12 @@ export default function TelemetryComplexDetail({ setActivePage, pageId }) {
 
                 <div style={{ minWidth: 0 }}>
                   <h4 style={{ margin: '0 0 10px 0', fontWeight: '700', color: colors.text }}>Описание</h4>
-                  {complex.subtitle && (
+                  {item.subtitle && (
                     <p style={{ color: colors.primary, fontWeight: '600', margin: '0 0 12px 0', lineHeight: '1.5' }}>
-                      {complex.subtitle}
+                      {item.subtitle}
                     </p>
                   )}
-                  {complex.description.map((paragraph, i) => (
+                  {item.description.map((paragraph, i) => (
                     <p
                       key={i}
                       style={{
@@ -154,56 +220,18 @@ export default function TelemetryComplexDetail({ setActivePage, pageId }) {
                   ))}
                 </div>
 
-                {hasSpecs && (
-                  <div style={{
-                    backgroundColor: colors.lightBlueBg,
-                    padding: '20px',
-                    borderRadius: '12px',
-                    border: `1px solid ${colors.border}`,
-                    minWidth: 0,
-                  }}>
-                    <h4 style={{ margin: '0 0 15px 0', fontWeight: '700', color: colors.text }}>
-                      Технические характеристики
-                    </h4>
-                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                      <tbody>
-                        {complex.specs.map((row, i) => (
-                          <tr key={i} style={{ borderBottom: `1px solid ${colors.borderNeutral}` }}>
-                            <td style={{
-                              padding: '8px 8px 8px 0',
-                              color: colors.textMuted,
-                              fontSize: '14px',
-                              textAlign: 'left',
-                              verticalAlign: 'top',
-                            }}
-                            >
-                              {row.label}
-                            </td>
-                            <td style={{
-                              padding: '8px 0',
-                              fontWeight: '600',
-                              fontSize: '14px',
-                              textAlign: 'right',
-                              verticalAlign: 'top',
-                              whiteSpace: 'nowrap',
-                            }}
-                            >
-                              {row.value}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                    {complex.specsNote && (
-                      <p style={{ margin: '12px 0 0 0', fontSize: '13px', color: colors.textLight }}>
-                        {complex.specsNote}
-                      </p>
-                    )}
-                  </div>
+                {hasSpecs && !specsFullWidth && (
+                  <SpecsBlock specs={item.specs} specsNote={item.specsNote} />
                 )}
               </div>
 
-              {complex.sections?.map((section, i) => (
+              {hasSpecs && specsFullWidth && (
+                <div style={{ marginTop: '24px' }}>
+                  <SpecsBlock specs={item.specs} specsNote={item.specsNote} fullWidth />
+                </div>
+              )}
+
+              {item.sections?.map((section, i) => (
                 <ContentSection key={i} section={section} />
               ))}
             </div>
@@ -213,7 +241,7 @@ export default function TelemetryComplexDetail({ setActivePage, pageId }) {
             <div>
               <h2 style={{ fontSize: '24px', color: colors.primary, margin: '0 0 8px 0' }}>Документация</h2>
               <p style={{ color: colors.textMuted, lineHeight: '1.6', margin: '0 0 24px 0' }}>
-                Сертификат и проектная документация для «{complex.cardTitle}».
+                Сертификат и проектная документация для «{item.cardTitle}».
               </p>
               <ul style={{ margin: 0, padding: '0 0 0 20px', color: colors.textMuted, lineHeight: '1.8' }}>
                 <li>Сертификат</li>

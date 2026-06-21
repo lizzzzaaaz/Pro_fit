@@ -1,4 +1,7 @@
 import { colors, fonts } from '../theme';
+import { companyAboutContent } from '../data/companyAboutContent';
+import { companyRequisites } from '../data/companyRequisites';
+import BrandEmblem from '../components/BrandEmblem';
 
 const cardIndexStyle = {
   margin: '0 0 12px 0',
@@ -18,45 +21,8 @@ function HeroBrandMark() {
       justifyContent: 'center',
       padding: '24px',
     }}>
-      <div style={{
-        position: 'relative',
-        width: '220px',
-        height: '220px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: '28px',
-      }}>
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          borderRadius: '50%',
-          border: '2px solid rgba(201, 162, 39, 0.35)',
-        }} />
-        <div style={{
-          position: 'absolute',
-          inset: '18px',
-          borderRadius: '50%',
-          border: '1px solid rgba(201, 162, 39, 0.2)',
-          background: 'rgba(201, 162, 39, 0.06)',
-        }} />
-        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" aria-hidden="true">
-          <circle cx="60" cy="60" r="54" stroke="rgba(201, 162, 39, 0.45)" strokeWidth="2" />
-          <circle cx="60" cy="60" r="38" stroke="rgba(201, 162, 39, 0.25)" strokeWidth="1.5" />
-          <circle cx="60" cy="60" r="28" fill="rgba(201, 162, 39, 0.14)" />
-          <path
-            d="M 22 58
-               C 28 58, 32 34, 42 34
-               C 50 34, 54 66, 60 68
-               C 66 70, 72 46, 80 46
-               C 88 46, 94 58, 98 58"
-            stroke={colors.lightBlue}
-            strokeWidth="5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-          />
-        </svg>
+      <div style={{ marginBottom: '28px' }}>
+        <BrandEmblem size={220} />
       </div>
 
       <div style={{
@@ -76,7 +42,7 @@ function HeroBrandMark() {
         lineHeight: '1.55',
         color: 'rgba(255, 255, 255, 0.62)',
       }}>
-        Надёжная автоматизация и телеметрия для промышленных объектов
+        {companyAboutContent.hero.brandCaption}
       </p>
     </div>
   );
@@ -96,11 +62,7 @@ function MainPage({ setActivePage }) {
   };
 
 
-  const features = [
-    { value: '15+', label: 'лет опыта в автоматизации' },
-    { value: '3', label: 'линейки контроллеров КУТ300' },
-    { value: '360°', label: 'цикл: проект — монтаж — ПНР' },
-  ];
+  const { hero } = companyAboutContent;
 
   return (
     <div style={{ fontFamily: fonts.base, color: colors.text }}>
@@ -148,7 +110,7 @@ function MainPage({ setActivePage }) {
               fontSize: '14px',
               color: 'rgba(255, 255, 255, 0.6)',
             }}>
-              ООО «НТК Профи-Т»
+              {companyRequisites.shortName}
             </p>
 
             <h1 style={{
@@ -158,8 +120,8 @@ function MainPage({ setActivePage }) {
               lineHeight: '1.12',
               letterSpacing: '-0.03em',
             }}>
-              Интеллектуальные системы{' '}
-              <span style={{ color: colors.lightBlue }}>управления процессами</span>
+              {hero.title}{' '}
+              <span style={{ color: colors.lightBlue }}>{hero.titleAccent}</span>
             </h1>
 
             <p style={{
@@ -169,8 +131,7 @@ function MainPage({ setActivePage }) {
               color: 'rgba(255, 255, 255, 0.78)',
               maxWidth: '520px',
             }}>
-              Проектирование, разработка и интеграция программно-аппаратных комплексов
-              для газо-, тепло-, водо- и электроснабжения.
+              {hero.subtitle}
             </p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
@@ -222,31 +183,6 @@ function MainPage({ setActivePage }) {
           </div>
 
           <HeroBrandMark />
-        </div>
-
-        <div style={{
-          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-          backgroundColor: 'rgba(0, 0, 0, 0.15)',
-        }}>
-          <div style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '28px 40px',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '24px',
-          }}>
-            {features.map(({ value, label }) => (
-              <div key={label} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '28px', fontWeight: '800', color: colors.lightBlue, marginBottom: '4px' }}>
-                  {value}
-                </div>
-                <div style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.65)', lineHeight: '1.4' }}>
-                  {label}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

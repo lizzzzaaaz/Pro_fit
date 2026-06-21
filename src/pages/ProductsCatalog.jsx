@@ -11,14 +11,18 @@ const categories = [
     img: controllersImg,
   },
   {
-    page: 'power-modules',
-    title: 'Источники и модули электропитания',
-    img: powerImg,
-  },
-  {
     page: 'autonomous-telemetry',
     title: 'Комплексы телеметрии',
     img: telemetryImg,
+  },
+  {
+    page: 'power-modules',
+    title: 'Барьеры искрозащиты',
+    img: powerImg,
+  },
+  {
+    page: 'software-products',
+    title: 'Программное обеспечение',
   },
 ];
 
@@ -85,11 +89,17 @@ export default function ProductsCatalog({ setActivePage }) {
                 padding: '24px',
                 boxSizing: 'border-box',
               }}>
-                <img
-                  src={img}
-                  alt={title}
-                  style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
-                />
+                {img ? (
+                  <img
+                    src={img}
+                    alt={title}
+                    style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                  />
+                ) : (
+                  <span style={{ fontSize: '13px', color: colors.textLight, textAlign: 'center' }}>
+                    Программное обеспечение
+                  </span>
+                )}
               </div>
 
               <div style={{ padding: '18px 20px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>

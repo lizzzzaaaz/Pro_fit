@@ -11,6 +11,7 @@ import certExplosionPdf from '../assets/Сертификат взрывозащ�
 import certSiPdf from '../assets/Сертификат СИ КУТ300-АК.pdf';
 import trTs020Pdf from '../assets/ТР ТС 020 на КУТ300-АК.pdf';
 import DocumentList from '../components/DocumentList';
+import ZoomableImage from '../components/ZoomableImage';
 
 const productDocuments = [
   {
@@ -47,12 +48,17 @@ export default function ProductsA2({ setActivePage }) {
     }, 0);
   };
 
-  const renderImage = (imgSrc, altText) => {
-    if (typeof imgSrc === 'string' && (imgSrc.startsWith('/') || imgSrc.startsWith('data:image') || imgSrc.startsWith('blob:'))) {
-      return <img src={imgSrc} alt={altText} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />;
-    }
-    if (typeof imgSrc === 'object' && imgSrc !== null) {
-      return <img src={imgSrc} alt={altText} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />;
+  const renderImage = (imgSrc, altText, zoomable = true) => {
+    const imgStyle = { width: '100%', height: '100%', objectFit: 'contain' };
+    const isValidString = typeof imgSrc === 'string'
+      && (imgSrc.startsWith('/') || imgSrc.startsWith('data:image') || imgSrc.startsWith('blob:'));
+    const isValidImport = typeof imgSrc === 'object' && imgSrc !== null;
+
+    if (isValidString || isValidImport) {
+      if (zoomable) {
+        return <ZoomableImage src={imgSrc} alt={altText} />;
+      }
+      return <img src={imgSrc} alt={altText} style={imgStyle} draggable={false} />;
     }
     return <span style={{ fontSize: '12px', color: '#64748b', textAlign: 'center', padding: '10px' }}>Фото будет добавлено</span>;
   };
@@ -259,6 +265,7 @@ export default function ProductsA2({ setActivePage }) {
                     {componentsData.map((comp) => (
                       <button
                         key={comp.id}
+                        type="button"
                         onClick={() => openComponent(comp)}
                         style={{
                           textAlign: 'left',
@@ -270,7 +277,9 @@ export default function ProductsA2({ setActivePage }) {
                           transition: 'transform 0.2s, border-color 0.2s, box-shadow 0.2s',
                           display: 'flex',
                           flexDirection: 'column',
-                          gap: '12px'
+                          gap: '12px',
+                          font: 'inherit',
+                          width: '100%',
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'translateY(-3px)';
@@ -294,9 +303,9 @@ export default function ProductsA2({ setActivePage }) {
                           color: '#64748b',
                           border: '1px solid #f3f4f6',
                           boxSizing: 'border-box',
-                          overflow: 'hidden'
+                          overflow: 'hidden',
                         }}>
-                          {renderImage(comp.img, comp.title)}
+                          {renderImage(comp.img, comp.title, false)}
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' }}>
                           <h3 style={{ color: '#c9a227', fontSize: '16px', margin: 0, fontWeight: 'bold' }}>{comp.id}</h3>
