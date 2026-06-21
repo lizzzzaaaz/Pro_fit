@@ -1,104 +1,258 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import emblemImg from '../assets/эмблема.png';
+import { colors, fonts } from '../theme';
+import { telemetryComplexPages } from '../pages/telemetryComplexesData';
+import { explosionBarrierPages } from '../pages/explosionBarriersData';
+import { softwareProductPages } from '../pages/softwareProductsData';
+
+const productLinks = [
+  { page: 'industrial-controllers', label: 'Промышленные контроллеры' },
+  { page: 'autonomous-telemetry', label: 'Комплексы телеметрии' },
+  { page: 'power-modules', label: 'Барьеры искрозащиты' },
+  { page: 'software-products', label: 'Программное обеспечение' },
+];
+
+const companyLinks = [
+  { page: 'about', label: 'О компании' },
+  { page: 'certificates', label: 'Сертификаты и лицензии' },
+];
+
+const companyPages = companyLinks.map(({ page }) => page);
+
+const menuItems = [
+  { id: 'main', label: 'Главная' },
+  {
+    id: 'products-catalog',
+    label: 'Продукция',
+    dropdown: 'products',
+    landingPage: 'products-catalog',
+    links: productLinks,
+  },
+  { id: 'services', label: 'Услуги' },
+  { id: 'contacts', label: 'Контакты' },
+  {
+    id: 'company',
+    label: 'Компания',
+    dropdown: 'company',
+    landingPage: 'about',
+    links: companyLinks,
+  },
+];
 
 function Header({ activePage, setActivePage }) {
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
 
-  const menuItems = [
-    { id: 'services', label: 'Услуги' },
-    { id: 'products-catalog', label: 'Продукция' },
-    { id: 'contacts', label: 'Контакты' },
-    { id: 'support', label: 'Тех поддержка' },
-    { id: 'about', label: 'О компании' }
-  ];
+  const isProductsActive = [
+    'products-catalog',
+    'industrial-controllers',
+    'autonomous-telemetry',
+    'power-modules',
+    'software-products',
+    'products-a1',
+    'products-a2',
+    'products-a3',
+    ...telemetryComplexPages,
+    ...explosionBarrierPages,
+    ...softwareProductPages,
+  ].includes(activePage);
+
+  const isCompanyActive = companyPages.includes(activePage);
+
+  const navLinkStyle = (isActive) => ({
+    cursor: 'pointer',
+    fontFamily: fonts.base,
+    fontSize: '16px',
+    fontWeight: isActive ? '600' : '500',
+    letterSpacing: '0.02em',
+    color: isActive ? colors.darkBlue : colors.textMuted,
+    padding: '12px 4px',
+    borderBottom: isActive ? `2px solid ${colors.primary}` : '2px solid transparent',
+    transition: 'color 0.2s ease, border-color 0.2s ease',
+    whiteSpace: 'nowrap',
+  });
+
+  const renderDropdown = (item) => {
+    const isOpen = openDropdown === item.dropdown;
+    const isActive = item.dropdown === 'products' ? isProductsActive : isCompanyActive;
+
+    return (
+      <div
+        key={item.id}
+        style={{ position: 'relative' }}
+        onMouseEnter={() => setOpenDropdown(item.dropdown)}
+        onMouseLeave={() => setOpenDropdown(null)}
+      >
+        <span
+          onClick={() => setActivePage(item.landingPage)}
+          style={navLinkStyle(isActive || isOpen)}
+          onMouseEnter={(e) => { e.currentTarget.style.color = colors.darkBlue; }}
+          onMouseLeave={(e) => {
+            if (!isActive && !isOpen) e.currentTarget.style.color = colors.textMuted;
+          }}
+        >
+          {item.label}
+          <span style={{
+            display: 'inline-block',
+            marginLeft: '6px',
+            fontSize: '11px',
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s ease',
+            opacity: 0.7,
+          }}>
+            ▾
+          </span>
+        </span>
+
+        {isOpen && (
+          <div style={{
+            position: 'absolute',
+            top: '100%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            paddingTop: '12px',
+            minWidth: item.dropdown === 'company' ? '260px' : '320px',
+            zIndex: 1001,
+          }}>
+            <div style={{
+              backgroundColor: colors.white,
+              border: `1px solid ${colors.border}`,
+              borderRadius: '10px',
+              boxShadow: '0 10px 32px rgba(74, 67, 56, 0.12)',
+              overflow: 'hidden',
+            }}>
+              {item.links.map(({ page, label }) => {
+                const isItemActive = activePage === page;
+                return (
+                  <button
+                    key={page}
+                    type="button"
+                    onClick={() => {
+                      setActivePage(page);
+                      setOpenDropdown(null);
+                    }}
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      textAlign: 'left',
+                      background: isItemActive ? colors.lightBlueBg : colors.white,
+                      border: 'none',
+                      borderLeft: isItemActive ? `3px solid ${colors.primary}` : '3px solid transparent',
+                      borderBottom: `1px solid ${colors.borderLight}`,
+                      padding: '13px 18px 13px 16px',
+                      cursor: 'pointer',
+                      fontFamily: fonts.base,
+                      fontSize: '15px',
+                      fontWeight: isItemActive ? '600' : '500',
+                      color: isItemActive ? colors.darkBlue : colors.textMuted,
+                      transition: 'background 0.15s ease, color 0.15s ease, border-color 0.15s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = colors.lightBlueBg;
+                      e.currentTarget.style.color = colors.darkBlue;
+                      if (!isItemActive) e.currentTarget.style.borderLeftColor = colors.border;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = isItemActive ? colors.lightBlueBg : colors.white;
+                      e.currentTarget.style.color = isItemActive ? colors.darkBlue : colors.textMuted;
+                      e.currentTarget.style.borderLeftColor = isItemActive ? colors.primary : 'transparent';
+                    }}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
-    <header style={{ 
-      padding: '25px 40px', 
-      backgroundColor: '#1e293b', 
-      color: '#ffffff', 
-      display: 'flex', 
-      justifyContent: 'space-between', 
-      alignItems: 'center',
-      boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+    <header style={{
+      fontFamily: fonts.base,
+      backgroundColor: colors.white,
+      color: colors.text,
+      boxShadow: '0 2px 16px rgba(92, 83, 68, 0.08)',
+      borderBottom: `3px solid ${colors.primary}`,
       position: 'relative',
-      zIndex: 1000
+      zIndex: 1000,
     }}>
-      <div style={{ fontSize: '26px', fontWeight: '800', cursor: 'pointer' }} onClick={() => setActivePage('main')}>
-        Pro_fit
-      </div>
-      
-      <nav style={{ display: 'flex', gap: '30px' }}>
-        {menuItems.map(item => (
-          <div 
-            key={item.id} 
-            style={{ position: 'relative' }}
-            onMouseEnter={() => item.id === 'products-catalog' && setShowDropdown(true)}
-            onMouseLeave={() => item.id === 'products-catalog' && setShowDropdown(false)}
-          >
-            <span 
-              onClick={() => setActivePage(item.id)}
-              style={{ 
-                cursor: 'pointer', 
-                fontWeight: activePage === item.id ? '700' : '500', 
-                opacity: activePage === item.id ? '1' : '0.8',
-                paddingBottom: '4px',
-                borderBottom: activePage === item.id ? '2px solid #ffffff' : 'none',
-                transition: 'all 0.3s ease'
-              }}
-            >
-              {item.label} {item.id === 'products-catalog' && '▾'}
-            </span>
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '18px 40px',
+        display: 'grid',
+        gridTemplateColumns: '1fr auto 1fr',
+        alignItems: 'center',
+        gap: '24px',
+      }}>
+        <button
+          type="button"
+          onClick={() => setActivePage('main')}
+          style={{
+            justifySelf: 'start',
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <img
+            src={emblemImg}
+            alt="Профи-Т"
+            style={{ height: '68px', width: 'auto', display: 'block' }}
+          />
+        </button>
 
-            {/* Выпадающий список категорий продукции с буферной зоной */}
-            {item.id === 'products-catalog' && showDropdown && (
-              <div style={{
-                position: 'absolute',
-                top: '100%',
-                left: 0,
-                paddingTop: '15px',
-                zIndex: 1000
-              }}>
-                <div style={{
-                  backgroundColor: '#ffffff',
-                  color: '#0f172a',
-                  padding: '10px 0',
-                  borderRadius: '8px',
-                  boxShadow: '0 8px 16px rgba(0,0,0,0.15)',
-                  minWidth: '260px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  border: '1px solid #f1f5f9'
-                }}>
-                  <div 
-                    onClick={() => setActivePage('industrial-controllers')} 
-                    style={{ padding: '12px 20px', cursor: 'pointer', fontSize: '14px', transition: 'background 0.2s' }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = '#f8fafc'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    Промышленные контроллеры
-                  </div>
-                  <div 
-                    onClick={() => setActivePage('autonomous-telemetry')} 
-                    style={{ padding: '12px 20px', cursor: 'pointer', fontSize: '14px', transition: 'background 0.2s' }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = '#f8fafc'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    Автономные комплексы телеметрии
-                  </div>
-                  <div 
-                    onClick={() => setActivePage('power-modules')} 
-                    style={{ padding: '12px 20px', cursor: 'pointer', fontSize: '14px', transition: 'background 0.2s' }}
-                    onMouseEnter={(e) => e.target.style.backgroundColor = '#f8fafc'}
-                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                  >
-                    Источники и модули
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
-      </nav>
+        <nav style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '32px',
+        }}>
+          {menuItems.map((item) => {
+            if (item.dropdown) {
+              return renderDropdown(item);
+            }
+
+            const isActive = activePage === item.id;
+
+            return (
+              <span
+                key={item.id}
+                onClick={() => setActivePage(item.id)}
+                style={navLinkStyle(isActive)}
+                onMouseEnter={(e) => { e.currentTarget.style.color = colors.darkBlue; }}
+                onMouseLeave={(e) => {
+                  if (!isActive) e.currentTarget.style.color = colors.textMuted;
+                }}
+              >
+                {item.label}
+              </span>
+            );
+          })}
+        </nav>
+
+        <a
+          href="tel:+79619914470"
+          style={{
+            justifySelf: 'end',
+            fontFamily: fonts.base,
+            fontSize: '17px',
+            fontWeight: '700',
+            color: colors.darkBlue,
+            textDecoration: 'none',
+            whiteSpace: 'nowrap',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = colors.primary; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = colors.darkBlue; }}
+        >
+          +7 (961) 991-44-70
+        </a>
+      </div>
     </header>
   );
 }

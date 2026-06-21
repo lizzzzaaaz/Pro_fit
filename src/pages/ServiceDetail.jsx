@@ -1,6 +1,8 @@
 import React from 'react';
-import ServiceCard from '../components/ServiceCard'; 
-import { services } from './servicesData'; // Импортируем весь массив для фильтрации
+import ServiceCard from '../components/ServiceCard';
+import Breadcrumbs from '../components/Breadcrumbs';
+import { services } from './servicesData';
+import { colors, fonts } from '../theme';
 
 function ServiceDetail({ service, onServiceClick, onBack, setActivePage }) {
   if (!service) return null;
@@ -9,33 +11,25 @@ function ServiceDetail({ service, onServiceClick, onBack, setActivePage }) {
   const relatedServices = services.filter(s => s.id !== service.id);
 
   return (
-    <div style={{ backgroundColor: '#ffffff', minHeight: '100vh', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
+    <div style={{ backgroundColor: colors.pageBg, fontFamily: fonts.base }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 40px 80px 40px' }}>
         
-        {/* Хлебные крошки */}
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
-          marginBottom: '30px',
-          fontSize: '13px',
-          letterSpacing: '0.5px',
-          fontWeight: '500'
-        }}>
-          <div style={{ color: '#94a3b8' }}>
-            <span onClick={() => setActivePage('main')} style={{ cursor: 'pointer', color: '#7baaf7' }}>ГЛАВНАЯ</span>
-            <span style={{ margin: '0 8px', color: '#cbd5e1' }}>/</span>
-            <span onClick={onBack} style={{ cursor: 'pointer', color: '#7baaf7' }}>УСЛУГИ</span>
-            <span style={{ margin: '0 8px', color: '#cbd5e1' }}>/</span>
-            <span style={{ color: '#334155', fontWeight: '600', textTransform: 'uppercase' }}>{service.shortTitle || service.title}</span>
-          </div>
-
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', gap: '16px', flexWrap: 'wrap' }}>
+          <Breadcrumbs
+            setActivePage={setActivePage}
+            style={{ marginBottom: 0 }}
+            items={[
+              { label: 'ГЛАВНАЯ', page: 'main' },
+              { label: 'УСЛУГИ', onClick: onBack },
+              { label: (service.shortTitle || service.title).toUpperCase() },
+            ]}
+          />
           <button 
             onClick={onBack}
             style={{
-              backgroundColor: '#f1f5f9',
-              color: '#475569',
-              border: 'none',
+              backgroundColor: colors.lightBlueBg,
+              color: colors.textMuted,
+              border: `1px solid ${colors.border}`,
               padding: '8px 16px',
               borderRadius: '8px',
               fontSize: '13px',
@@ -43,45 +37,44 @@ function ServiceDetail({ service, onServiceClick, onBack, setActivePage }) {
               cursor: 'pointer',
               transition: 'all 0.2s ease'
             }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#e2e8f0'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = '#f1f5f9'}
+            onMouseEnter={(e) => e.target.style.backgroundColor = colors.borderLight}
+            onMouseLeave={(e) => e.target.style.backgroundColor = colors.lightBlueBg}
           >
             ← Все услуги
           </button>
         </div>
 
-        <hr style={{ border: 'none', borderTop: '1px solid #f1f5f9', marginBottom: '40px' }} />
+        <hr style={{ border: 'none', borderTop: `1px solid ${colors.border}`, marginBottom: '40px' }} />
 
-        <h1 style={{ fontSize: '32px', fontWeight: '800', color: '#0f172a', marginBottom: '25px', letterSpacing: '-0.5px' }}>
+        <h1 style={{ fontSize: '32px', fontWeight: '800', color: colors.text, marginBottom: '25px', letterSpacing: '-0.5px' }}>
           {service.title}
         </h1>
 
         <div style={{ 
           padding: '35px', 
-          backgroundColor: '#f8fafc', 
+          backgroundColor: colors.lightBlueBg, 
           borderRadius: '20px', 
           marginBottom: '60px',
-          color: '#334155',
+          color: colors.text,
           fontSize: '16px',
           lineHeight: '1.7',
           fontWeight: '400',
-          border: '1px solid #f1f5f9'
+          border: `1px solid ${colors.border}`
         }}>
           {service.description}
         </div>
 
         {/* Блок снизу: Другие услуги */}
-        <div style={{ marginTop: '60px', borderTop: '1px solid #f1f5f9', paddingTop: '50px' }}>
-          <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#0f172a', marginBottom: '25px' }}>
+        <div style={{ marginTop: '60px', borderTop: `1px solid ${colors.border}`, paddingTop: '50px' }}>
+          <h2 style={{ fontSize: '22px', fontWeight: '700', color: colors.text, marginBottom: '25px' }}>
             Другие услуги направления
           </h2>
 
           {/* Сетка для уменьшенных карточек */}
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(2, 1fr)', 
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
             gap: '30px',
-            maxWidth: '850px' // Ограничиваем общую ширину ряда, чтобы карточки были меньше основного размера
           }}>
             {relatedServices.map((s) => {
               // Ищем оригинальный индекс услуги в общем массиве, чтобы сохранить правильный номер (01, 02, 03) и картинку

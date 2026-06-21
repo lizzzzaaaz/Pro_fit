@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import MainPage from './pages/MainPage';
 import Services from './pages/Services';
 import Contacts from './pages/Contacts';
+import { About, Certificates } from './pages/CompanyPages';
 import ServiceDetail from './pages/ServiceDetail';
 
 // Импортируем страницы каталога продукции
 import ProductsCatalog from './pages/ProductsCatalog';
 import IndustrialControllers from './pages/IndustrialControllers';
 import AutonomousTelemetry from './pages/AutonomousTelemetry';
+import TelemetryComplexDetail from './pages/TelemetryComplexDetail';
+import { telemetryComplexPages } from './pages/telemetryComplexesData';
+import { explosionBarrierPages, getExplosionBarrier } from './pages/explosionBarriersData';
+import { softwareProductPages, getSoftwareProduct } from './pages/softwareProductsData';
 import PowerAndModules from './pages/PowerAndModules';
+import SoftwareProducts from './pages/SoftwareProducts';
 
 // Детальные страницы товаров
 import ProductsA1 from './pages/ProductsA1'; 
 import ProductsA2 from './pages/ProductsA2'; 
+import ProductsA3 from './pages/ProductsA3';
 
 import { services } from './pages/servicesData'; 
 
@@ -22,14 +30,18 @@ function MainApp() {
   const [currentPage, setCurrentPage] = useState('main');
   const [activeServiceId, setActiveServiceId] = useState(null);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage, activeServiceId]);
+
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#06080f' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column' }}>
       <Header activePage={currentPage} setActivePage={setCurrentPage} />
-      <main>
+      <main style={{ flex: 1 }}>
         
         {/* СТРАНИЦЫ КАТАЛОГА ПРОДУКЦИИ */}
         
-        {/* Главная страница Продукции (плитка из 3 категорий) */}
+        {/* Главная страница Продукции (плитка из 4 категорий) */}
         {currentPage === 'products-catalog' && (
           <ProductsCatalog setActivePage={setCurrentPage} />
         )}
@@ -39,15 +51,58 @@ function MainApp() {
           <IndustrialControllers setActivePage={setCurrentPage} />
         )}
 
-        {/* 2. Категория: Автономные комплексы телеметрии */}
+        {/* 2. Категория: Комплексы телеметрии */}
         {currentPage === 'autonomous-telemetry' && (
           <AutonomousTelemetry setActivePage={setCurrentPage} />
         )}
 
-        {/* 3. Категория: Источники и модули */}
+        {telemetryComplexPages.map((pageId) => (
+          currentPage === pageId && (
+            <TelemetryComplexDetail
+              key={pageId}
+              setActivePage={setCurrentPage}
+              pageId={pageId}
+            />
+          )
+        ))}
+
+        {explosionBarrierPages.map((pageId) => (
+          currentPage === pageId && (
+            <TelemetryComplexDetail
+              key={pageId}
+              setActivePage={setCurrentPage}
+              pageId={pageId}
+              getItem={getExplosionBarrier}
+              listPage="power-modules"
+              listBreadcrumb="БАРЬЕРЫ ИСКРОЗАЩИТЫ"
+              backLabel="← К списку барьеров"
+            />
+          )
+        ))}
+
+        {/* 3. Категория: Барьеры искрозащиты */}
         {currentPage === 'power-modules' && (
           <PowerAndModules setActivePage={setCurrentPage} />
         )}
+
+        {/* 4. Категория: Программное обеспечение */}
+        {currentPage === 'software-products' && (
+          <SoftwareProducts setActivePage={setCurrentPage} />
+        )}
+
+        {softwareProductPages.map((pageId) => (
+          currentPage === pageId && (
+            <TelemetryComplexDetail
+              key={pageId}
+              setActivePage={setCurrentPage}
+              pageId={pageId}
+              getItem={getSoftwareProduct}
+              listPage="software-products"
+              listBreadcrumb="ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ"
+              backLabel="← К списку ПО"
+            />
+          )
+        ))}
 
         {/* Детальная страница 1: КУТ300-ПК */}
         {currentPage === 'products-a1' && (
@@ -57,6 +112,11 @@ function MainApp() {
         {/* Детальная страница 2: КУТ300-АК */}
         {currentPage === 'products-a2' && (
           <ProductsA2 setActivePage={setCurrentPage} />
+        )}
+
+        {/* Детальная страница 3: КУТ300-А42 */}
+        {currentPage === 'products-a3' && (
+          <ProductsA3 setActivePage={setCurrentPage} />
         )}
 
         {/* СТРАНИЦЫ УСЛУГ И ОСНОВНЫЕ РАЗДЕЛЫ */}
@@ -87,14 +147,17 @@ function MainApp() {
         
         {currentPage === 'contacts' && <Contacts setActivePage={setCurrentPage} />}
 
-        {/* Заглушки для страниц в разработке */}
-        {['support', 'about'].includes(currentPage) && (
-          <div style={{ padding: '80px 40px', color: '#fff', fontFamily: 'Arial, sans-serif' }}>
-            <h1>Страница "{currentPage}" в разработке</h1>
+        {currentPage === 'about' && <About setActivePage={setCurrentPage} />}
+        {currentPage === 'certificates' && <Certificates setActivePage={setCurrentPage} />}
+
+        {currentPage === 'support' && (
+          <div style={{ padding: '80px 40px', color: '#0f172a', fontFamily: 'Arial, sans-serif', backgroundColor: '#ffffff' }}>
+            <h1>Страница «Поддержка» в разработке</h1>
           </div>
         )}
 
       </main>
+      <Footer setActivePage={setCurrentPage} />
     </div>
   );
 }

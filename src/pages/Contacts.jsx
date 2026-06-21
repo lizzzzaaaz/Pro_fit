@@ -1,71 +1,248 @@
-import React from 'react';
+import Breadcrumbs from '../components/Breadcrumbs';
+import RequisitesBlock from '../components/RequisitesBlock';
+import { companyRequisites, YANDEX_MAPS_URL, YANDEX_MAP_EMBED } from '../data/companyRequisites';
+import { colors, fonts } from '../theme';
 
 function Contacts({ setActivePage }) {
-  const labelStyle = { fontWeight: '700', color: '#0f172a', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '1px', fontSize: '11px' };
-  const textStyle = { color: '#475569', margin: '0 0 24px 0', fontSize: '15px', lineHeight: '1.6' };
+  const labelStyle = {
+    fontWeight: '700',
+    color: colors.primary,
+    marginBottom: '12px',
+    textTransform: 'uppercase',
+    letterSpacing: '0.08em',
+    fontSize: '11px',
+  };
+
+  const textStyle = {
+    color: colors.textMuted,
+    margin: 0,
+    fontSize: '15px',
+    lineHeight: '1.6',
+  };
+
+  const cardStyle = {
+    backgroundColor: colors.white,
+    borderRadius: '12px',
+    padding: '22px 24px',
+    border: `1px solid rgba(92, 83, 68, 0.12)`,
+    borderLeft: `4px solid ${colors.primary}`,
+    boxShadow: '0 4px 16px rgba(74, 67, 56, 0.06)',
+    height: '100%',
+    boxSizing: 'border-box',
+  };
+
+  const phoneLinkStyle = {
+    display: 'block',
+    fontWeight: '700',
+    color: colors.darkBlue,
+    fontSize: '15px',
+    textDecoration: 'none',
+    marginBottom: '6px',
+    transition: 'color 0.2s ease',
+  };
 
   return (
-    <div style={{ backgroundColor: '#fcfcfc', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
-      
-      {/* Крошки - исправлено: добавлен onClick */}
-      <div style={{ backgroundColor: '#fff', borderBottom: '1px solid #f0f0f0' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '16px 40px', fontSize: '14px', color: '#64748b' }}>
-          <span style={{ color: '#0070f3', cursor: 'pointer', fontWeight: '500' }} onClick={() => setActivePage('main')}>Главная</span>
-          <span style={{ margin: '0 12px', color: '#cbd5e1' }}>/</span>
-          <span style={{ color: '#1e293b', fontWeight: '500' }}>Контакты</span>
-        </div>
-      </div>
+    <div style={{ backgroundColor: colors.pageBg, fontFamily: fonts.base, padding: '40px 0 80px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+        <Breadcrumbs
+          setActivePage={setActivePage}
+          items={[
+            { label: 'ГЛАВНАЯ', page: 'main' },
+            { label: 'КОНТАКТЫ' },
+          ]}
+        />
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '60px 40px' }}>
-        <h1 style={{ fontSize: '38px', fontWeight: '800', color: '#111', margin: '0 0 40px 0', letterSpacing: '-1px' }}>Контакты</h1>
+        <header style={{
+          margin: '8px 0 32px 0',
+          paddingBottom: '24px',
+          borderBottom: `2px solid ${colors.darkBlue}`,
+        }}>
+          <h1 style={{
+            margin: '0 0 8px 0',
+            fontSize: '28px',
+            fontWeight: '800',
+            color: colors.text,
+            letterSpacing: '-0.02em',
+          }}>
+            Контакты
+          </h1>
+          <p style={{ margin: 0, fontSize: '15px', color: colors.textMuted }}>
+            {companyRequisites.shortName}
+          </p>
+        </header>
 
-        <div style={{ backgroundColor: '#fff', borderRadius: '16px', padding: '45px', boxShadow: '0 10px 40px rgba(0,0,0,0.01)', border: '1px solid #eef2f6', display: 'flex', gap: '60px' }}>
-          
-          {/* Инфо */}
-          <div style={{ flex: '1' }}>
-            <div style={{ display: 'flex', gap: '20px', alignItems: 'center', backgroundColor: '#f8fafc', padding: '20px', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '35px' }}>
-              <div style={{ width: '60px', height: '60px', backgroundColor: '#cbd5e1', borderRadius: '50%' }}></div>
-              <div>
-                <p style={{ margin: '0 0 2px 0', color: '#0070f3', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>Генеральный директор</p>
-                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '700' }}>Алексеев Пётр Валентинович</h3>
-                <p style={{ margin: '4px 0 0 0', color: '#64748b', fontSize: '14px' }}>ceo@pro-fit.ru</p>
-              </div>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr) minmax(280px, 1.05fr)',
+          gap: '20px',
+          alignItems: 'stretch',
+          marginBottom: '28px',
+        }}>
+          <div style={{
+            ...cardStyle,
+            borderLeft: 'none',
+            background: `linear-gradient(135deg, ${colors.darkBlue} 0%, ${colors.darkBlueDeep} 100%)`,
+            display: 'flex',
+            gap: '16px',
+            alignItems: 'flex-start',
+            boxShadow: '0 8px 24px rgba(74, 67, 56, 0.15)',
+          }}>
+            <div style={{
+              width: '52px',
+              height: '52px',
+              flexShrink: 0,
+              borderRadius: '50%',
+              border: `2px solid rgba(201, 162, 39, 0.5)`,
+              backgroundColor: 'rgba(201, 162, 39, 0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '16px',
+              fontWeight: '800',
+              color: colors.lightBlue,
+            }}>
+              РЛ
             </div>
-
-            <p style={labelStyle}>Официальное название:</p>
-            <p style={textStyle}>ООО "Про_фит Разработки"</p>
-            
-            <p style={labelStyle}>Адрес головного офиса:</p>
-            <p style={textStyle}>350059, г. Краснодар, ул. Стасова, д. 10, офис 402</p>
-
-            <div style={{ display: 'flex', gap: '30px' }}>
-              <div style={{ flex: '1' }}>
-                <p style={labelStyle}>Телефон приёмной:</p>
-                <p style={{ ...textStyle, fontWeight: '700', color: '#1e293b', fontSize: '17px' }}>+7 (861) 999-22-33</p>
-              </div>
-              <div style={{ flex: '1' }}>
-                <p style={labelStyle}>Режим работы:</p>
-                <p style={textStyle}>Пн — Пт: с 9:00 до 18:00</p>
-              </div>
+            <div>
+              <p style={{
+                margin: '0 0 6px 0',
+                color: colors.lightBlue,
+                fontSize: '11px',
+                fontWeight: '700',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+              }}>
+                {companyRequisites.director.title}
+              </p>
+              <h3 style={{
+                margin: '0 0 6px 0',
+                fontSize: '17px',
+                fontWeight: '700',
+                color: colors.white,
+                lineHeight: '1.35',
+              }}>
+                {companyRequisites.director.name}
+              </h3>
+              <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.72)', fontSize: '13px', lineHeight: '1.5' }}>
+                {companyRequisites.director.basis}
+              </p>
             </div>
+          </div>
 
-            <p style={labelStyle}>Электронная почта:</p>
-            <p style={{ ...textStyle, marginBottom: 0 }}>
-              sales@pro-fit.ru — Отдел продаж<br />
-              support@pro-fit.ru — Техническая поддержка
+          <div style={cardStyle}>
+            <p style={labelStyle}>Организация</p>
+            <p style={{ ...textStyle, marginBottom: '8px', fontWeight: '600', color: colors.text }}>
+              {companyRequisites.shortName}
             </p>
+            <p style={{ ...textStyle, fontSize: '14px' }}>{companyRequisites.fullName}</p>
           </div>
 
-          {/* Карта */}
-          <div style={{ flex: '1.1', border: '1px solid #eef2f6', borderRadius: '12px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #eef2f6', padding: '14px 20px', fontWeight: '600', fontSize: '14px', color: '#1e293b' }}>📍 Карта Краснодара</div>
-            <div style={{ flex: '1', backgroundColor: '#f1f5f9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#64748b', minHeight: '380px' }}>
-              <span style={{ fontWeight: '600', color: '#1e293b' }}>Интерактивная карта</span>
-              <span style={{ fontSize: '13px', color: '#94a3b8', marginTop: '4px' }}>ул. Стасова, 10</span>
+          <div style={{
+            ...cardStyle,
+            padding: 0,
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            gridRow: 'span 2',
+            borderLeft: 'none',
+          }}>
+            <div style={{
+              background: `linear-gradient(135deg, ${colors.darkBlue} 0%, ${colors.darkBlueDeep} 100%)`,
+              padding: '14px 20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '12px',
+              flexWrap: 'wrap',
+            }}>
+              <span style={{ fontWeight: '700', fontSize: '14px', color: colors.white }}>
+                Карта офиса
+              </span>
+              <a
+                href={YANDEX_MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: '13px', fontWeight: '600', color: colors.lightBlue, textDecoration: 'none' }}
+              >
+                Яндекс Карты →
+              </a>
             </div>
+            <iframe
+              title="Офис на карте — ул. Стасова, 182б, Краснодар"
+              src={YANDEX_MAP_EMBED}
+              style={{ display: 'block', width: '100%', flex: 1, minHeight: '320px', border: 'none' }}
+              loading="lazy"
+              allowFullScreen
+            />
           </div>
 
+          <div style={cardStyle}>
+            <p style={labelStyle}>Связь</p>
+            <p style={{ ...textStyle, marginBottom: '12px', fontSize: '13px', fontWeight: '600', color: colors.text }}>
+              Телефоны
+            </p>
+            {companyRequisites.phones.map((phone, i) => (
+              <a
+                key={phone}
+                href={companyRequisites.phoneLinks[i]}
+                style={phoneLinkStyle}
+                onMouseEnter={(e) => { e.currentTarget.style.color = colors.primary; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = colors.darkBlue; }}
+              >
+                {phone}
+              </a>
+            ))}
+            <p style={{ ...textStyle, margin: '14px 0 8px 0', fontSize: '13px', fontWeight: '600', color: colors.text }}>
+              E-mail
+            </p>
+            <a
+              href={`mailto:${companyRequisites.email}`}
+              style={{ color: colors.primary, fontWeight: '600', textDecoration: 'none', fontSize: '15px' }}
+            >
+              {companyRequisites.email}
+            </a>
+            <p style={{ ...textStyle, margin: '16px 0 8px 0', fontSize: '13px', fontWeight: '600', color: colors.text }}>
+              Контактное лицо
+            </p>
+            <p style={{ ...textStyle, marginBottom: '6px', fontSize: '14px' }}>
+              {companyRequisites.contactPerson.name}
+            </p>
+            <a
+              href={companyRequisites.contactPerson.phoneLink}
+              style={{ ...phoneLinkStyle, marginBottom: 0 }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = colors.primary; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = colors.darkBlue; }}
+            >
+              {companyRequisites.contactPerson.phone}
+            </a>
+          </div>
+
+          <div style={cardStyle}>
+            <p style={labelStyle}>Адреса</p>
+            <p style={{ ...textStyle, marginBottom: '14px' }}>
+              <span style={{ display: 'block', fontWeight: '600', color: colors.text, marginBottom: '4px', fontSize: '13px' }}>
+                Юридический
+              </span>
+              {companyRequisites.legalAddress}
+            </p>
+            <p style={{ ...textStyle, marginBottom: '14px' }}>
+              <span style={{ display: 'block', fontWeight: '600', color: colors.text, marginBottom: '4px', fontSize: '13px' }}>
+                Для корреспонденции
+              </span>
+              {companyRequisites.mailAddress}
+            </p>
+            <a
+              href={YANDEX_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: colors.primary, fontSize: '14px', fontWeight: '600', textDecoration: 'none' }}
+            >
+              Открыть в Яндекс Картах →
+            </a>
+          </div>
         </div>
+
+        <RequisitesBlock />
       </div>
     </div>
   );
