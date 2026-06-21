@@ -61,11 +61,11 @@ function Header({ activePage, setActivePage }) {
   const navLinkStyle = (isActive) => ({
     cursor: 'pointer',
     fontFamily: fonts.base,
-    fontSize: '14px',
+    fontSize: '16px',
     fontWeight: isActive ? '600' : '500',
     letterSpacing: '0.02em',
     color: isActive ? colors.darkBlue : colors.textMuted,
-    padding: '10px 4px',
+    padding: '12px 4px',
     borderBottom: isActive ? `2px solid ${colors.primary}` : '2px solid transparent',
     transition: 'color 0.2s ease, border-color 0.2s ease',
     whiteSpace: 'nowrap',
@@ -94,7 +94,7 @@ function Header({ activePage, setActivePage }) {
           <span style={{
             display: 'inline-block',
             marginLeft: '6px',
-            fontSize: '10px',
+            fontSize: '11px',
             transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
             transition: 'transform 0.2s ease',
             opacity: 0.7,
@@ -141,7 +141,7 @@ function Header({ activePage, setActivePage }) {
                       padding: '13px 18px 13px 16px',
                       cursor: 'pointer',
                       fontFamily: fonts.base,
-                      fontSize: '14px',
+                      fontSize: '15px',
                       fontWeight: isItemActive ? '600' : '500',
                       color: isItemActive ? colors.darkBlue : colors.textMuted,
                       transition: 'background 0.15s ease, color 0.15s ease, border-color 0.15s ease',
@@ -181,7 +181,7 @@ function Header({ activePage, setActivePage }) {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '12px 40px',
+        padding: '18px 40px',
         display: 'grid',
         gridTemplateColumns: '1fr auto 1fr',
         alignItems: 'center',
@@ -203,7 +203,7 @@ function Header({ activePage, setActivePage }) {
           <img
             src={emblemImg}
             alt="Профи-Т"
-            style={{ height: '52px', width: 'auto', display: 'block' }}
+            style={{ height: '68px', width: 'auto', display: 'block' }}
           />
         </button>
 
@@ -211,7 +211,7 @@ function Header({ activePage, setActivePage }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '28px',
+          gap: '32px',
         }}>
           {menuItems.map((item) => {
             if (item.dropdown) {
@@ -241,7 +241,7 @@ function Header({ activePage, setActivePage }) {
           style={{
             justifySelf: 'end',
             fontFamily: fonts.base,
-            fontSize: '15px',
+            fontSize: '17px',
             fontWeight: '700',
             color: colors.darkBlue,
             textDecoration: 'none',
