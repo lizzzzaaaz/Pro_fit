@@ -11,8 +11,8 @@ export default function LegalDocumentPage({ setActivePage, pageId }) {
   }
 
   return (
-    <div style={{ backgroundColor: colors.white, fontFamily: fonts.base, padding: '40px 0 80px' }}>
-      <div style={{ maxWidth: '860px', margin: '0 auto', padding: '0 40px' }}>
+    <div className="page-shell" style={{ backgroundColor: colors.white, fontFamily: fonts.base, padding: '40px 0 80px' }}>
+      <div className="page-container" style={{ maxWidth: '860px', margin: '0 auto', padding: '0 40px' }}>
         <Breadcrumbs
           setActivePage={setActivePage}
           items={[
@@ -33,7 +33,7 @@ export default function LegalDocumentPage({ setActivePage, pageId }) {
           {doc.intro}
         </p>
 
-        <div style={{
+        <div className="content-card" style={{
           backgroundColor: colors.white,
           border: `1px solid ${colors.border}`,
           borderRadius: '12px',

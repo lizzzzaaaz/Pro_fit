@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import DocumentList from '../components/DocumentList';
 import ZoomableImage from '../components/ZoomableImage';
-import { colors, fonts } from '../theme';
+import { colors, fonts, backButtonStyle } from '../theme';
 import { getTelemetryComplex } from './telemetryComplexesData';
 
 const defaultCatalog = {
@@ -133,8 +133,8 @@ export default function TelemetryComplexDetail({
   });
 
   return (
-    <div style={{ backgroundColor: colors.pageBg, padding: '40px 0 80px', fontFamily: fonts.base }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', color: colors.text }}>
+    <div className="page-shell" style={{ backgroundColor: colors.pageBg, padding: '40px 0 80px', fontFamily: fonts.base }}>
+      <div className="page-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', color: colors.text }}>
         <Breadcrumbs
           setActivePage={setActivePage}
           items={[
@@ -149,15 +149,7 @@ export default function TelemetryComplexDetail({
           <button
             type="button"
             onClick={() => setActivePage(listPage)}
-            style={{
-              padding: '12px 24px',
-              backgroundColor: colors.lightBlueBg,
-              border: `1px solid ${colors.border}`,
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontWeight: '600',
-              fontFamily: fonts.base,
-            }}
+            style={backButtonStyle}
           >
             {backLabel}
           </button>
@@ -172,7 +164,7 @@ export default function TelemetryComplexDetail({
           </button>
         </div>
 
-        <div style={{
+        <div className="content-card" style={{
           backgroundColor: colors.white,
           padding: '30px',
           borderRadius: '16px',
@@ -185,7 +177,7 @@ export default function TelemetryComplexDetail({
                 {item.cardTitle}
               </h1>
 
-              <div style={{
+              <div className="grid-detail" style={{
                 display: 'grid',
                 gridTemplateColumns: gridColumns,
                 gap: '30px',

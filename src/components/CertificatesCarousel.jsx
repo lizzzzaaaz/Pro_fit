@@ -1,38 +1,115 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import * as pdfjs from 'pdfjs-dist';
+import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import { colors, fonts } from '../theme';
 
+pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
+
 const CARD_WIDTH = 220;
-const CARD_HEIGHT = Math.round(CARD_WIDTH * (4.2 / 3));
-const SCROLLBAR_CLIP = 24;
-const CARD_GAP = 24;
+const CARD_GAP = 20;
 
 function CertificatePreview({ href, title }) {
+  const wrapRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    let renderTask = null;
+    let lastWidth = 0;
+
+    const renderPage = async () => {
+      const wrap = wrapRef.current;
+      const canvas = canvasRef.current;
+      if (!wrap || !canvas) return;
+
+      const wrapWidth = wrap.clientWidth || CARD_WIDTH;
+      if (Math.abs(wrapWidth - lastWidth) < 2 && canvas.width > 0) return;
+      lastWidth = wrapWidth;
+
+      setFailed(false);
+
+      try {
+        const doc = await pdfjs.getDocument(href).promise;
+        if (cancelled) return;
+
+        const page = await doc.getPage(1);
+        if (cancelled) return;
+
+        const baseViewport = page.getViewport({ scale: 1 });
+        const scale = wrapWidth / baseViewport.width;
+        const viewport = page.getViewport({ scale });
+
+        const context = canvas.getContext('2d');
+        canvas.width = Math.floor(viewport.width);
+        canvas.height = Math.floor(viewport.height);
+
+        renderTask = page.render({ canvasContext: context, viewport });
+        await renderTask.promise;
+      } catch {
+        if (!cancelled) setFailed(true);
+      }
+    };
+
+    renderPage();
+
+    const observer = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(() => { renderPage(); })
+      : null;
+
+    if (observer && wrapRef.current) {
+      observer.observe(wrapRef.current);
+    }
+
+    return () => {
+      cancelled = true;
+      renderTask?.cancel?.();
+      observer?.disconnect();
+    };
+  }, [href]);
+
   return (
-    <div style={{
-      width: '100%',
-      height: `${CARD_HEIGHT}px`,
-      backgroundColor: colors.white,
-      border: `1px solid ${colors.border}`,
-      overflow: 'hidden',
-      position: 'relative',
-      boxSizing: 'border-box',
-    }}>
-      <iframe
-        title={title}
-        src={`${href}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
-        scrolling="no"
-        tabIndex={-1}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: `${CARD_WIDTH + SCROLLBAR_CLIP}px`,
-          height: `${CARD_HEIGHT}px`,
-          border: 'none',
-          pointerEvents: 'none',
-          overflow: 'hidden',
-        }}
-      />
+    <div
+      ref={wrapRef}
+      className="cert-preview"
+      style={{
+        width: '100%',
+        backgroundColor: colors.white,
+        border: `1px solid ${colors.border}`,
+        borderRadius: '6px',
+        overflow: 'hidden',
+        position: 'relative',
+        boxSizing: 'border-box',
+      }}
+    >
+      {!failed ? (
+        <canvas
+          ref={canvasRef}
+          title={title}
+          style={{
+            width: '100%',
+            height: 'auto',
+            display: 'block',
+          }}
+        />
+      ) : (
+        <div style={{ aspectRatio: '210 / 297', position: 'relative' }}>
+          <iframe
+            title={title}
+            src={`${href}#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+            scrolling="no"
+            tabIndex={-1}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              border: 'none',
+              pointerEvents: 'none',
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -44,23 +121,28 @@ function CertificateCard({ title, href, fileName, fullWidth = false }) {
       target="_blank"
       rel="noopener noreferrer"
       download={fileName}
+      className={fullWidth ? 'certificate-card certificate-card--grid' : 'certificate-card'}
       style={{
         flex: fullWidth ? undefined : `0 0 ${CARD_WIDTH}px`,
         width: fullWidth ? '100%' : undefined,
         textDecoration: 'none',
-        color: 'inherit',
+        color: colors.text,
         display: 'block',
+        minWidth: 0,
       }}
     >
       <CertificatePreview href={href} title={title} />
-      <p style={{
-        margin: '12px 0 0 0',
-        fontSize: '13px',
-        lineHeight: '1.45',
-        textAlign: 'center',
-        color: colors.textMuted,
-        fontFamily: fonts.base,
-      }}>
+      <p
+        className="certificate-card__title"
+        style={{
+          margin: '10px 0 0 0',
+          fontSize: '13px',
+          lineHeight: '1.45',
+          textAlign: 'center',
+          color: colors.textMuted,
+          fontFamily: fonts.base,
+        }}
+      >
         {title}
       </p>
     </a>
@@ -142,12 +224,12 @@ export default function CertificatesCarousel({
               borderRadius: '999px',
               border: `1px solid ${colors.primary}`,
               backgroundColor: colors.white,
-              color: colors.primary,
+              color: colors.text,
               fontSize: '14px',
               fontWeight: '600',
               cursor: 'pointer',
               fontFamily: fonts.base,
-              transition: 'background-color 0.2s, color 0.2s',
+              transition: 'background-color 0.2s, color 0.2s, border-color 0.2s',
               whiteSpace: 'nowrap',
             }}
             onMouseEnter={(e) => {
@@ -156,7 +238,7 @@ export default function CertificatesCarousel({
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = colors.white;
-              e.currentTarget.style.color = colors.primary;
+              e.currentTarget.style.color = colors.text;
             }}
           >
             Смотреть все
@@ -166,6 +248,7 @@ export default function CertificatesCarousel({
 
       <div
         ref={trackRef}
+        className="certificates-track"
         style={{
           display: 'flex',
           gap: `${CARD_GAP}px`,
@@ -186,11 +269,7 @@ export default function CertificatesCarousel({
 
 export function CertificatesGrid({ items }) {
   return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: `repeat(auto-fill, minmax(${CARD_WIDTH}px, 1fr))`,
-      gap: '28px 24px',
-    }}>
+    <div className="certificates-grid">
       {items.map((item) => (
         <CertificateCard key={item.id} {...item} fullWidth />
       ))}

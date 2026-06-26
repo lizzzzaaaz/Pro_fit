@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
 import DocumentList from '../components/DocumentList';
 import ZoomableImage from '../components/ZoomableImage';
+import { colors, fonts, backButtonStyle } from '../theme';
 import mainImg from '../assets/КУТ300-А42.png';
 import passportPdf from '../assets/12_КУТ300-А42 _ ПС.pdf';
 import { appendSt1 } from '../data/st1Certificate';
@@ -28,7 +29,7 @@ export default function ProductsA3({ setActivePage }) {
   const [activeTab, setActiveTab] = useState('main');
 
   return (
-    <div style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: '#0f172a', fontFamily: 'sans-serif', backgroundColor: '#ffffff' }}>
+    <div className="page-shell page-container" style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: '#0f172a', fontFamily: 'sans-serif', backgroundColor: '#ffffff' }}>
       <Breadcrumbs
         setActivePage={setActivePage}
         items={[
@@ -40,7 +41,7 @@ export default function ProductsA3({ setActivePage }) {
       />
 
       <div style={{ marginBottom: '25px' }}>
-        <button onClick={() => setActivePage('industrial-controllers')} style={{ padding: '12px 24px', backgroundColor: '#f5f5f5', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+        <button type="button" onClick={() => setActivePage('industrial-controllers')} style={backButtonStyle}>
           ← К списку контроллеров
         </button>
       </div>
@@ -54,7 +55,7 @@ export default function ProductsA3({ setActivePage }) {
         {activeTab === 'main' && (
           <div style={{ marginBottom: '40px' }}>
             <h2 style={{ fontSize: '24px', color: '#c9a227', marginBottom: '15px' }}>КУТ300-А42</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '30px' }}>
+            <div className="grid-product-spec" style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '30px' }}>
               <div style={{
                 aspectRatio: '1 / 1',
                 width: '100%',

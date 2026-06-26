@@ -9,8 +9,8 @@ function Services({ onServiceClick, setActivePage }) {
   const bottomRow = services.slice(3);
 
   return (
-    <div style={{ backgroundColor: colors.pageBg, padding: '40px 0 80px 0', fontFamily: fonts.base }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+    <div className="page-shell" style={{ backgroundColor: colors.pageBg, padding: '40px 0 80px 0', fontFamily: fonts.base }}>
+      <div className="page-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
         <Breadcrumbs
           setActivePage={setActivePage}
           items={[
@@ -33,7 +33,7 @@ function Services({ onServiceClick, setActivePage }) {
         </h2>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-          <div style={{
+          <div className="grid-3" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '30px',
@@ -48,7 +48,7 @@ function Services({ onServiceClick, setActivePage }) {
             ))}
           </div>
 
-          <div style={{
+          <div className="grid-services-bottom grid-2" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
             gap: '30px',

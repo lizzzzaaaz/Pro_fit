@@ -25,8 +25,8 @@ export function About({ setActivePage }) {
   const { lead, fullText, directions } = companyAboutContent;
 
   return (
-    <div style={{ backgroundColor: colors.white, fontFamily: fonts.base, padding: '40px 0 80px' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+    <div className="page-shell" style={{ backgroundColor: colors.white, fontFamily: fonts.base, padding: '40px 0 80px' }}>
+      <div className="page-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
         <Breadcrumbs
           setActivePage={setActivePage}
           items={[
@@ -93,7 +93,7 @@ export function About({ setActivePage }) {
 
         <section style={{ marginBottom: '40px' }}>
           <h2 style={sectionTitleStyle}>Направления применения оборудования</h2>
-          <div style={{
+          <div className="grid-auto-cards" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
             gap: '20px',
@@ -176,8 +176,8 @@ export function About({ setActivePage }) {
 
 export function Certificates({ setActivePage }) {
   return (
-    <div style={{ backgroundColor: colors.white, fontFamily: fonts.base, padding: '40px 0 80px' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+    <div className="page-shell" style={{ backgroundColor: colors.white, fontFamily: fonts.base, padding: '40px 0 80px' }}>
+      <div className="page-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
         <Breadcrumbs
           setActivePage={setActivePage}
           items={[

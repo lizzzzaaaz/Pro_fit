@@ -5,8 +5,10 @@ const linkStyle = {
   border: 'none',
   padding: 0,
   cursor: 'pointer',
-  color: colors.primary,
+  color: colors.textMuted,
   font: 'inherit',
+  textDecoration: 'none',
+  transition: 'color 0.2s',
 };
 
 const containerStyle = {
@@ -39,6 +41,8 @@ export default function Breadcrumbs({ items, setActivePage, style }) {
                   else if (item.page) setActivePage(item.page);
                 }}
                 style={linkStyle}
+                onMouseEnter={(e) => { e.currentTarget.style.color = colors.darkBlue; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = colors.textMuted; }}
               >
                 {item.label}
               </button>

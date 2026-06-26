@@ -20,3 +20,17 @@ export const colors = {
 export const fonts = {
   base: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
 };
+
+/** Кнопка «назад» / «к списку» — явный цвет текста, без синего браузера по умолчанию */
+export const backButtonStyle = {
+  padding: '12px 24px',
+  backgroundColor: colors.lightBlueBg,
+  border: `1px solid ${colors.border}`,
+  borderRadius: '8px',
+  cursor: 'pointer',
+  fontWeight: '600',
+  fontFamily: fonts.base,
+  fontSize: '14px',
+  color: colors.text,
+  transition: 'background-color 0.2s, border-color 0.2s',
+};

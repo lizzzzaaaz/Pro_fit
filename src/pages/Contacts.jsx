@@ -42,8 +42,8 @@ function Contacts({ setActivePage }) {
   };
 
   return (
-    <div style={{ backgroundColor: colors.pageBg, fontFamily: fonts.base, padding: '40px 0 80px' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+    <div className="page-shell" style={{ backgroundColor: colors.pageBg, fontFamily: fonts.base, padding: '40px 0 80px' }}>
+      <div className="page-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
         <Breadcrumbs
           setActivePage={setActivePage}
           items={[
@@ -71,7 +71,7 @@ function Contacts({ setActivePage }) {
           </p>
         </header>
 
-        <div style={{
+        <div className="grid-contacts" style={{
           display: 'grid',
           gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr) minmax(280px, 1.05fr)',
           gap: '20px',
@@ -137,7 +137,7 @@ function Contacts({ setActivePage }) {
             <p style={{ ...textStyle, fontSize: '14px' }}>{companyRequisites.fullName}</p>
           </div>
 
-          <div style={{
+          <div className="contacts-map-cell" style={{
             ...cardStyle,
             padding: 0,
             overflow: 'hidden',

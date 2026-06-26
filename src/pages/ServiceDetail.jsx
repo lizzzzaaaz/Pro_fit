@@ -2,7 +2,7 @@ import React from 'react';
 import ServiceCard from '../components/ServiceCard';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { services } from './servicesData';
-import { colors, fonts } from '../theme';
+import { colors, fonts, backButtonStyle } from '../theme';
 
 function ServiceDetail({ service, onServiceClick, onBack, setActivePage }) {
   if (!service) return null;
@@ -11,10 +11,10 @@ function ServiceDetail({ service, onServiceClick, onBack, setActivePage }) {
   const relatedServices = services.filter(s => s.id !== service.id);
 
   return (
-    <div style={{ backgroundColor: colors.pageBg, fontFamily: fonts.base }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 40px 80px 40px' }}>
+    <div className="page-shell" style={{ backgroundColor: colors.pageBg, fontFamily: fonts.base }}>
+      <div className="page-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 40px 80px 40px' }}>
         
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', gap: '16px', flexWrap: 'wrap' }}>
+        <div className="breadcrumb-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', gap: '16px', flexWrap: 'wrap' }}>
           <Breadcrumbs
             setActivePage={setActivePage}
             style={{ marginBottom: 0 }}
@@ -25,20 +25,11 @@ function ServiceDetail({ service, onServiceClick, onBack, setActivePage }) {
             ]}
           />
           <button 
+            type="button"
             onClick={onBack}
-            style={{
-              backgroundColor: colors.lightBlueBg,
-              color: colors.textMuted,
-              border: `1px solid ${colors.border}`,
-              padding: '8px 16px',
-              borderRadius: '8px',
-              fontSize: '13px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = colors.borderLight}
-            onMouseLeave={(e) => e.target.style.backgroundColor = colors.lightBlueBg}
+            style={backButtonStyle}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = colors.borderLight; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = colors.lightBlueBg; }}
           >
             ← Все услуги
           </button>
@@ -46,7 +37,7 @@ function ServiceDetail({ service, onServiceClick, onBack, setActivePage }) {
 
         <hr style={{ border: 'none', borderTop: `1px solid ${colors.border}`, marginBottom: '40px' }} />
 
-        <h1 style={{ fontSize: '32px', fontWeight: '800', color: colors.text, marginBottom: '25px', letterSpacing: '-0.5px' }}>
+        <h1 className="responsive-heading-xl" style={{ fontSize: '32px', fontWeight: '800', color: colors.text, marginBottom: '25px', letterSpacing: '-0.5px' }}>
           {service.title}
         </h1>
 

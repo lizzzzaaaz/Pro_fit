@@ -28,12 +28,12 @@ const controllers = [
 
 export default function IndustrialControllers({ setActivePage }) {
   return (
-    <div style={{
+    <div className="page-shell" style={{
       backgroundColor: colors.pageBg,
       padding: '40px 0 80px 0',
       fontFamily: fonts.base,
     }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+      <div className="page-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
         <Breadcrumbs
           setActivePage={setActivePage}
           items={[
@@ -45,7 +45,7 @@ export default function IndustrialControllers({ setActivePage }) {
 
         <h1 style={{ margin: '0 0 30px 0', fontSize: '28px', color: colors.text }}>Промышленные контроллеры</h1>
 
-        <div style={{
+        <div className="grid-auto-cards" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
           gap: '30px'

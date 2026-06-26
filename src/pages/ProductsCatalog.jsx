@@ -71,8 +71,8 @@ const productImageStyle = {
 
 export default function ProductsCatalog({ setActivePage }) {
   return (
-    <div style={{ backgroundColor: colors.pageBg, fontFamily: fonts.base, padding: '40px 0 80px' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', color: colors.text }}>
+    <div className="page-shell" style={{ backgroundColor: colors.pageBg, fontFamily: fonts.base, padding: '40px 0 80px' }}>
+      <div className="page-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', color: colors.text }}>
         <Breadcrumbs
           setActivePage={setActivePage}
           items={[
@@ -85,7 +85,7 @@ export default function ProductsCatalog({ setActivePage }) {
           Продукция
         </h1>
 
-        <div style={{
+        <div className="grid-auto-cards" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
           gap: '30px',

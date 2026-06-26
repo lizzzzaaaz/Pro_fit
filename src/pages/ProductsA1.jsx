@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { colors, fonts } from '../theme';
+import { colors, fonts, backButtonStyle } from '../theme';
 import mainImg from '../assets/kut300-pk.png'; 
 import p11Img from '../assets/kut300-p11.png';
 import p12Img from '../assets/kut300-p12.png';
@@ -199,7 +199,7 @@ export default function ProductsA1({ setActivePage }) {
   });
 
   return (
-    <div style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: colors.text, fontFamily: fonts.base, backgroundColor: colors.pageBg }}>
+    <div className="page-shell page-container" style={{ padding: '40px 30px 80px 30px', maxWidth: '1200px', margin: '0 auto', color: colors.text, fontFamily: fonts.base, backgroundColor: colors.pageBg }}>
       
       <Breadcrumbs
         setActivePage={setActivePage}
@@ -213,7 +213,7 @@ export default function ProductsA1({ setActivePage }) {
 
       {/* Кнопка назад */}
       <div style={{ marginBottom: '25px' }}>
-        <button onClick={() => setActivePage('industrial-controllers')} style={{ padding: '12px 24px', backgroundColor: '#f5f5f5', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+        <button type="button" onClick={() => setActivePage('industrial-controllers')} style={backButtonStyle}>
           ← К списку контроллеров
         </button>
       </div>
@@ -242,7 +242,7 @@ export default function ProductsA1({ setActivePage }) {
                 {/* Карточка прибора КУТ300-ПК */}
                 <div style={{ marginBottom: '40px' }}>
                   <h2 style={{ fontSize: '24px', color: '#c9a227', marginBottom: '15px' }}>КУТ300-ПК</h2>
-                  <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '30px', marginBottom: '30px' }}>
+                  <div className="grid-product-spec" style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '30px', marginBottom: '30px' }}>
                     <div style={{
                       aspectRatio: '1 / 1',
                       width: '100%',
@@ -356,7 +356,7 @@ export default function ProductsA1({ setActivePage }) {
               /* ДЕТАЛЬНАЯ КАРТОЧКА ВЫБРАННОГО МОДУЛЯ */
               <div>
                 <h2 style={{ fontSize: '24px', color: colors.primary, marginBottom: '15px' }}>{selectedComponent.title}</h2>
-                <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '30px', marginBottom: '30px' }}>
+                <div className="grid-product-spec" style={{ display: 'grid', gridTemplateColumns: '260px 1fr 1fr', gap: '30px', marginBottom: '30px' }}>
                   <div style={{ 
                     aspectRatio: '1 / 1',
                     width: '100%',
@@ -390,7 +390,7 @@ export default function ProductsA1({ setActivePage }) {
                     </table>
                   </div>
                 </div>
-                <button onClick={() => { setSelectedComponent(null); setModuleTab('main'); }} style={{ padding: '10px 20px', backgroundColor: colors.primary, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
+                <button type="button" onClick={() => { setSelectedComponent(null); setModuleTab('main'); }} style={{ ...backButtonStyle, backgroundColor: colors.primary, color: '#fff', border: 'none' }}>
                   ← Назад к модулям
                 </button>
               </div>
@@ -403,7 +403,7 @@ export default function ProductsA1({ setActivePage }) {
                   Сертификаты и декларации соответствия для КУТ300-ПК.
                 </p>
                 <DocumentList items={appendSt1(productDocuments, { componentId: selectedComponent.id })} />
-                <button onClick={() => { setSelectedComponent(null); setModuleTab('main'); }} style={{ marginTop: '24px', padding: '10px 20px', backgroundColor: colors.primary, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
+                <button type="button" onClick={() => { setSelectedComponent(null); setModuleTab('main'); }} style={{ ...backButtonStyle, marginTop: '24px', backgroundColor: colors.primary, color: '#fff', border: 'none' }}>
                   ← Назад к модулям
                 </button>
               </div>

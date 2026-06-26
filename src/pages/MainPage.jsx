@@ -93,7 +93,7 @@ function MainPage({ setActivePage }) {
           pointerEvents: 'none',
         }} />
 
-        <div style={{
+        <div className="hero-grid" style={{
           maxWidth: '1200px',
           margin: '0 auto',
           padding: '72px 40px 80px',
@@ -186,10 +186,10 @@ function MainPage({ setActivePage }) {
         </div>
       </section>
 
-      <section style={{ backgroundColor: colors.white, padding: '72px 40px 88px' }}>
+      <section className="section-pad" style={{ backgroundColor: colors.white, padding: '72px 40px 88px' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <h2 style={{ margin: '0 0 12px 0', fontSize: '28px', fontWeight: '800', color: colors.darkBlue }}>
+            <h2 className="responsive-heading-lg" style={{ margin: '0 0 12px 0', fontSize: '28px', fontWeight: '800', color: colors.darkBlue }}>
               Направления деятельности
             </h2>
             <p style={{ margin: 0, color: colors.textMuted, fontSize: '16px' }}>
@@ -197,7 +197,7 @@ function MainPage({ setActivePage }) {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px' }}>
+          <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px' }}>
             <div
               role="button"
               tabIndex={0}
