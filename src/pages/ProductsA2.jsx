@@ -12,6 +12,7 @@ import certSiPdf from '../assets/Сертификат СИ КУТ300-АК.pdf';
 import trTs020Pdf from '../assets/ТР ТС 020 на КУТ300-АК.pdf';
 import DocumentList from '../components/DocumentList';
 import ZoomableImage from '../components/ZoomableImage';
+import { appendSt1 } from '../data/st1Certificate';
 
 const productDocuments = [
   {
@@ -365,7 +366,7 @@ export default function ProductsA2({ setActivePage }) {
                 <p style={{ color: colors.textMuted, lineHeight: '1.6', margin: '0 0 24px 0' }}>
                   Сертификаты и декларации соответствия для КУТ300-АК.
                 </p>
-                <DocumentList items={productDocuments} />
+                <DocumentList items={appendSt1(productDocuments, { componentId: selectedComponent.id })} />
                 <button onClick={() => { setSelectedComponent(null); setModuleTab('main'); }} style={{ marginTop: '24px', padding: '10px 20px', backgroundColor: colors.primary, color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}>
                   ← Назад к модулям
                 </button>
@@ -380,7 +381,7 @@ export default function ProductsA2({ setActivePage }) {
             <p style={{ color: colors.textMuted, lineHeight: '1.6', margin: '0 0 24px 0' }}>
               Сертификаты и декларации соответствия для КУТ300-АК.
             </p>
-            <DocumentList items={productDocuments} />
+            <DocumentList items={appendSt1(productDocuments, { productId: 'КУТ300-АК' })} />
           </div>
         )}
       </div>

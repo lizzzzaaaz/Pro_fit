@@ -25,6 +25,8 @@ import SoftwareProducts from './pages/SoftwareProducts';
 import ProductsA1 from './pages/ProductsA1'; 
 import ProductsA2 from './pages/ProductsA2'; 
 import ProductsA3 from './pages/ProductsA3';
+import LegalDocumentPage from './pages/LegalDocumentPage';
+import { legalDocumentPages } from './data/legalDocumentsData';
 
 import { services } from './pages/servicesData'; 
 
@@ -170,6 +172,16 @@ function MainApp() {
 
         {currentPage === 'about' && <About setActivePage={setCurrentPage} />}
         {currentPage === 'certificates' && <Certificates setActivePage={setCurrentPage} />}
+
+        {legalDocumentPages.map((pageId) => (
+          currentPage === pageId && (
+            <LegalDocumentPage
+              key={pageId}
+              setActivePage={setCurrentPage}
+              pageId={pageId}
+            />
+          )
+        ))}
 
         {currentPage === 'support' && (
           <div style={{ padding: '80px 40px', color: '#0f172a', fontFamily: 'Arial, sans-serif', backgroundColor: '#ffffff' }}>

@@ -4,6 +4,7 @@ import DocumentList from '../components/DocumentList';
 import ZoomableImage from '../components/ZoomableImage';
 import mainImg from '../assets/КУТ300-А42.png';
 import passportPdf from '../assets/12_КУТ300-А42 _ ПС.pdf';
+import { appendSt1 } from '../data/st1Certificate';
 
 const productDocuments = [
   {
@@ -116,7 +117,7 @@ export default function ProductsA3({ setActivePage }) {
             <p style={{ color: '#475569', lineHeight: '1.6', margin: '0 0 24px 0' }}>
               Документация для «КУТ300-А42».
             </p>
-            <DocumentList items={productDocuments} />
+            <DocumentList items={appendSt1(productDocuments, { productId: 'КУТ300-А42' })} />
           </div>
         )}
       </div>

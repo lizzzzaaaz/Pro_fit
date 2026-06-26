@@ -1,5 +1,7 @@
 /** Контент комплексов телеметрии — буклет АНТ 2018, стр. 13–14, 19–20, 22, 26–27 */
 
+import tmBez220Img from '../assets/Комплекс_КУТ300АК_БЕЗ220.png';
+
 const tmGrpshContent = {
   subtitle: 'Автономный контроллер АК-500 исполнение «Стандарт»',
   description: [
@@ -65,6 +67,7 @@ export const telemetryComplexes = [
     page: 'telemetry-tm-bez220',
     cardTitle: 'ТМ ГРПШ БЕЗ 220 КУТ300-АК',
     shortDesc: 'Телеметрический комплекс для ГРПШ без сети 220 В на базе КУТ300-АК.',
+    img: tmBez220Img,
     ...tmGrpshContent,
   },
   {
