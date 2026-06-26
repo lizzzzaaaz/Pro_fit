@@ -4,11 +4,13 @@ import { colors, fonts } from '../theme';
 import { telemetryComplexPages } from '../pages/telemetryComplexesData';
 import { explosionBarrierPages } from '../pages/explosionBarriersData';
 import { softwareProductPages } from '../pages/softwareProductsData';
+import { powerSupplyPages } from '../pages/powerSuppliesData';
 
 const productLinks = [
   { page: 'industrial-controllers', label: 'Промышленные контроллеры' },
   { page: 'autonomous-telemetry', label: 'Комплексы телеметрии' },
   { page: 'power-modules', label: 'Барьеры искрозащиты' },
+  { page: 'power-supplies', label: 'Источники питания' },
   { page: 'software-products', label: 'Программное обеспечение' },
 ];
 
@@ -47,6 +49,7 @@ function Header({ activePage, setActivePage }) {
     'industrial-controllers',
     'autonomous-telemetry',
     'power-modules',
+    'power-supplies',
     'software-products',
     'products-a1',
     'products-a2',
@@ -54,6 +57,7 @@ function Header({ activePage, setActivePage }) {
     ...telemetryComplexPages,
     ...explosionBarrierPages,
     ...softwareProductPages,
+    ...powerSupplyPages,
   ].includes(activePage);
 
   const isCompanyActive = companyPages.includes(activePage);

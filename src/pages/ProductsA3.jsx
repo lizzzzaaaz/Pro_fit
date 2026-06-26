@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
+import DocumentList from '../components/DocumentList';
 import ZoomableImage from '../components/ZoomableImage';
 import mainImg from '../assets/КУТ300-А42.png';
+import passportPdf from '../assets/12_КУТ300-А42 _ ПС.pdf';
+
+const productDocuments = [
+  {
+    title: 'Паспорт КУТ300-А42',
+    href: passportPdf,
+    fileName: '12_КУТ300-А42 _ ПС.pdf',
+  },
+];
 
 const renderImage = (imgSrc, altText) => {
   if (typeof imgSrc === 'string' && (imgSrc.startsWith('/') || imgSrc.startsWith('data:image') || imgSrc.startsWith('blob:'))) {
@@ -102,8 +112,11 @@ export default function ProductsA3({ setActivePage }) {
 
         {activeTab === 'documents' && (
           <div>
-            <h2>Документация</h2>
-            <p>Технические паспорта и сертификаты в формате PDF появятся здесь.</p>
+            <h2 style={{ fontSize: '24px', color: '#c9a227', margin: '0 0 8px 0' }}>Документация</h2>
+            <p style={{ color: '#475569', lineHeight: '1.6', margin: '0 0 24px 0' }}>
+              Документация для «КУТ300-А42».
+            </p>
+            <DocumentList items={productDocuments} />
           </div>
         )}
       </div>

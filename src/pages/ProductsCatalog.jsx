@@ -1,6 +1,7 @@
 import controllersImg from '../assets/kut300-pk.png';
 import telemetryImg from '../assets/КУТ300-АК.png';
 import powerImg from '../assets/kut300-b03.png';
+import batteryImg from '../assets/Аккамуляторный блок.png';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { colors, fonts } from '../theme';
 
@@ -19,6 +20,11 @@ const categories = [
     page: 'power-modules',
     title: 'Барьеры искрозащиты',
     img: powerImg,
+  },
+  {
+    page: 'power-supplies',
+    title: 'Источники питания',
+    img: batteryImg,
   },
   {
     page: 'software-products',

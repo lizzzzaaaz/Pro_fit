@@ -1,13 +1,42 @@
 /** Барьеры искрозащиты — буклет АНТ 2018, стр. 30–34 */
 
+import bizIp9Img from '../assets/БИЗ-ИП9.png';
+import profA4d4Img from '../assets/ПРОФ-А4Д4.png';
+import profA8d8Img from '../assets/ПРОФ-А8Д8.png';
+import profN4Img from '../assets/ПРОФ-Н4.png';
+import dsExtractPdf from '../assets/Выписка по ДС № ЕАЭС N RU Д-RU.РА07.В.71440_25 от 2025-09-08.pdf';
+import eaesCertPdf from '../assets/ЕАЭС KG 417_043.RU.02.14428.pdf';
+import bizIp9CertPdf from '../assets/Сертификат соответствия на БИЗ-ИП9 (1).pdf';
+
+const dsExtractDocument = {
+  title: 'Выписка по ДС № ЕАЭС N RU Д-RU.РА07.В.71440/25 от 08.09.2025',
+  href: dsExtractPdf,
+  fileName: 'Выписка по ДС № ЕАЭС N RU Д-RU.РА07.В.71440_25 от 2025-09-08.pdf',
+};
+
+const eaesCertDocument = {
+  title: 'Сертификат соответствия ЕАЭС KG 417/043.RU.02.14428',
+  href: eaesCertPdf,
+  fileName: 'ЕАЭС KG 417_043.RU.02.14428.pdf',
+};
+
+const profDocuments = [dsExtractDocument, eaesCertDocument];
+
+const bizIp9CertDocument = {
+  title: 'Сертификат соответствия на БИЗ-ИП9',
+  href: bizIp9CertPdf,
+  fileName: 'Сертификат соответствия на БИЗ-ИП9 (1).pdf',
+};
+
 export const explosionBarriers = [
   {
     page: 'barrier-antib-a4d4',
-    cardTitle: 'АНТИБ-А4Д4',
+    cardTitle: 'ПРОФ А4Д4',
     shortDesc: 'Барьер искрозащиты аналоговых датчиков — 4 канала.',
     subtitle: 'Барьер искрозащиты аналоговых датчиков',
+    img: profA4d4Img,
     description: [
-      'АНТИБ-А4Д4 является связанным пассивным оборудованием, предназначенным для организации искробезопасной передачи аналоговых либо цифровых сигналов любой полярности.',
+      'ПРОФ А4Д4 является связанным пассивным оборудованием, предназначенным для организации искробезопасной передачи аналоговых либо цифровых сигналов любой полярности.',
     ],
     sections: [
       {
@@ -35,14 +64,16 @@ export const explosionBarriers = [
       { label: 'C0 (IIA / IIB / IIC), мкФ', value: '2,0 / 1,0 / 0,07' },
       { label: 'L0 (IIA / IIB / IIC), мГн', value: '10,0 / 5,0 / 1,0' },
     ],
+    documents: profDocuments,
   },
   {
     page: 'barrier-antib-a8d8',
-    cardTitle: 'АНТИБ-А8Д8',
+    cardTitle: 'ПРОФА8Д8',
     shortDesc: 'Барьер искрозащиты аналоговых датчиков — 8 каналов.',
     subtitle: 'Барьер искрозащиты аналоговых датчиков',
+    img: profA8d8Img,
     description: [
-      'АНТИБ-А8Д8 является связанным пассивным оборудованием, предназначенным для организации искробезопасной передачи аналоговых либо цифровых сигналов любой полярности.',
+      'ПРОФА8Д8 является связанным пассивным оборудованием, предназначенным для организации искробезопасной передачи аналоговых либо цифровых сигналов любой полярности.',
     ],
     sections: [
       {
@@ -70,14 +101,16 @@ export const explosionBarriers = [
       { label: 'C0 (IIA / IIB / IIC), мкФ', value: '2,0 / 1,0 / 0,07' },
       { label: 'L0 (IIA / IIB / IIC), мГн', value: '10,0 / 5,0 / 1,0' },
     ],
+    documents: profDocuments,
   },
   {
     page: 'barrier-antib-ip9',
-    cardTitle: 'АНТИБ-ИП9',
+    cardTitle: 'БИЗ ИП 9',
     shortDesc: 'Барьер искрозащиты интерфейсов с питанием датчиков.',
     subtitle: 'Барьер искрозащиты интерфейсов',
+    img: bizIp9Img,
     description: [
-      'АНТИБ-ИП9 является связанным оборудованием, предназначенным для организации искробезопасного питания датчиков и безопасной связи с ними через интерфейсы RS-232/RS-422/RS-485.',
+      'БИЗ ИП 9 является связанным оборудованием, предназначенным для организации искробезопасного питания датчиков и безопасной связи с ними через интерфейсы RS-232/RS-422/RS-485.',
     ],
     sections: [
       {
@@ -105,14 +138,16 @@ export const explosionBarriers = [
       { label: 'Um (цепь ia, интерфейс)', value: '250 В' },
       { label: 'Um (цепь ia, питание)', value: '250 В' },
     ],
+    documents: [bizIp9CertDocument],
   },
   {
     page: 'barrier-antib-n4',
-    cardTitle: 'АНТИБ-Н4',
+    cardTitle: 'ПРОФН4',
     shortDesc: 'Модуль расширения дискретных входов со встроенным барьером искрозащиты.',
     subtitle: 'Модуль расширения дискретных входов со встроенным барьером искрозащиты',
+    img: profN4Img,
     description: [
-      'АНТИБ-Н4 является модулем расширения дискретных входов ТС/ТИИ со встроенным барьером искрозащиты стандарта IEC 60947-5-6-2000 (EN 50227 «NAMUR»).',
+      'ПРОФН4 является модулем расширения дискретных входов ТС/ТИИ со встроенным барьером искрозащиты стандарта IEC 60947-5-6-2000 (EN 50227 «NAMUR»).',
     ],
     sections: [
       {
@@ -153,6 +188,7 @@ export const explosionBarriers = [
       { label: 'C0 (IIA / IIB / IIC), мкФ', value: '10,8 / 2,7 / 0,4' },
       { label: 'L0 (IIA / IIB / IIC), мГн', value: '49,5 / 24,7 / 6,1' },
     ],
+    documents: profDocuments,
   },
 ];
 

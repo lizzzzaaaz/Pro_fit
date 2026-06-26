@@ -16,7 +16,9 @@ import TelemetryComplexDetail from './pages/TelemetryComplexDetail';
 import { telemetryComplexPages } from './pages/telemetryComplexesData';
 import { explosionBarrierPages, getExplosionBarrier } from './pages/explosionBarriersData';
 import { softwareProductPages, getSoftwareProduct } from './pages/softwareProductsData';
+import { powerSupplyPages, getPowerSupply } from './pages/powerSuppliesData';
 import PowerAndModules from './pages/PowerAndModules';
+import PowerSupplies from './pages/PowerSupplies';
 import SoftwareProducts from './pages/SoftwareProducts';
 
 // Детальные страницы товаров
@@ -41,7 +43,7 @@ function MainApp() {
         
         {/* СТРАНИЦЫ КАТАЛОГА ПРОДУКЦИИ */}
         
-        {/* Главная страница Продукции (плитка из 4 категорий) */}
+        {/* Главная страница Продукции (плитка категорий) */}
         {currentPage === 'products-catalog' && (
           <ProductsCatalog setActivePage={setCurrentPage} />
         )}
@@ -100,6 +102,25 @@ function MainApp() {
               listPage="software-products"
               listBreadcrumb="ПРОГРАММНОЕ ОБЕСПЕЧЕНИЕ"
               backLabel="← К списку ПО"
+            />
+          )
+        ))}
+
+        {/* 5. Категория: Источники питания */}
+        {currentPage === 'power-supplies' && (
+          <PowerSupplies setActivePage={setCurrentPage} />
+        )}
+
+        {powerSupplyPages.map((pageId) => (
+          currentPage === pageId && (
+            <TelemetryComplexDetail
+              key={pageId}
+              setActivePage={setCurrentPage}
+              pageId={pageId}
+              getItem={getPowerSupply}
+              listPage="power-supplies"
+              listBreadcrumb="ИСТОЧНИКИ ПИТАНИЯ"
+              backLabel="← К списку источников питания"
             />
           )
         ))}

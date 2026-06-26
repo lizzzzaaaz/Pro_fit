@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Breadcrumbs from '../components/Breadcrumbs';
+import DocumentList from '../components/DocumentList';
 import ZoomableImage from '../components/ZoomableImage';
 import { colors, fonts } from '../theme';
 import { getTelemetryComplex } from './telemetryComplexesData';
@@ -241,24 +242,23 @@ export default function TelemetryComplexDetail({
             <div>
               <h2 style={{ fontSize: '24px', color: colors.primary, margin: '0 0 8px 0' }}>Документация</h2>
               <p style={{ color: colors.textMuted, lineHeight: '1.6', margin: '0 0 24px 0' }}>
-                Сертификат и проектная документация для «{item.cardTitle}».
+                Документация для «{item.cardTitle}».
               </p>
-              <ul style={{ margin: 0, padding: '0 0 0 20px', color: colors.textMuted, lineHeight: '1.8' }}>
-                <li>Сертификат</li>
-                <li>Проект</li>
-              </ul>
-              <div style={{
-                marginTop: '16px',
-                padding: '16px 20px',
-                backgroundColor: colors.lightBlueBg,
-                borderRadius: '8px',
-                border: `1px dashed ${colors.border}`,
-                color: colors.textMuted,
-                fontSize: '14px',
-                lineHeight: '1.6',
-              }}>
-                Файлы будут добавлены позже.
-              </div>
+              {item.documents?.length > 0 ? (
+                <DocumentList items={item.documents} />
+              ) : (
+                <div style={{
+                  padding: '16px 20px',
+                  backgroundColor: colors.lightBlueBg,
+                  borderRadius: '8px',
+                  border: `1px dashed ${colors.border}`,
+                  color: colors.textMuted,
+                  fontSize: '14px',
+                  lineHeight: '1.6',
+                }}>
+                  Файлы будут добавлены позже.
+                </div>
+              )}
             </div>
           )}
         </div>
